@@ -1,4 +1,4 @@
-package com.example.walkforcats.ui.dashboard
+package com.example.walkforcats.ui.Chart
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
