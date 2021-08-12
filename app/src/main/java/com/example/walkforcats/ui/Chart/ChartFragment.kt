@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.walkforcats.databinding.FragmentDashboardBinding
+import com.example.walkforcats.viewmodels.DashboardViewModel
 
 class ChartFragment : Fragment() {
 

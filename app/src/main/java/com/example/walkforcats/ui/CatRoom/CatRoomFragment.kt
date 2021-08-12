@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.walkforcats.databinding.FragmentNotificationsBinding
+import com.example.walkforcats.viewmodels.NotificationsViewModel
 
 class CatRoomFragment : Fragment() {
 
