@@ -1,4 +1,15 @@
 package com.example.walkforcats.database
 
-class Entity {
-}
+
+import androidx.room.Entity
+
+
+@Entity
+data class Entity(
+    var stepcount :Int
+)
+
+
+
+
+
