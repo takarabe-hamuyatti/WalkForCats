@@ -8,10 +8,12 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
 import android.widget.Toast
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.walkforcats.R
 import com.example.walkforcats.databinding.ActivityStepCountBinding
 import com.example.walkforcats.listener.StepListener
 import com.example.walkforcats.utils.StepDetector
@@ -75,5 +77,11 @@ class StepCountActivity : AppCompatActivity(), SensorEventListener, StepListener
     override fun step(timeNs: Long) {
         viewmodel.plusStep()
         viewmodel.getParcent()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
     }
 }

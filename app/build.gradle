@@ -75,6 +75,10 @@ dependencies {
 
     //rcularprogressbar
     implementation 'com.mikhaellopez:circularprogressbar:3.1.0'
+
+    //lotteie
+    def lottieVersion = "3.4.0"
+    implementation "com.airbnb.android:lottie:$lottieVersion"
 }
 
 repositories {
