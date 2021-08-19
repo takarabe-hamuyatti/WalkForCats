@@ -31,7 +31,7 @@ class CatRoomFragment : Fragment() {
         _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textNotifications
+        val textView: TextView = binding.test
         catRoomViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })

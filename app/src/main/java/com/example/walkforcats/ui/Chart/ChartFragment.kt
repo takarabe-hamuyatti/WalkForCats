@@ -35,6 +35,9 @@ class ChartFragment : Fragment() {
         chartViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
+
+
+
         return root
     }
 
