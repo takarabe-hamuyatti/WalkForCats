@@ -13,4 +13,6 @@ class ChartViewModel : ViewModel() {
         value = "歩きなさい！！"
     }
     val text: LiveData<String> = _text
+
+
 }
