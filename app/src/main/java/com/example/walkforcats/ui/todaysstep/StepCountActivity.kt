@@ -9,6 +9,7 @@ import android.hardware.SensorManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.core.content.edit
 import androidx.lifecycle.LifecycleOwner
@@ -19,6 +20,7 @@ import androidx.navigation.findNavController
 import com.example.walkforcats.R
 import com.example.walkforcats.databinding.ActivityStepCountBinding
 import com.example.walkforcats.listener.StepListener
+import com.example.walkforcats.ui.setting.SettingsFragment
 import com.example.walkforcats.utils.StepDetector
 import com.example.walkforcats.viewmodels.CatRoomViewModel
 import com.example.walkforcats.viewmodels.StepCountViewmodel
@@ -72,7 +74,6 @@ class StepCountActivity : AppCompatActivity(), SensorEventListener, StepListener
             })
 
             binding.goCatRoom.setOnClickListener {
-
             }
 
 
@@ -97,6 +98,21 @@ class StepCountActivity : AppCompatActivity(), SensorEventListener, StepListener
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle item selection
+        return when (item.itemId) {
+            R.id.action_settings -> {
+                supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.settings, SettingsFragment())
+                    .commit()
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onDestroy() {
