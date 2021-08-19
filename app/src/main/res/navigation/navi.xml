@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navi"
+    app:startDestination="@id/stepCountActivity">
+
+    <activity
+        android:id="@+id/stepCountActivity"
+        android:name="com.example.walkforcats.ui.todaysstep.StepCountActivity"
+        android:label="activity_step_count"
+        tools:layout="@layout/activity_step_count" />
+    <fragment
+        android:id="@+id/catRoomFragment"
+        android:name="com.example.walkforcats.ui.CatRoom.CatRoomFragment"
+        android:label="fragment_cat_room"
+        tools:layout="@layout/fragment_cat_room" >
+        <action
+            android:id="@+id/action_catRoomFragment_to_stepCountActivity"
+            app:destination="@id/stepCountActivity" />
+    </fragment>
+</navigation>

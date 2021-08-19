@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WalkForCats</string>
+    <string name="app_name">猫歩き</string>
     <string name="title_home">今日の歩数</string>
     <string name="title_dashboard">記録</string>
     <string name="title_notifications">猫部屋</string>
@@ -28,4 +28,6 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

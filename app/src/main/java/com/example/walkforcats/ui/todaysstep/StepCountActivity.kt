@@ -10,15 +10,19 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.widget.Toast
+import androidx.core.content.edit
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import com.example.walkforcats.R
 import com.example.walkforcats.databinding.ActivityStepCountBinding
 import com.example.walkforcats.listener.StepListener
 import com.example.walkforcats.utils.StepDetector
 import com.example.walkforcats.viewmodels.CatRoomViewModel
 import com.example.walkforcats.viewmodels.StepCountViewmodel
+import kotlin.properties.Delegates
 
 class StepCountActivity : AppCompatActivity(), SensorEventListener, StepListener {
         private lateinit var viewmodel: StepCountViewmodel
@@ -27,16 +31,19 @@ class StepCountActivity : AppCompatActivity(), SensorEventListener, StepListener
 
         private var simpleStepDetector: StepDetector? = null
         private var sensorManager: SensorManager? = null
+        private var count by Delegates.notNull<Int>()
 
-        override fun onCreate(savedInstanceState: Bundle?) {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
             binding = ActivityStepCountBinding.inflate(layoutInflater)
             setContentView(binding.root)
 
+
             viewmodel =
                 ViewModelProvider(this).get(StepCountViewmodel::class.java)
 
-            //センサーの下について、model 側で動かそうと思ったのですが、cntextが必要だったのでui層に設置しました。
+            //センサーについて、model 側で動かそうと思ったのですが、cntextが必要だったのでui層に設置しました。
             sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
             simpleStepDetector = StepDetector()
@@ -52,16 +59,23 @@ class StepCountActivity : AppCompatActivity(), SensorEventListener, StepListener
                     )
             }
 
-            viewmodel.percent.observe(this, Observer{
+            viewmodel.percent.observe(this, {
               binding.percent.text  = "$it%"
             })
 
-            viewmodel.steps.observe(this, Observer {
-                binding.count.text = it.toString()
+            viewmodel.count.observe(this,  {
+                count = it
+                binding.count.text = count.toString()
                 binding.circularProgressBar.apply {
-                    setProgressWithAnimation(it.toFloat())
+                    setProgressWithAnimation(count.toFloat())
                 }
             })
+
+            binding.goCatRoom.setOnClickListener {
+
+            }
+
+
 
         }
 
@@ -83,5 +97,11 @@ class StepCountActivity : AppCompatActivity(), SensorEventListener, StepListener
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+
     }
 }
