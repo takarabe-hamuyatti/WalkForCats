@@ -1,5 +1,7 @@
 package com.example.walkforcats.ui.Chart
 
+import android.content.Context
+import android.hardware.SensorManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,9 +11,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.walkforcats.databinding.FragmentDashboardBinding
+import com.example.walkforcats.utils.StepDetector
 import com.example.walkforcats.viewmodels.ChartViewModel
 
 class ChartFragment : Fragment() {
+
 
     private lateinit var chartViewModel: ChartViewModel
     private var _binding: FragmentDashboardBinding? = null
@@ -35,6 +39,8 @@ class ChartFragment : Fragment() {
         chartViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
+
+
 
 
 

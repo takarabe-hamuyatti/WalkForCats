@@ -3,6 +3,12 @@ package com.example.walkforcats.utils
 import com.example.walkforcats.listener.StepListener
 
 
+/*
+Released under the MIT license
+https://opensource.org/licenses/mit-license.php
+
+ */
+
 class StepDetector {
 
     private val ACCEL_RING_SIZE = 50

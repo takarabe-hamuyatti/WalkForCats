@@ -1,5 +1,10 @@
 package com.example.walkforcats.utils
 
+/*
+Released under the MIT license
+https://opensource.org/licenses/mit-license.php
+
+ */
 
 class SensorFilter {
 

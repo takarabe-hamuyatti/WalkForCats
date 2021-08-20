@@ -2,19 +2,21 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.todaysstep.StepCountActivity">
+    tools:context=".ui.todaysstep.StepCountFragment">
 
+    <!-- TODO: Update blank fragment layout -->
     <com.mikhaellopez.circularprogressbar.CircularProgressBar
         android:id="@+id/circularProgressBar"
-        android:layout_width="270dp"
-        android:layout_height="246dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:cpb_background_progressbar_color="#b6bbd8"
         app:cpb_background_progressbar_width="5dp"
         app:cpb_progress_direction="to_right"
-        app:cpb_progressbar_color="#3f51b5"
         app:cpb_progress_max="1000"
+        app:cpb_progressbar_color="#3f51b5"
         app:cpb_progressbar_width="10dp"
         app:cpb_round_border="false"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -36,15 +38,14 @@
         android:id="@+id/percent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="128dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/goCatRoom"
-        android:layout_width="110dp"
-        android:layout_height="92dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.916"
@@ -54,15 +55,6 @@
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/cat" />
-
-    <FrameLayout
-        android:id="@+id/settings"
-        android:layout_width="420dp"
-        android:layout_height="729dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </FrameLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

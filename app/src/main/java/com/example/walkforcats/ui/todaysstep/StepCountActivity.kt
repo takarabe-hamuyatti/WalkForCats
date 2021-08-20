@@ -1,6 +1,6 @@
 package com.example.walkforcats.ui.todaysstep
 
-import android.app.Activity
+
 import android.content.Context
 import android.hardware.Sensor
 import android.hardware.SensorEvent
@@ -10,24 +10,20 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.view.WindowManager
 import android.widget.Toast
-import androidx.core.content.edit
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import com.example.walkforcats.R
 import com.example.walkforcats.databinding.ActivityStepCountBinding
 import com.example.walkforcats.listener.StepListener
 import com.example.walkforcats.ui.setting.SettingsFragment
 import com.example.walkforcats.utils.StepDetector
-import com.example.walkforcats.viewmodels.CatRoomViewModel
 import com.example.walkforcats.viewmodels.StepCountViewmodel
 import kotlin.properties.Delegates
 
-class StepCountActivity : AppCompatActivity(), SensorEventListener, StepListener {
-        private lateinit var viewmodel: StepCountViewmodel
+class StepCountActivity : AppCompatActivity() {
+     /*  private lateinit var viewmodel: StepCountViewmodel
 
         private lateinit var binding:ActivityStepCountBinding
 
@@ -37,44 +33,45 @@ class StepCountActivity : AppCompatActivity(), SensorEventListener, StepListener
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-            super.onCreate(savedInstanceState)
-            binding = ActivityStepCountBinding.inflate(layoutInflater)
-            setContentView(binding.root)
+        super.onCreate(savedInstanceState)
+        binding = ActivityStepCountBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
 
-            viewmodel =
-                ViewModelProvider(this).get(StepCountViewmodel::class.java)
+        viewmodel =
+            ViewModelProvider(this).get(StepCountViewmodel::class.java)
 
-            //センサーについて、model 側で動かそうと思ったのですが、cntextが必要だったのでui層に設置しました。
-            sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        //センサーについて、model 側で動かそうと思ったのですが、cntextだったのでui層に設置しました。
+        sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        simpleStepDetector = StepDetector()
+        simpleStepDetector!!.registerListener(this)
 
-            simpleStepDetector = StepDetector()
-            simpleStepDetector!!.registerListener(this)
+        if (sensorManager == null) {
+            Toast.makeText(this, "端末にセンサーが用意されていません。", Toast.LENGTH_SHORT).show()
+        } else {
+            sensorManager!!.registerListener(
+                this,
+                sensorManager!!.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+                SensorManager.SENSOR_DELAY_FASTEST
+            )
+        }
 
-                if (sensorManager == null) {
-                    Toast.makeText(this, "端末にセンサーが用意されていません。", Toast.LENGTH_SHORT).show()
-                } else {
-                    sensorManager!!.registerListener(
-                        this,
-                        sensorManager!!.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-                        SensorManager.SENSOR_DELAY_FASTEST
-                    )
-            }
-
-            viewmodel.percent.observe(this, {
+        viewmodel.percent.observe(this, {
               binding.percent.text  = "$it%"
-            })
+        })
 
-            viewmodel.count.observe(this,  {
-                count = it
-                binding.count.text = count.toString()
-                binding.circularProgressBar.apply {
-                    setProgressWithAnimation(count.toFloat())
-                }
-            })
-
-            binding.goCatRoom.setOnClickListener {
+        viewmodel.count.observe(this,  {
+            count = it
+            binding.count.text = count.toString()
+            binding.circularProgressBar.apply {
+                setProgressWithAnimation(count.toFloat())
             }
+        })
+
+        binding.goCatRoom.setOnClickListener {
+
+        }
 
 
 
@@ -104,9 +101,15 @@ class StepCountActivity : AppCompatActivity(), SensorEventListener, StepListener
         // Handle item selection
         return when (item.itemId) {
             R.id.action_settings -> {
+                binding.circularProgressBar.visibility = View.INVISIBLE
+                binding.count.visibility = View.INVISIBLE
+                binding.percent.visibility = View.INVISIBLE
+
+
                 supportFragmentManager
                     .beginTransaction()
                     .replace(R.id.settings, SettingsFragment())
+                    .addToBackStack(null)
                     .commit()
                 true
             }
@@ -115,9 +118,20 @@ class StepCountActivity : AppCompatActivity(), SensorEventListener, StepListener
         }
     }
 
+
+    override fun onResume() {
+        super.onResume()
+
+    }
+
     override fun onDestroy() {
         super.onDestroy()
 
 
     }
+
+      */
+
 }
+
+

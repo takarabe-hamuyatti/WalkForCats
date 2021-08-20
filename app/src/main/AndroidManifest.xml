@@ -15,11 +15,9 @@
         android:theme="@style/Theme.WalkForCats">
         <activity
             android:name=".MainActivity"
-            android:exported="true" />
-        <activity
-            android:name=".ui.todaysstep.StepCountActivity"
             android:exported="true"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

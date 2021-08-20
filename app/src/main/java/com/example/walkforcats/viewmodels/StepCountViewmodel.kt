@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class StepCountViewmodel :ViewModel(){
+class StepCountViewmodel:ViewModel(){
 
 
     private var _percent = MutableLiveData<Float>()
@@ -17,7 +17,7 @@ class StepCountViewmodel :ViewModel(){
     val count :LiveData<Int>
          get() = _count
 
-    fun plusStep(){
+    fun plusCount(){
         _count.value = _count.value?.plus(1)
     }
 
