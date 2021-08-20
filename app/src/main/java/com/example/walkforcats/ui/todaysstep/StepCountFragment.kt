@@ -11,16 +11,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.example.walkforcats.R
-import com.example.walkforcats.databinding.ActivityStepCountBinding
 import com.example.walkforcats.databinding.FragmentStepCountBinding
 import com.example.walkforcats.listener.StepListener
 import com.example.walkforcats.utils.StepDetector
 import com.example.walkforcats.viewmodels.StepCountViewmodel
-import kotlin.properties.Delegates
 
 
 class StepCountFragment : Fragment() , SensorEventListener, StepListener {
@@ -30,10 +27,8 @@ class StepCountFragment : Fragment() , SensorEventListener, StepListener {
     private var _binding: FragmentStepCountBinding? = null
     private val binding get() = _binding!!
 
-
     private var simpleStepDetector: StepDetector? = null
     private var sensorManager: SensorManager? = null
-    private var count by Delegates.notNull<Int>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,16 +60,18 @@ class StepCountFragment : Fragment() , SensorEventListener, StepListener {
         binding.goCatRoom.setOnClickListener{
             findNavController().navigate(R.id.action_stepCountFragment_to_catRoomFragment)
         }
+        viewModel.percent.observe(viewLifecycleOwner, {
+            binding.percent.text  = "$it%"
+        })
 
         viewModel.count.observe(viewLifecycleOwner,{
             binding.count.text = it.toString()
+            binding.circularProgressBar.apply {
+                setProgressWithAnimation(it.toFloat())
+            }
         })
     }
 
-    override fun onResume() {
-        super.onResume()
-
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -92,6 +89,7 @@ class StepCountFragment : Fragment() , SensorEventListener, StepListener {
 
     override fun step(timeNs: Long) {
         viewModel.plusCount()
+        viewModel.getParcent()
     }
 }
 

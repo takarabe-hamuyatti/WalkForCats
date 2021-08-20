@@ -15,7 +15,6 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.walkforcats.R
-import com.example.walkforcats.databinding.ActivityStepCountBinding
 import com.example.walkforcats.listener.StepListener
 import com.example.walkforcats.ui.setting.SettingsFragment
 import com.example.walkforcats.utils.StepDetector
@@ -102,7 +101,21 @@ class StepCountActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.action_settings -> {
                 binding.circularProgressBar.visibility = View.INVISIBLE
+                binding.cd.action_settings -> {
+                binding.circularProgressBar.visibility = View.INVISIBLE
                 binding.count.visibility = View.INVISIBLE
+                binding.percent.visibility = View.INVISIBLE
+
+
+                supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.settings, SettingsFragment())
+                    .addToBackStack(null)
+                    .commit()
+                true
+            }
+
+            else -> super.onOptionsIteount.visibility = View.INVISIBLE
                 binding.percent.visibility = View.INVISIBLE
 
 
