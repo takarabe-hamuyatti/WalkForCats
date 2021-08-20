@@ -17,9 +17,6 @@ import com.mikhaellopez.circularprogressbar.CircularProgressBar
 class TodaysStepActivity : AppCompatActivity(), SensorEventListener {
     private lateinit var sensorManager: SensorManager
 
-
-
-
     private var isWalking = false
     private var totalSteps = 0f
     private var previousTotalSteps = 0f
