@@ -40,7 +40,7 @@
     </navigation>
     <fragment
         android:id="@+id/titleFragment"
-        android:name="com.example.walkforcats.TitleFragment"
+        android:name="com.example.walkforcats.ui.title.TitleFragment"
         android:label="fragment_title"
         tools:layout="@layout/fragment_title" >
         <action

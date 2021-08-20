@@ -6,10 +6,8 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
@@ -30,12 +28,18 @@ class StepCountFragment : Fragment() , SensorEventListener, StepListener {
     private var simpleStepDetector: StepDetector? = null
     private var sensorManager: SensorManager? = null
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentStepCountBinding.inflate(inflater, container, false)
+
         val root: View = binding.root
         return root
     }
@@ -43,6 +47,7 @@ class StepCountFragment : Fragment() , SensorEventListener, StepListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //contextが必要だったのでui層に設置しました。
         sensorManager = activity?.getSystemService(Context.SENSOR_SERVICE) as SensorManager
         simpleStepDetector = StepDetector()
         simpleStepDetector!!.registerListener(this)
@@ -60,6 +65,7 @@ class StepCountFragment : Fragment() , SensorEventListener, StepListener {
         binding.goCatRoom.setOnClickListener{
             findNavController().navigate(R.id.action_stepCountFragment_to_catRoomFragment)
         }
+
         viewModel.percent.observe(viewLifecycleOwner, {
             binding.percent.text  = "$it%"
         })
@@ -70,12 +76,6 @@ class StepCountFragment : Fragment() , SensorEventListener, StepListener {
                 setProgressWithAnimation(it.toFloat())
             }
         })
-    }
-
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
@@ -91,6 +91,29 @@ class StepCountFragment : Fragment() , SensorEventListener, StepListener {
         viewModel.plusCount()
         viewModel.getParcent()
     }
+
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_main, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_settings -> {
+                findNavController().navigate(R.id.action_stepCountFragment_to_settingsFragment)
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
 }
 
 
