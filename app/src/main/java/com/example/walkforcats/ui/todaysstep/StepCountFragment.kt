@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.example.walkforcats.R
@@ -18,7 +19,7 @@ import com.example.walkforcats.utils.StepDetector
 import com.example.walkforcats.viewmodels.StepCountViewmodel
 
 
-class StepCountFragment : Fragment() /*, SensorEventListener, StepListener */{
+class StepCountFragment : Fragment(){
 
     private val viewModel: StepCountViewmodel by navGraphViewModels(R.id.nest)
 
@@ -45,6 +46,7 @@ class StepCountFragment : Fragment() /*, SensorEventListener, StepListener */{
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
 
         sensorManager = activity?.getSystemService(Context.SENSOR_SERVICE) as SensorManager
         viewModel.getSensorManager(sensorManager!!)

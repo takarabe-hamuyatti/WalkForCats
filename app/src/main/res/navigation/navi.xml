@@ -35,7 +35,9 @@
             android:label="SettingsFragment" >
             <action
                 android:id="@+id/action_settingsFragment_to_stepCountFragment"
-                app:destination="@id/stepCountFragment" />
+                app:destination="@id/stepCountFragment"
+                app:popUpTo="@id/settingsFragment"
+                app:popUpToInclusive="true"/>
         </fragment>
     </navigation>
     <fragment
