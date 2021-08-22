@@ -9,13 +9,12 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.widget.Toast
+import androidx.lifecycle.*
 import androidx.preference.PreferenceManager
 import com.example.walkforcats.listener.StepListener
 import com.example.walkforcats.utils.StepDetector
+import kotlinx.coroutines.launch
 
 class StepCountViewmodel(application: Application): AndroidViewModel(application), SensorEventListener , StepListener {
     var sensorManager: SensorManager? = null
@@ -40,9 +39,12 @@ class StepCountViewmodel(application: Application): AndroidViewModel(application
         _count.value = _count.value?.plus(1)
     }
 
-    fun getParcent() {
-        var tmp = _count.value?.toFloat()?.times(100)
-        _percent.value = tmp?.div(aDayGoal)
+    fun getPercent() {
+        //まずパーセントを出します
+        var percentFloat = _count.value?.toFloat()?.div(aDayGoal)?.times(100)
+        //少数第二位以下を切り捨てます。
+        var Truncate= percentFloat?.times(10)?.toInt()?.toFloat()?.div(10)
+        _percent.value = Truncate!!
     }
 
     fun getSensorManager(sensor: SensorManager) {
@@ -50,9 +52,8 @@ class StepCountViewmodel(application: Application): AndroidViewModel(application
         simpleStepDetector = StepDetector()
         simpleStepDetector!!.registerListener(this)
         if (sensorManager == null) {
-            /*Toast.makeText(context, "端末にセンサーが用意されていません。", Toast.LENGTH_SHORT).show()
-
-                  */
+            val cont = getApplication<Application>().applicationContext
+            Toast.makeText(cont, "端末にセンサーが用意されていません。", Toast.LENGTH_SHORT).show()
         } else {
             sensorManager!!.registerListener(
                 this,
@@ -78,8 +79,10 @@ class StepCountViewmodel(application: Application): AndroidViewModel(application
     }
 
     override fun step(timeNs: Long) {
-        plusCount()
-        getParcent()
+        viewModelScope.launch {
+            plusCount()
+            getPercent()
+        }
     }
 
     fun getpreference() {
