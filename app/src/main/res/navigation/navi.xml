@@ -35,7 +35,9 @@
             android:label="SettingsFragment" >
             <action
                 android:id="@+id/action_settingsFragment_to_stepCountFragment"
-                app:destination="@id/stepCountFragment" />
+                app:destination="@id/stepCountFragment"
+                app:popUpTo="@id/settingsFragment"
+                app:popUpToInclusive="true"/>
         </fragment>
     </navigation>
     <fragment
@@ -45,6 +47,9 @@
         tools:layout="@layout/fragment_title" >
         <action
             android:id="@+id/action_titleFragment_to_nest"
-            app:destination="@id/nest" />
+            app:destination="@id/nest"
+            app:popUpTo="@id/titleFragment"
+            app:popUpToInclusive="true"/>
+
     </fragment>
 </navigation>

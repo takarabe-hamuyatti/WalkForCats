@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.example.walkforcats.R
@@ -18,7 +19,7 @@ import com.example.walkforcats.utils.StepDetector
 import com.example.walkforcats.viewmodels.StepCountViewmodel
 
 
-class StepCountFragment : Fragment() /*, SensorEventListener, StepListener */{
+class StepCountFragment : Fragment(){
 
     private val viewModel: StepCountViewmodel by navGraphViewModels(R.id.nest)
 
@@ -46,6 +47,7 @@ class StepCountFragment : Fragment() /*, SensorEventListener, StepListener */{
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         sensorManager = activity?.getSystemService(Context.SENSOR_SERVICE) as SensorManager
         viewModel.getSensorManager(sensorManager!!)
 
@@ -54,13 +56,20 @@ class StepCountFragment : Fragment() /*, SensorEventListener, StepListener */{
             findNavController().navigate(R.id.action_stepCountFragment_to_catRoomFragment)
         }
 
-        viewModel.percent.observe(viewLifecycleOwner, {
-            binding.percent.text  = "$it%"
+        viewModel.aDayPercent.observe(viewLifecycleOwner, {
+            binding.aDayPercent.text  = "$it%"
+        })
+
+        viewModel.weeklyPercent.observe(viewLifecycleOwner, {
+            binding.aWeeklyPercent.text  = "$it%"
         })
 
         viewModel.count.observe(viewLifecycleOwner,{
             binding.count.text = it.toString()
-            binding.circularProgressBar.apply {
+            binding.aDayCircularProgressBar.apply {
+                setProgressWithAnimation(it.toFloat())
+            }
+            binding.weeklyCircularProgressBar.apply {
                 setProgressWithAnimation(it.toFloat())
             }
         })
