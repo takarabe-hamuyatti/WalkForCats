@@ -21,12 +21,9 @@ import kotlinx.coroutines.launch
 class StepCountViewmodel(application: Application): AndroidViewModel(application), SensorEventListener , StepListener {
     var sensorManager: SensorManager? = null
     var simpleStepDetector: StepDetector? = null
-    var aDayGoal: Float = 0f
-    var weeklyGoal :Float = 0f
 
-    init {
-        getpreference()
-    }
+    var isFirstinit = true
+
 
     private var _aDayPercent = MutableLiveData<Float>()
     val aDayPercent: LiveData<Float>
@@ -39,24 +36,39 @@ class StepCountViewmodel(application: Application): AndroidViewModel(application
     private var _count = MutableLiveData<Int>().apply {
         value = 0
     }
+    val count: LiveData<Int>
+        get() = _count
+
     private var _weeklyCount = MutableLiveData<Int>().apply {
         value = 0
     }
     val weeklyCount: LiveData<Int>
         get() = _weeklyCount
 
+    private var _weeklyGoal = MutableLiveData<Float>().apply {
+        value = 0f
+    }
+    val weeklyGoal: LiveData<Float>
+        get() = _weeklyGoal
 
-    val count: LiveData<Int>
-        get() = _count
+    private var _aDayGoal = MutableLiveData<Float>().apply {
+        value = 0f
+    }
+     val aDayGoal: LiveData<Float>
+        get() = _aDayGoal
+
+
+
 
     fun plusCount() {
         _count.value = _count.value?.plus(1)
+        _weeklyCount.value = _weeklyCount.value?.plus(1)
     }
 
     fun getPercent() {
         //まずパーセントを出します
-        var percentFloatofDay = _count.value?.toFloat()?.div(aDayGoal)?.times(100)
-        var percentFloatofWeek = _count.value?.toFloat()?.div(weeklyGoal)?.times(100)
+        var percentFloatofDay = _count.value?.toFloat()?.div(_aDayGoal.value!!)?.times(100)
+        var percentFloatofWeek = _weeklyCount.value?.toFloat()?.div(_weeklyGoal.value!!)?.times(100)
         //少数第二位以下を切り捨てます。
         var TruncateofDay= percentFloatofDay?.times(10)?.toInt()?.toFloat()?.div(10)
         var TruncateofWeek= percentFloatofWeek?.times(10)?.toInt()?.toFloat()?.div(10)
@@ -64,6 +76,8 @@ class StepCountViewmodel(application: Application): AndroidViewModel(application
         _weeklyPercent.value = TruncateofWeek!!
     }
 
+
+    //センサーマネージャー取得
     fun getSensorManager(sensor: SensorManager) {
         sensorManager = sensor
         simpleStepDetector = StepDetector()
@@ -81,6 +95,7 @@ class StepCountViewmodel(application: Application): AndroidViewModel(application
     }
 
 
+    //歩数取得
     override fun onSensorChanged(event: SensorEvent?) {
         if (event!!.sensor.type == Sensor.TYPE_ACCELEROMETER) {
             simpleStepDetector!!.updateAccelerometer(
@@ -103,21 +118,33 @@ class StepCountViewmodel(application: Application): AndroidViewModel(application
 
 
     //共有プリファレンス
+    //その日ごとの記録は共有プリファレンスで行い、累計の記録はroom で行います。
     fun getpreference() {
         val cont = getApplication<Application>().applicationContext
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(cont)
-        aDayGoal = sharedPreferences.getString("goal", "15000")?.toFloat()!!
-        weeklyGoal = sharedPreferences.getString("weeklyGoal", "15000")?.toFloat()!!
+        _aDayGoal.value = sharedPreferences.getString("goal", "15000")?.toFloat()
+        _weeklyGoal.value = sharedPreferences.getString("weeklyGoal", "50000")?.toFloat()
+
     }
+
+    fun getCountFromPreference(){
+        val cont = getApplication<Application>().applicationContext
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(cont)
+        _count.value = sharedPreferences.getInt("count", 10000)
+        _weeklyCount.value = sharedPreferences.getInt("weeklyCount", 20000)
+    }
+
 
     override fun onCleared() {
         super.onCleared()
         val cont = getApplication<Application>().applicationContext
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(cont)
-        sharedPreferences.edit {
-            putString("count",_count.value.toString())
-            putString("weeklyCount",_weeklyCount.value.toString())
-        }
-    }
 
+        sharedPreferences.edit {
+            putInt("count", _count.value?.toInt()!!)
+            putInt("weeklyCount",_weeklyCount.value?.toInt()!!)
+                .commit()
+        }
+        isFirstinit = !isFirstinit
+    }
 }

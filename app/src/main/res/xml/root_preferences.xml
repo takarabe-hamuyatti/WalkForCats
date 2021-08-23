@@ -3,14 +3,17 @@
     <PreferenceCategory app:title="@string/goal_header">
 
         <EditTextPreference
-            app:key="goal"
+            app:key="aDayGoal"
             app:title="@string/aDayGoal"
-            app:useSimpleSummaryProvider="true" />
+            app:useSimpleSummaryProvider="true"
+            app:defaultValue="20000"
+            />
 
         <EditTextPreference
             app:key="weeklyGoal"
             app:title="@string/weeklyGoal"
-            app:useSimpleSummaryProvider="true" />
+            app:useSimpleSummaryProvider="true"
+            app:defaultValue="2999"/>
 
     </PreferenceCategory>
 

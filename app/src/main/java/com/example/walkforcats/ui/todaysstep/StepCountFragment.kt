@@ -1,17 +1,24 @@
 package com.example.walkforcats.ui.todaysstep
 
+import android.app.Activity
+import android.app.Application
+import android.app.Service
 import android.content.Context
+import android.content.Intent
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
+import android.os.IBinder
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Toast
 import androidx.activity.addCallback
+import androidx.core.content.edit
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
+import androidx.preference.PreferenceManager
 import com.example.walkforcats.R
 import com.example.walkforcats.databinding.FragmentStepCountBinding
 import com.example.walkforcats.listener.StepListener
@@ -22,6 +29,8 @@ import com.example.walkforcats.viewmodels.StepCountViewmodel
 class StepCountFragment : Fragment(){
 
     private val viewModel: StepCountViewmodel by navGraphViewModels(R.id.nest)
+    private var count = 0
+    private var weeklyCount = 0
 
     private var _binding: FragmentStepCountBinding? = null
     private val binding get() = _binding!!
@@ -31,6 +40,14 @@ class StepCountFragment : Fragment(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+
+        //設定画面や猫部屋から戻るたびに前回終了時のカウントがロードされるのを防ぐためにif文を設けています
+        if(viewModel.isFirstinit) {
+            viewModel.getCountFromPreference()
+            viewModel.getpreference()
+            viewModel.isFirstinit = !viewModel.isFirstinit
+        }
+
     }
 
     override fun onCreateView(
@@ -65,19 +82,35 @@ class StepCountFragment : Fragment(){
         })
 
         viewModel.count.observe(viewLifecycleOwner,{
+            count = it
             binding.count.text = it.toString()
             binding.aDayCircularProgressBar.apply {
                 setProgressWithAnimation(it.toFloat())
             }
+        })
+
+        viewModel.weeklyCount.observe(viewLifecycleOwner,{
+            weeklyCount = it
+            binding.weeklyCount.text = it.toString()
             binding.weeklyCircularProgressBar.apply {
                 setProgressWithAnimation(it.toFloat())
             }
         })
-    }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        viewModel.aDayGoal.observe(viewLifecycleOwner,{
+            binding.aDayCircularProgressBar.apply {
+                progressMax = it
+            }
+        })
+
+        viewModel.weeklyGoal.observe(viewLifecycleOwner,{
+            binding.weeklyCircularProgressBar.apply {
+                progressMax = it
+            }
+        })
+
+
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -93,6 +126,30 @@ class StepCountFragment : Fragment(){
 
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+   /* fun saveData() {
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+
+        sharedPreferences.edit {
+            putInt("count", count)
+            putInt("weeklyCount",weeklyCount)
+                .commit()
+        }
+    }
+
+    */
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+        //saveData()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        //saveData()
     }
 
 }

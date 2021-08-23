@@ -47,10 +47,10 @@
         android:id="@+id/count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="120dp"
         android:layout_marginTop="68dp"
-        android:layout_marginEnd="60dp"
         android:text="0"
-        app:layout_constraintEnd_toStartOf="@+id/aDayPercent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -79,8 +79,8 @@
 
     <TextView
         android:id="@+id/aWeeklyPercent"
-        android:layout_width="0dp"
-        android:layout_height="17dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="13dp"
         android:layout_marginEnd="172dp"
         android:text="0%"
@@ -91,10 +91,10 @@
         android:id="@+id/weeklyCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="13dp"
-        android:layout_marginEnd="60dp"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="14dp"
         android:text="0"
-        app:layout_constraintEnd_toStartOf="@+id/aWeeklyPercent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/count" />
 
 
