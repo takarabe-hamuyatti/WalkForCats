@@ -47,6 +47,9 @@
         tools:layout="@layout/fragment_title" >
         <action
             android:id="@+id/action_titleFragment_to_nest"
-            app:destination="@id/nest" />
+            app:destination="@id/nest"
+            app:popUpTo="@id/titleFragment"
+            app:popUpToInclusive="true"/>
+
     </fragment>
 </navigation>

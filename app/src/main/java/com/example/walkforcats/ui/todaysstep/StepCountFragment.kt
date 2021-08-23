@@ -56,13 +56,20 @@ class StepCountFragment : Fragment(){
             findNavController().navigate(R.id.action_stepCountFragment_to_catRoomFragment)
         }
 
-        viewModel.percent.observe(viewLifecycleOwner, {
-            binding.percent.text  = "$it%"
+        viewModel.aDayPercent.observe(viewLifecycleOwner, {
+            binding.aDayPercent.text  = "$it%"
+        })
+
+        viewModel.weeklyPercent.observe(viewLifecycleOwner, {
+            binding.aWeeklyPercent.text  = "$it%"
         })
 
         viewModel.count.observe(viewLifecycleOwner,{
             binding.count.text = it.toString()
-            binding.circularProgressBar.apply {
+            binding.aDayCircularProgressBar.apply {
+                setProgressWithAnimation(it.toFloat())
+            }
+            binding.weeklyCircularProgressBar.apply {
                 setProgressWithAnimation(it.toFloat())
             }
         })
