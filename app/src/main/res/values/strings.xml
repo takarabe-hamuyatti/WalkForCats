@@ -27,7 +27,6 @@
     <string name="weeklyGoal">一週間の目標</string>
 
 
-
     <!-- Sync Preferences -->
     <string name="sync_title">Sync email periodically</string>
     <string name="attachment_title">Download incoming attachments</string>
