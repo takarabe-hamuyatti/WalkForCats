@@ -128,29 +128,12 @@ class StepCountFragment : Fragment(){
         }
     }
 
-   /* fun saveData() {
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-
-        sharedPreferences.edit {
-            putInt("count", count)
-            putInt("weeklyCount",weeklyCount)
-                .commit()
-        }
-    }
-
-    */
-
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
         //saveData()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        //saveData()
-    }
 
 }
 

@@ -130,7 +130,7 @@ class StepCountViewmodel(application: Application): AndroidViewModel(application
     fun getCountFromPreference(){
         val cont = getApplication<Application>().applicationContext
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(cont)
-        _count.value = sharedPreferences.getInt("count", 10000)
+        _count.value = sharedPreferences.getInt("todayCount", 10000)
         _weeklyCount.value = sharedPreferences.getInt("weeklyCount", 20000)
     }
 
@@ -141,7 +141,7 @@ class StepCountViewmodel(application: Application): AndroidViewModel(application
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(cont)
 
         sharedPreferences.edit {
-            putInt("count", _count.value?.toInt()!!)
+            putInt("todayCount", _count.value?.toInt()!!)
             putInt("weeklyCount",_weeklyCount.value?.toInt()!!)
                 .commit()
         }
