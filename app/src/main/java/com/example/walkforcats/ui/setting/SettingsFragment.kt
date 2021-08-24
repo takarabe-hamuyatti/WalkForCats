@@ -41,7 +41,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             val text =  aDayGoalPreference?.text
             val text2 = weeklyGoalPreference?.text
             if(text?.intOrString() == true && text2?.intOrString() == true) {
-                viewModel.getPreference()
+                viewModel.getGoalFromPreference()
                 findNavController().navigate(R.id.action_settingsFragment_to_stepCountFragment)
             }else {
                 AlertDialog.Builder(context)

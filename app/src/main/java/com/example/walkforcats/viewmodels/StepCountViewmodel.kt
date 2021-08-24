@@ -61,8 +61,8 @@ class StepCountViewmodel(application: Application): AndroidViewModel(application
 
     fun getPercent() {
         //まずパーセントを出します
-        var percentFloatofDay = _count.value?.toFloat()?.div(_aDayGoal.value!!)?.times(100)
-        var percentFloatofWeek = _weeklyCount.value?.toFloat()?.div(_weeklyGoal.value!!)?.times(100)
+        var percentFloatofDay = count.value?.toFloat()?.div(aDayGoal.value!!)?.times(100)
+        var percentFloatofWeek = weeklyCount.value?.toFloat()?.div(weeklyGoal.value!!)?.times(100)
         //少数第二位以下を切り捨てます。
         val TruncateofDay= percentFloatofDay?.times(10)?.toInt()?.toFloat()?.div(10)
         val TruncateofWeek= percentFloatofWeek?.times(10)?.toInt()?.toFloat()?.div(10)
@@ -113,19 +113,19 @@ class StepCountViewmodel(application: Application): AndroidViewModel(application
 
     //共有プリファレンス
     //その日ごとの記録は共有プリファレンスで行い、累計の記録はroom で行います。
-    fun getPreference() {
+    fun getGoalFromPreference() {
         val cont = getApplication<Application>().applicationContext
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(cont)
-        _aDayGoal.value = sharedPreferences.getString("goal", "15000")?.toFloat()
+        _aDayGoal.value = sharedPreferences.getString("aDayGoal", "15000")?.toFloat()
         _weeklyGoal.value = sharedPreferences.getString("weeklyGoal", "50000")?.toFloat()
-
     }
 
+    //一日ごと、一週間ごとの目標を取得しています。
     fun getCountFromPreference(){
         val cont = getApplication<Application>().applicationContext
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(cont)
-        _count.value = sharedPreferences.getInt("todayCount", 10000)
-        _weeklyCount.value = sharedPreferences.getInt("weeklyCount", 20000)
+        _count.value = sharedPreferences.getInt("todayCount", 0)
+        _weeklyCount.value = sharedPreferences.getInt("weeklyCount", 0)
     }
 
 

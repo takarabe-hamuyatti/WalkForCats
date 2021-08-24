@@ -1,7 +1,6 @@
 package com.example.walkforcats.worker
 
 import android.app.Application
-import android.os.Build
 import androidx.work.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -25,7 +24,7 @@ class Operations:Application() {
     private fun setupRecurringWork() {
 
 
-        //todo 単純な保存でも例外が起こりうるケースを考え、制約を設定する。
+        //todo 単純な保存でも例外が起こりうるケースを考え、制約を設定するつもりです。
        /* val constraints = Constraints.Builder()
             .apply {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -36,14 +35,15 @@ class Operations:Application() {
 
         */
 
-        val repeatingRequest = PeriodicWorkRequestBuilder<savingWorker>(
-            //todo 一日の終わりを指定するには？？
+        val repeatingRequest = PeriodicWorkRequestBuilder<SavingWorker>(
             1,
-            TimeUnit.DAYS)
+            TimeUnit.DAYS,
+            5,
+            TimeUnit.MINUTES)
             .build()
 
         WorkManager.getInstance().enqueueUniquePeriodicWork(
-            savingWorker.WORK_NAME,
+            SavingWorker.WORK_NAME,
             ExistingPeriodicWorkPolicy.KEEP,
             repeatingRequest)
     }

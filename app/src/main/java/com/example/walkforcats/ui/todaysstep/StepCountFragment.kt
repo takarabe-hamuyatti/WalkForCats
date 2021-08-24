@@ -30,7 +30,7 @@ class StepCountFragment : Fragment(){
         //設定画面や猫部屋から戻るたびに前回終了時のカウントがロードされるのを防ぐためにif文を設けています
         if(viewModel.isFirstinit) {
             viewModel.getCountFromPreference()
-            viewModel.getPreference()
+            viewModel.getGoalFromPreference()
             viewModel.isFirstinit = !viewModel.isFirstinit
         }
 
@@ -42,6 +42,10 @@ class StepCountFragment : Fragment(){
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentStepCountBinding.inflate(inflater, container, false)
+
+        binding.aDayCircularProgressBar.apply {
+
+        }
 
         val root: View = binding.root
         return root
