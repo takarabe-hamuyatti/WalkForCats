@@ -7,7 +7,6 @@ import androidx.activity.addCallback
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import androidx.preference.EditTextPreference
-import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.example.walkforcats.R
 import com.example.walkforcats.viewmodels.StepCountViewmodel
@@ -39,10 +38,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         }
         val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
-            var text =  aDayGoalPreference?.text
-            var text2 = weeklyGoalPreference?.text
+            val text =  aDayGoalPreference?.text
+            val text2 = weeklyGoalPreference?.text
             if(text?.intOrString() == true && text2?.intOrString() == true) {
-                viewModel.getpreference()
+                viewModel.getPreference()
                 findNavController().navigate(R.id.action_settingsFragment_to_stepCountFragment)
             }else {
                 AlertDialog.Builder(context)

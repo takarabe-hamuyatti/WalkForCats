@@ -3,12 +3,16 @@ package com.example.walkforcats.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.time.LocalDate
+import java.util.*
 
 
 @Entity
-data class Entity(
+data class StepEntity(
      @PrimaryKey
-    var stepcount :Int
+     val date: String,
+     var stepcount :Int,
+
 )
 
 

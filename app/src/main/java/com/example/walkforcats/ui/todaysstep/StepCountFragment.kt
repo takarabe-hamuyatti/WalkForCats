@@ -1,28 +1,14 @@
 package com.example.walkforcats.ui.todaysstep
 
-import android.app.Activity
-import android.app.Application
-import android.app.Service
 import android.content.Context
-import android.content.Intent
-import android.hardware.Sensor
-import android.hardware.SensorEvent
-import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
-import android.os.IBinder
 import android.view.*
 import androidx.fragment.app.Fragment
-import android.widget.Toast
-import androidx.activity.addCallback
-import androidx.core.content.edit
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
-import androidx.preference.PreferenceManager
 import com.example.walkforcats.R
 import com.example.walkforcats.databinding.FragmentStepCountBinding
-import com.example.walkforcats.listener.StepListener
-import com.example.walkforcats.utils.StepDetector
 import com.example.walkforcats.viewmodels.StepCountViewmodel
 
 
@@ -44,7 +30,7 @@ class StepCountFragment : Fragment(){
         //設定画面や猫部屋から戻るたびに前回終了時のカウントがロードされるのを防ぐためにif文を設けています
         if(viewModel.isFirstinit) {
             viewModel.getCountFromPreference()
-            viewModel.getpreference()
+            viewModel.getPreference()
             viewModel.isFirstinit = !viewModel.isFirstinit
         }
 
@@ -53,7 +39,7 @@ class StepCountFragment : Fragment(){
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentStepCountBinding.inflate(inflater, container, false)
 
@@ -78,7 +64,7 @@ class StepCountFragment : Fragment(){
         })
 
         viewModel.weeklyPercent.observe(viewLifecycleOwner, {
-            binding.aWeeklyPercent.text  = "$it%"
+            binding.aWeeklyPercent.text = "$it%"
         })
 
         viewModel.count.observe(viewLifecycleOwner,{

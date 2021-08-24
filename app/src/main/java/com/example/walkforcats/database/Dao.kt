@@ -8,9 +8,9 @@ import androidx.room.Query
 
 @Dao
 interface Dao {
-   /* @Query("select * from ")
-    fun getVideos(): LiveData<List<>>
+    @Query("select * from StepEntity")
+    fun getSteops(): List<StepEntity>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll( videos: List<>)*/
+    @Insert
+    fun insert(stepEntity: StepEntity)
 }

@@ -1,10 +1,6 @@
 package com.example.walkforcats.viewmodels
 
-import android.annotation.SuppressLint
-import android.app.Activity
 import android.app.Application
-import android.content.Context
-import android.content.SharedPreferences
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -15,8 +11,6 @@ import androidx.lifecycle.*
 import androidx.preference.PreferenceManager
 import com.example.walkforcats.listener.StepListener
 import com.example.walkforcats.utils.StepDetector
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class StepCountViewmodel(application: Application): AndroidViewModel(application), SensorEventListener , StepListener {
     var sensorManager: SensorManager? = null
@@ -70,8 +64,8 @@ class StepCountViewmodel(application: Application): AndroidViewModel(application
         var percentFloatofDay = _count.value?.toFloat()?.div(_aDayGoal.value!!)?.times(100)
         var percentFloatofWeek = _weeklyCount.value?.toFloat()?.div(_weeklyGoal.value!!)?.times(100)
         //少数第二位以下を切り捨てます。
-        var TruncateofDay= percentFloatofDay?.times(10)?.toInt()?.toFloat()?.div(10)
-        var TruncateofWeek= percentFloatofWeek?.times(10)?.toInt()?.toFloat()?.div(10)
+        val TruncateofDay= percentFloatofDay?.times(10)?.toInt()?.toFloat()?.div(10)
+        val TruncateofWeek= percentFloatofWeek?.times(10)?.toInt()?.toFloat()?.div(10)
         _aDayPercent.value = TruncateofDay!!
         _weeklyPercent.value = TruncateofWeek!!
     }
@@ -88,7 +82,7 @@ class StepCountViewmodel(application: Application): AndroidViewModel(application
         } else {
             sensorManager!!.registerListener(
                 this,
-                sensorManager!!.getDefaultSensor(android.hardware.Sensor.TYPE_ACCELEROMETER),
+                sensorManager!!.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
                 SensorManager.SENSOR_DELAY_FASTEST
             )
         }
@@ -107,7 +101,7 @@ class StepCountViewmodel(application: Application): AndroidViewModel(application
         }
     }
 
-    override fun onAccuracyChanged(p0: android.hardware.Sensor?, p1: Int) {
+    override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
     }
 
     //歩数検知時の行動
@@ -119,7 +113,7 @@ class StepCountViewmodel(application: Application): AndroidViewModel(application
 
     //共有プリファレンス
     //その日ごとの記録は共有プリファレンスで行い、累計の記録はroom で行います。
-    fun getpreference() {
+    fun getPreference() {
         val cont = getApplication<Application>().applicationContext
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(cont)
         _aDayGoal.value = sharedPreferences.getString("goal", "15000")?.toFloat()
