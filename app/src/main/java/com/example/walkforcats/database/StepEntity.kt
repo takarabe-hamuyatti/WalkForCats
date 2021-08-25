@@ -6,7 +6,6 @@ import androidx.room.PrimaryKey
 import java.time.LocalDate
 import java.util.*
 
-
 @Entity
 data class StepEntity(
      @PrimaryKey

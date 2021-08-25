@@ -24,7 +24,7 @@ class Operations:Application() {
     private fun setupRecurringWork() {
 
 
-        //todo 単純な保存でも例外が起こりうるケースを考え、制約を設定するつもりです。
+        //todo 単純な保存でも例外が起こりうるケースを考え、制約を設定する。
        /* val constraints = Constraints.Builder()
             .apply {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -35,11 +35,13 @@ class Operations:Application() {
 
         */
 
+        //1日の終わりに実行します。
         val repeatingRequest = PeriodicWorkRequestBuilder<SavingDayCountWorker>(
             1,
-            TimeUnit.DAYS,
+            TimeUnit.DAYS,//24時間感覚で、
             5,
-            TimeUnit.MINUTES)
+            TimeUnit.MINUTES//最後の5分を指定
+                 )
             .build()
 
         WorkManager.getInstance().enqueueUniquePeriodicWork(
