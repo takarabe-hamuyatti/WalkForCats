@@ -16,17 +16,11 @@ class StepCountViewmodel(application: Application): AndroidViewModel(application
     var sensorManager: SensorManager? = null
     var simpleStepDetector: StepDetector? = null
 
+    //設定画面や猫部屋から戻るたびに前回分がロードされるのを防ぐための判定に用います。
+    // stepCountFragment が最初に作られ歩数をロードした時にfalse　に変え、 navgraph viewmodel（StepCountFragment） が　clearされる時にtureに戻ります。
     var isFirstinit = true
 
-
-    private var _aDayPercent = MutableLiveData<Float>()
-    val aDayPercent: LiveData<Float>
-        get() = _aDayPercent
-
-    private var _weeklyPercent = MutableLiveData<Float>()
-    val weeklyPercent: LiveData<Float>
-        get() = _weeklyPercent
-
+    //歩数の1日ごと、週間での集計です
     private var _count = MutableLiveData<Int>().apply {
         value = 0
     }
@@ -39,6 +33,8 @@ class StepCountViewmodel(application: Application): AndroidViewModel(application
     val weeklyCount: LiveData<Int>
         get() = _weeklyCount
 
+
+    //1日、１週間の目標です。
     private var _weeklyGoal = MutableLiveData<Float>().apply {
         value = 0f
     }
@@ -52,6 +48,14 @@ class StepCountViewmodel(application: Application): AndroidViewModel(application
         get() = _aDayGoal
 
 
+    //1日単位、週間単位での歩数の達成率です
+    private var _aDayPercent = MutableLiveData<Float>()
+    val aDayPercent: LiveData<Float>
+        get() = _aDayPercent
+
+    private var _weeklyPercent = MutableLiveData<Float>()
+    val weeklyPercent: LiveData<Float>
+        get() = _weeklyPercent
 
 
     fun plusCount() {
@@ -89,7 +93,7 @@ class StepCountViewmodel(application: Application): AndroidViewModel(application
     }
 
 
-    //歩数取得
+    //歩数検知
     override fun onSensorChanged(event: SensorEvent?) {
         if (event!!.sensor.type == Sensor.TYPE_ACCELEROMETER) {
             simpleStepDetector!!.updateAccelerometer(
@@ -101,6 +105,7 @@ class StepCountViewmodel(application: Application): AndroidViewModel(application
         }
     }
 
+    //大元のオープンソースで用意されている関数
     override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
     }
 

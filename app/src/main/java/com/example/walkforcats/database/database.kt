@@ -17,7 +17,7 @@ fun getDatabase(context: Context): StepDatabase {
         if (!::INSTANCE.isInitialized) {
             INSTANCE = Room.databaseBuilder(context.applicationContext,
                 StepDatabase::class.java,
-                "videos").build()
+                "Steps").build()
         }
     }
     return INSTANCE

@@ -44,7 +44,7 @@ class StepCountFragment : Fragment(){
         _binding = FragmentStepCountBinding.inflate(inflater, container, false)
 
         binding.aDayCircularProgressBar.apply {
-
+            //todo よしなに
         }
 
         val root: View = binding.root
@@ -55,14 +55,11 @@ class StepCountFragment : Fragment(){
         super.onViewCreated(view, savedInstanceState)
 
 
+        //センサー取得をして、実際の歩行検知をvieewmodelに任せています。
         sensorManager = activity?.getSystemService(Context.SENSOR_SERVICE) as SensorManager
         viewModel.getSensorManager(sensorManager!!)
 
-
-        binding.goCatRoom.setOnClickListener{
-            findNavController().navigate(R.id.action_stepCountFragment_to_catRoomFragment)
-        }
-
+        //viewmodelで処理した歩数、目標、達成率を画面に反映させています。
         viewModel.aDayPercent.observe(viewLifecycleOwner, {
             binding.aDayPercent.text  = "$it%"
         })
@@ -100,6 +97,9 @@ class StepCountFragment : Fragment(){
         })
 
 
+        binding.goCatRoom.setOnClickListener{
+            findNavController().navigate(R.id.action_stepCountFragment_to_catRoomFragment)
+        }
 
     }
 
@@ -121,7 +121,7 @@ class StepCountFragment : Fragment(){
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        //saveData()
+
     }
 
 

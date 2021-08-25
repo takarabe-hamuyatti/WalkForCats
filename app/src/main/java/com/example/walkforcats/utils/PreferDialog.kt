@@ -5,7 +5,7 @@ import androidx.preference.PreferenceFragmentCompat
 
 class PreferDialog(): PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-        TODO("Not yet implemented")
+        //todo 数字以外を入力するまでダイアログを閉じれない実装をする
     }
 
 }

@@ -12,7 +12,6 @@ data class StepEntity(
      @PrimaryKey
      val date: String,
      var stepcount :Int,
-
 )
 
 

@@ -11,7 +11,7 @@ import com.example.walkforcats.database.getDatabase
 import com.example.walkforcats.repository.StepSaveRepository
 import java.time.LocalDate
 
-class SavingWorker (appContext: Context, workerPrams:WorkerParameters)
+class SavingDayCountWorker (appContext: Context, workerPrams:WorkerParameters)
     : CoroutineWorker(appContext,workerPrams){
 
     companion object {

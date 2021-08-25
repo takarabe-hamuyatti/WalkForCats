@@ -35,7 +35,7 @@ class Operations:Application() {
 
         */
 
-        val repeatingRequest = PeriodicWorkRequestBuilder<SavingWorker>(
+        val repeatingRequest = PeriodicWorkRequestBuilder<SavingDayCountWorker>(
             1,
             TimeUnit.DAYS,
             5,
@@ -43,7 +43,7 @@ class Operations:Application() {
             .build()
 
         WorkManager.getInstance().enqueueUniquePeriodicWork(
-            SavingWorker.WORK_NAME,
+            SavingDayCountWorker.WORK_NAME,
             ExistingPeriodicWorkPolicy.KEEP,
             repeatingRequest)
     }
