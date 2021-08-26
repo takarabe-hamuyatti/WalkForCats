@@ -13,7 +13,7 @@ buildscript {
 
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:7.0.0"
+        classpath "com.android.tools.build:gradle:7.0.1"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.20"
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -29,11 +29,4 @@ allprojects {
         maven { url 'https://maven.google.com' }
         maven { url 'https://maven.fabric.io/public'}
     }
-}
-
-
-
-
-task clean(type: Delete) {
-    delete rootProject.buildDir
 }
