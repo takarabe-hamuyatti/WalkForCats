@@ -3,8 +3,8 @@
     <PreferenceCategory app:title="@string/goal_header">
 
         <EditTextPreference
-            app:key="aDayGoal"
-            app:title="@string/aDayGoal"
+            app:key="dailyGoal"
+            app:title="@string/dailyGoal"
             app:useSimpleSummaryProvider="true"
             app:defaultValue="20000"
             />

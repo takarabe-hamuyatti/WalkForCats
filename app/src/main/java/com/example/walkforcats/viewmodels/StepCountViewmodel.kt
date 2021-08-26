@@ -6,72 +6,69 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.widget.Toast
-import androidx.core.content.edit
 import androidx.lifecycle.*
 import androidx.preference.PreferenceManager
 import com.example.walkforcats.listener.StepListener
+import com.example.walkforcats.repository.preferenceRepository
 import com.example.walkforcats.utils.StepDetector
 
 class StepCountViewmodel(application: Application): AndroidViewModel(application), SensorEventListener , StepListener {
     var sensorManager: SensorManager? = null
     var simpleStepDetector: StepDetector? = null
 
+
+    val cont = getApplication<Application>().applicationContext
+
+    val repository = preferenceRepository(cont)
+
+
+
     //設定画面や猫部屋から戻るたびに前回分がロードされるのを防ぐための判定に用います。
-    // stepCountFragment が最初に作られ歩数をロードした時にfalse　に変え、 navgraph viewmodel（StepCountFragment） が　clearされる時にtureに戻ります。
+    // stepCountFragment が最初に作られ歩数をロードした時にfalse　に変え、 navgraph viewmodel が　clearされる時にtureに戻ります。
     var isFirstinit = true
 
     //歩数の1日ごと、週間での集計です
-    private var _count = MutableLiveData<Int>().apply {
-        value = 0
-    }
-    val count: LiveData<Int>
-        get() = _count
+    private val _dailyCount = MutableLiveData(0)
+    val dailyCount: LiveData<Int>
+        get() = _dailyCount
 
-    private var _weeklyCount = MutableLiveData<Int>().apply {
-        value = 0
-    }
+    private val _weeklyCount = MutableLiveData(0)
     val weeklyCount: LiveData<Int>
         get() = _weeklyCount
 
 
     //1日、１週間の目標です。
-    private var _weeklyGoal = MutableLiveData<Float>().apply {
-        value = 0f
-    }
+    private val _weeklyGoal = MutableLiveData(0f)
     val weeklyGoal: LiveData<Float>
         get() = _weeklyGoal
 
-    private var _aDayGoal = MutableLiveData<Float>().apply {
-        value = 0f
-    }
+    private val _dailyGoal = MutableLiveData(0f)
      val aDayGoal: LiveData<Float>
-        get() = _aDayGoal
+        get() = _dailyGoal
 
 
     //1日単位、週間単位での歩数の達成率です
-    private var _aDayPercent = MutableLiveData<Float>()
-    val aDayPercent: LiveData<Float>
-        get() = _aDayPercent
+    private val _aDayPercent = MutableLiveData<Float>()
+    val aDayPercent: LiveData<String>
+        get() = _aDayPercent.map{"$it%"}
 
-    private var _weeklyPercent = MutableLiveData<Float>()
-    val weeklyPercent: LiveData<Float>
-        get() = _weeklyPercent
+    private val _weeklyPercent = MutableLiveData<Float>()
+    val weeklyPercent: LiveData<String>
+        get() = _weeklyPercent.map {"$it%"}
 
 
-    fun plusCount() {
-        _count.value = _count.value?.plus(1)
+    private fun plusCount() {
+        _dailyCount.value = _dailyCount.value?.plus(1)
         _weeklyCount.value = _weeklyCount.value?.plus(1)
     }
 
-    fun getPercent() {
+    private fun getPercent() {
         //まずパーセントを出します
-        var percentFloatofDay = count.value?.toFloat()?.div(aDayGoal.value!!)?.times(100)
-        var percentFloatofWeek = weeklyCount.value?.toFloat()?.div(weeklyGoal.value!!)?.times(100)
+        val percentFloatofDay = getRatio(_dailyCount.value,_dailyGoal.value)
+        val percentFloatofWeek = getRatio(_weeklyCount.value,_weeklyGoal.value)
         //少数第二位以下を切り捨てます。
-        val TruncateofDay= percentFloatofDay?.times(10)?.toInt()?.toFloat()?.div(10)
-        val TruncateofWeek= percentFloatofWeek?.times(10)?.toInt()?.toFloat()?.div(10)
-        _aDayPercent.value = TruncateofDay!!
-        _weeklyPercent.value = TruncateofWeek!!
+        _aDayPercent.value = truncating(percentFloatofDay)
+        _weeklyPercent.value = truncating(percentFloatofWeek)
     }
 
 
@@ -95,8 +92,8 @@ class StepCountViewmodel(application: Application): AndroidViewModel(application
 
     //歩数検知
     override fun onSensorChanged(event: SensorEvent?) {
-        if (event!!.sensor.type == Sensor.TYPE_ACCELEROMETER) {
-            simpleStepDetector!!.updateAccelerometer(
+        if (event?.sensor?.type == Sensor.TYPE_ACCELEROMETER) {
+            simpleStepDetector?.updateAccelerometer(
                 event.timestamp,
                 event.values[0],
                 event.values[1],
@@ -107,6 +104,7 @@ class StepCountViewmodel(application: Application): AndroidViewModel(application
 
     //大元のオープンソースで用意されている関数
     override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
+        // do nothing
     }
 
     //歩数検知時の行動
@@ -118,32 +116,37 @@ class StepCountViewmodel(application: Application): AndroidViewModel(application
 
     //共有プリファレンス
     //その日ごとの記録は共有プリファレンスで行い、累計の記録はroom で行います。
-    fun getGoalFromPreference() {
-        val cont = getApplication<Application>().applicationContext
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(cont)
-        _aDayGoal.value = sharedPreferences.getString("aDayGoal", "15000")?.toFloat()
-        _weeklyGoal.value = sharedPreferences.getString("weeklyGoal", "50000")?.toFloat()
+
+    fun getDailyGoalFromPreference() {
+       _dailyGoal.value  = repository.getDailyGoalFromPreference()?.toFloat()
+    }
+
+    fun getWeeklyGoalFromPreference() {
+        _weeklyGoal.value  = repository.getWeeklyGoalFromPreference()?.toFloat()
     }
 
     //一日ごと、一週間ごとの目標を取得しています。
-    fun getCountFromPreference(){
-        val cont = getApplication<Application>().applicationContext
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(cont)
-        _count.value = sharedPreferences.getInt("todayCount", 0)
-        _weeklyCount.value = sharedPreferences.getInt("weeklyCount", 0)
+    fun getDailyCountFromPreference(){
+        _dailyCount.value  = repository.getDailyCountFromPreference()
+    }
+
+    fun getWeeklyCountFromPreference(){
+        _weeklyCount.value  = repository.getWeeklyCountFromPreference()
     }
 
 
     override fun onCleared() {
         super.onCleared()
-        val cont = getApplication<Application>().applicationContext
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(cont)
-
-        sharedPreferences.edit {
-            putInt("todayCount", _count.value?.toInt()!!)
-            putInt("weeklyCount",_weeklyCount.value?.toInt()!!)
-                .commit()
-        }
+        repository.saveCount(_dailyCount.value,_weeklyCount.value)
         isFirstinit = !isFirstinit
     }
+
+    private fun getRatio(num1: Int?, num2: Float?): Float? {
+        return num1?.toFloat()?.div(num2!!)?.times(100)
+    }
+
+    private fun truncating(num:Float?):Float?{
+        return num?.times(10)?.toInt()?.toFloat()?.div(10)
+    }
+
 }

@@ -5,9 +5,9 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [StepEntity::class], version = 1)
+@Database(entities = [DaylyStep::class], version = 1)
 abstract class StepDatabase: RoomDatabase() {
-    abstract val Dao: Dao
+    abstract val aboutStepsDao: aboutStepsDao
 }
 
 private lateinit var INSTANCE: StepDatabase

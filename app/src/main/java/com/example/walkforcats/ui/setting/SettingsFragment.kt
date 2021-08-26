@@ -23,40 +23,33 @@ class SettingsFragment : PreferenceFragmentCompat() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val aDayGoalPreference: EditTextPreference? = findPreference("aDayGoal")
+        val dailyGoalPreference: EditTextPreference? = findPreference("dailyGoal")
         val weeklyGoalPreference: EditTextPreference? = findPreference("weeklyGoal")
 
         //実機で使ってみたところ、キーボードアプリを使っている場合数字以外も打ててしまいました。
         //そのため、プラスで数字以外を弾く処理を書いています。
-        aDayGoalPreference?.setOnBindEditTextListener { editText ->
+        dailyGoalPreference?.setOnBindEditTextListener { editText ->
             editText.inputType = InputType.TYPE_CLASS_NUMBER
         }
 
         weeklyGoalPreference?.setOnBindEditTextListener { editText ->
             editText.inputType = InputType.TYPE_CLASS_NUMBER
-            editText.toString().intOrString()
 
         }
         val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
-            val text =  aDayGoalPreference?.text
+            val text =  dailyGoalPreference?.text
             val text2 = weeklyGoalPreference?.text
-            if(text?.intOrString() == true && text2?.intOrString() == true) {
-                viewModel.getGoalFromPreference()
-                findNavController().navigate(R.id.action_settingsFragment_to_stepCountFragment)
-            }else {
+
+            if(text?.toIntOrNull() == null  ||  text2?.toIntOrNull() == null) {
                 AlertDialog.Builder(context)
                     .setTitle("")
                     .setMessage("数字を入力してください")
                     .show()
+            }else {
+                viewModel.getDailyGoalFromPreference()
+                viewModel.getWeeklyGoalFromPreference()
+                findNavController().navigate(R.id.action_settingsFragment_to_stepCountFragment)
             }
         }
     }
 }
-fun String.intOrString(): Boolean {
-    val v = toIntOrNull()
-    return when(v) {
-        null -> false
-        else -> true
-    }
-}
-

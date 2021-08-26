@@ -15,8 +15,6 @@ import com.example.walkforcats.viewmodels.StepCountViewmodel
 class StepCountFragment : Fragment(){
 
     private val viewModel: StepCountViewmodel by navGraphViewModels(R.id.nest)
-    private var count = 0
-    private var weeklyCount = 0
 
     private var _binding: FragmentStepCountBinding? = null
     private val binding get() = _binding!!
@@ -29,8 +27,12 @@ class StepCountFragment : Fragment(){
 
         //設定画面や猫部屋から戻るたびに前回終了時のカウントがロードされるのを防ぐためにif文を設けています
         if(viewModel.isFirstinit) {
-            viewModel.getCountFromPreference()
-            viewModel.getGoalFromPreference()
+            viewModel.getDailyCountFromPreference()
+            viewModel.getWeeklyCountFromPreference()
+
+            viewModel.getDailyGoalFromPreference()
+            viewModel.getWeeklyGoalFromPreference()
+
             viewModel.isFirstinit = !viewModel.isFirstinit
         }
 
@@ -43,12 +45,11 @@ class StepCountFragment : Fragment(){
         // Inflate the layout for this fragment
         _binding = FragmentStepCountBinding.inflate(inflater, container, false)
 
-        binding.aDayCircularProgressBar.apply {
+        binding.dailyCircularProgressBar.apply {
             //todo よしなに
         }
 
-        val root: View = binding.root
-        return root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -57,42 +58,40 @@ class StepCountFragment : Fragment(){
 
         //センサー取得をして、実際の歩行検知をvieewmodelに任せています。
         sensorManager = activity?.getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        viewModel.getSensorManager(sensorManager!!)
+        sensorManager?.let { viewModel.getSensorManager(it)}
 
         //viewmodelで処理した歩数、目標、達成率を画面に反映させています。
         viewModel.aDayPercent.observe(viewLifecycleOwner, {
-            binding.aDayPercent.text  = "$it%"
+            binding.aDayPercent.text  = it
         })
 
         viewModel.weeklyPercent.observe(viewLifecycleOwner, {
-            binding.aWeeklyPercent.text = "$it%"
+            binding.aWeeklyPercent.text = it
         })
 
-        viewModel.count.observe(viewLifecycleOwner,{
-            count = it
-            binding.count.text = it.toString()
-            binding.aDayCircularProgressBar.apply {
-                setProgressWithAnimation(it.toFloat())
+        viewModel.dailyCount.observe(viewLifecycleOwner,{
+            binding.count.text = "$it"
+            binding.dailyCircularProgressBar.apply {
+                setProgressWithAnimation(it?.toFloat()!!)
             }
         })
 
         viewModel.weeklyCount.observe(viewLifecycleOwner,{
-            weeklyCount = it
-            binding.weeklyCount.text = it.toString()
+            binding.weeklyCount.text = "$it"
             binding.weeklyCircularProgressBar.apply {
-                setProgressWithAnimation(it.toFloat())
+                //setProgressWithAnimation(it?.toFloat()!!)
             }
         })
 
         viewModel.aDayGoal.observe(viewLifecycleOwner,{
-            binding.aDayCircularProgressBar.apply {
-                progressMax = it
+            binding.dailyCircularProgressBar.apply {
+               //  progressMax = it
             }
         })
 
         viewModel.weeklyGoal.observe(viewLifecycleOwner,{
             binding.weeklyCircularProgressBar.apply {
-                progressMax = it
+            //     progressMax = it
             }
         })
 
@@ -117,14 +116,10 @@ class StepCountFragment : Fragment(){
             else -> super.onOptionsItemSelected(item)
         }
     }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-
     }
-
-
 }
 
 

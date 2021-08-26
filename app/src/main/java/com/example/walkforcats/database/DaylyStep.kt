@@ -7,11 +7,12 @@ import java.time.LocalDate
 import java.util.*
 
 @Entity
-data class StepEntity(
+data class DaylyStep(
      @PrimaryKey
      val date: String,
      var stepcount :Int,
 )
+
 
 
 

@@ -23,7 +23,7 @@
     <string name="reply_title">Default reply action</string>
 
     <!-- goal Preferences -->
-    <string name="aDayGoal">1日の目標</string>
+    <string name="dailyGoal">1日の目標</string>
     <string name="weeklyGoal">一週間の目標</string>
 
 

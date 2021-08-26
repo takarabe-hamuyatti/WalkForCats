@@ -6,7 +6,7 @@ import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.example.walkforcats.database.StepEntity
+import com.example.walkforcats.database.DaylyStep
 import com.example.walkforcats.database.getDatabase
 import com.example.walkforcats.repository.StepSaveRepository
 import java.time.LocalDate
@@ -15,7 +15,7 @@ class SavingDayCountWorker (appContext: Context, workerPrams:WorkerParameters)
     : CoroutineWorker(appContext,workerPrams){
 
     companion object {
-        const val WORK_NAME = "SavinginDaysEnd"
+        const val WORK_NAME = "savingDaysEnd"
     }
 
     @SuppressLint("NewApi")
@@ -27,14 +27,14 @@ class SavingDayCountWorker (appContext: Context, workerPrams:WorkerParameters)
              val pref = PreferenceManager.getDefaultSharedPreferences(applicationContext)
              val todayCount = pref.getInt("todayCount",0)
 
-             val newStepEntity = StepEntity(date = LocalDate.now().toString(),stepcount = todayCount)
+             val newStepEntity = DaylyStep(date = LocalDate.now().toString(),stepcount = todayCount)
              repository.saveStep(newStepEntity)
 
              pref.edit {
                  putInt("todayCount",0)
              }
 
-             return Result.retry()
+             return Result.success()
          }catch (e:Exception){
              return  Result.retry()
          }
