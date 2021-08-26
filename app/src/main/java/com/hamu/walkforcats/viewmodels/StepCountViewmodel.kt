@@ -24,36 +24,33 @@ class StepCountViewmodel(application: Application): AndroidViewModel(application
 
     val repository : preferenceRepository = preferenceRepository()
 
-
-
     //設定画面や猫部屋から戻るたびに前回分がロードされるのを防ぐための判定に用います。
     // stepCountFragment が最初に作られ歩数をロードした時にfalse　に変え、 navgraph viewmodel が　clearされる時にtureに戻ります。
     var isFirstinit = true
     //歩数の1日ごと、週間での集計です
     private val _dailyCount = MutableLiveData(0)
-    val dailyCount: LiveData<Int>
-        get() = _dailyCount
-    val dailyStep = dailyCount
+    val dailyCount: LiveData<String>
+        get() = _dailyCount.map{it.toString()}
 
     private val _weeklyCount = MutableLiveData(0)
-    val weeklyCount: LiveData<Int>
-        get() = _weeklyCount
+    val weeklyCount: LiveData<String>
+        get() = _weeklyCount.map{it.toString()}
 
 
     //1日、１週間の目標です。
-    private val _weeklyGoal = MutableLiveData(0f)
-    val weeklyGoal: LiveData<Float>
-        get() = _weeklyGoal
+    private val _weeklyGoal = MutableLiveData(0)
+    val weeklyGoal: LiveData<Int>
+        get() = _weeklyGoal.map{it.toInt()}
 
-    private val _dailyGoal = MutableLiveData(0f)
-     val aDayGoal: LiveData<Float>
-        get() = _dailyGoal
+    private val _dailyGoal = MutableLiveData(0)
+     val dailyGoal: LiveData<Int>
+        get() = _dailyGoal.map{it.toInt()}
 
 
     //1日単位、週間単位での歩数の達成率です
-    private val _aDayPercent = MutableLiveData<Float>()
-    val aDayPercent: LiveData<String>
-        get() = _aDayPercent.map{"$it%"}
+    private val _dailyPercent = MutableLiveData<Float>()
+    val dailyPercent: LiveData<String>
+        get() = _dailyPercent.map{"$it%"}
 
     private val _weeklyPercent = MutableLiveData<Float>()
     val weeklyPercent: LiveData<String>
@@ -110,7 +107,7 @@ class StepCountViewmodel(application: Application): AndroidViewModel(application
         val percentFloatofDay = getRatio(_dailyCount.value,_dailyGoal.value)
         val percentFloatofWeek = getRatio(_weeklyCount.value,_weeklyGoal.value)
         //少数第二位以下を切り捨てます。
-        _aDayPercent.value = truncating(percentFloatofDay)
+        _dailyPercent.value = truncating(percentFloatofDay)
         _weeklyPercent.value = truncating(percentFloatofWeek)
     }
 
@@ -124,8 +121,8 @@ class StepCountViewmodel(application: Application): AndroidViewModel(application
 
     //一日ごと、一週間ごとの目標を取得しています。
     fun getGoalFromPreference() {
-        _dailyGoal.value  = repository.getDailyGoalFromPreference(pref)?.toFloat()
-        _weeklyGoal.value  = repository.getWeeklyGoalFromPreference(pref)?.toFloat()
+        _dailyGoal.value  = repository.getDailyGoalFromPreference(pref)
+        _weeklyGoal.value  = repository.getWeeklyGoalFromPreference(pref)
     }
 
     override fun onCleared() {
@@ -134,7 +131,7 @@ class StepCountViewmodel(application: Application): AndroidViewModel(application
         isFirstinit = !isFirstinit
     }
 
-    private fun getRatio(num1: Int?, num2: Float?): Float? {
+    private fun getRatio(num1: Int?, num2: Int?): Float? {
         return num1?.toFloat()?.div(num2!!)?.times(100)
     }
 

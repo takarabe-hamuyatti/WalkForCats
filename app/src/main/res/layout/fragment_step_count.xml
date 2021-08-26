@@ -32,7 +32,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/weeklyCircularProgressBar"
         app:layout_constraintEnd_toEndOf="@+id/weeklyCircularProgressBar"
         app:layout_constraintStart_toStartOf="@+id/weeklyCircularProgressBar"
-        app:layout_constraintTop_toTopOf="@+id/weeklyCircularProgressBar" />
+        app:layout_constraintTop_toTopOf="@+id/weeklyCircularProgressBar"
+        />
 
     <com.mikhaellopez.circularprogressbar.CircularProgressBar
         android:id="@+id/weeklyCircularProgressBar"
@@ -41,7 +42,7 @@
         app:cpb_background_progressbar_color="#b6bbd8"
         app:cpb_background_progressbar_width="5dp"
         app:cpb_progress_direction="to_right"
-        app:cpb_progress_max="1000"
+        app:cpb_progress_max="2000"
         app:cpb_progressbar_color="#e6e3cf"
         app:cpb_progressbar_width="30dp"
         app:cpb_round_border="false"
@@ -54,7 +55,7 @@
         android:id="@+id/count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0"
+        android:text="@{viewModel.dailyCount}"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.297"
@@ -63,10 +64,10 @@
         app:layout_constraintVertical_bias="0.132" />
 
     <TextView
-        android:id="@+id/aDayPercent"
+        android:id="@+id/dailyPercent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0%"
+        android:text="@{viewModel.dailyPercent}"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.305"
@@ -89,10 +90,10 @@
         app:lottie_rawRes="@raw/cat" />
 
     <TextView
-        android:id="@+id/aWeeklyPercent"
+        android:id="@+id/WeeklyPercent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0%"
+        android:text="@{viewModel.weeklyPercent}"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.603"
@@ -104,7 +105,7 @@
         android:id="@+id/weeklyCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0"
+        android:text="@{viewModel.weeklyCount}"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.588"
@@ -128,7 +129,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="Weeky"
+        android:text="Weekly"
         app:layout_constraintBottom_toTopOf="@+id/weeklyCount"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.606"

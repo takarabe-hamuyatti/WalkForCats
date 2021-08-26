@@ -29,71 +29,41 @@ class StepCountFragment : Fragment(){
         if(viewModel.isFirstinit) {
             viewModel.getCountFromPreference()
             viewModel.getGoalFromPreference()
-
             viewModel.isFirstinit = !viewModel.isFirstinit
         }
-
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         _binding = FragmentStepCountBinding.inflate(inflater, container, false)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
 
         binding.dailyCircularProgressBar.apply {
             //todo よしなに
         }
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.viewModel = viewModel
-
 
         //センサー取得をして、実際の歩行検知をvieewmodelに任せています。
         sensorManager = activity?.getSystemService(Context.SENSOR_SERVICE) as SensorManager
         sensorManager?.let { viewModel.getSensorManager(it)}
 
-        //viewmodelで処理した歩数、目標、達成率を画面に反映させています。
-
         viewModel.dailyCount.observe(viewLifecycleOwner,{
-            binding.count.text = "$it"
             binding.dailyCircularProgressBar.apply {
                 setProgressWithAnimation(it.toFloat())
             }
         })
 
         viewModel.weeklyCount.observe(viewLifecycleOwner,{
-            binding.weeklyCount.text = "$it"
             binding.weeklyCircularProgressBar.apply {
                 setProgressWithAnimation(it.toFloat())
             }
         })
-
-        viewModel.aDayGoal.observe(viewLifecycleOwner,{
-            binding.dailyCircularProgressBar.apply {
-                progressMax = it
-            }
-        })
-
-        viewModel.weeklyGoal.observe(viewLifecycleOwner,{
-            binding.weeklyCircularProgressBar.apply {
-                progressMax = it
-            }
-        })
-
-        viewModel.aDayPercent.observe(viewLifecycleOwner, {
-            binding.aDayPercent.text  = it
-        })
-
-        viewModel.weeklyPercent.observe(viewLifecycleOwner, {
-            binding.aWeeklyPercent.text = it
-        })
-
 
         binding.goCatRoom.setOnClickListener{
             findNavController().navigate(R.id.action_stepCountFragment_to_catRoomFragment)

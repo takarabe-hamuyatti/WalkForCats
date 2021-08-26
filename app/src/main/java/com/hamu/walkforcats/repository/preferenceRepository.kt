@@ -5,12 +5,12 @@ import androidx.core.content.edit
 
 class preferenceRepository (){
 
-    fun getDailyGoalFromPreference(pref :SharedPreferences): String? {
-         return pref.getString(dailyGoalKey, "15000")
+    fun getDailyGoalFromPreference(pref :SharedPreferences): Int? {
+         return pref.getString(dailyGoalKey, "15000")?.toInt()
     }
 
-    fun getWeeklyGoalFromPreference(pref :SharedPreferences):String? {
-        return pref.getString(weeklyGoalKey, "50000")
+    fun getWeeklyGoalFromPreference(pref :SharedPreferences):Int? {
+        return pref.getString(weeklyGoalKey, "50000")?.toInt()
     }
 
     fun getDailyCountFromPreference(pref :SharedPreferences): Int {
