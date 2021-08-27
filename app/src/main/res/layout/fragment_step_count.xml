@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
@@ -10,131 +11,132 @@
     </data>
 
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.stepCount.StepCountFragment">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.stepCount.StepCountFragment">
 
 
-    <com.mikhaellopez.circularprogressbar.CircularProgressBar
-        android:id="@+id/dailyCircularProgressBar"
-        android:layout_width="226dp"
-        android:layout_height="254dp"
-        app:cpb_background_progressbar_color="#b6bbd8"
-        app:cpb_background_progressbar_width="5dp"
-        app:cpb_progress_direction="to_right"
-        app:cpb_progress_max="1000"
-        app:cpb_progressbar_color="#c6d4d5"
-        app:cpb_progressbar_width="20dp"
-        app:cpb_round_border="false"
-        app:layout_constraintBottom_toBottomOf="@+id/weeklyCircularProgressBar"
-        app:layout_constraintEnd_toEndOf="@+id/weeklyCircularProgressBar"
-        app:layout_constraintStart_toStartOf="@+id/weeklyCircularProgressBar"
-        app:layout_constraintTop_toTopOf="@+id/weeklyCircularProgressBar"
-        />
+        <com.mikhaellopez.circularprogressbar.CircularProgressBar
+            android:id="@+id/dailyCircularProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="254dp"
+            app:cpb_background_progressbar_color="#b6bbd8"
+            app:cpb_background_progressbar_width="5dp"
+            app:cpb_progress_direction="to_right"
+            app:cpb_progress_max="@{viewModel.dailyGoal}"
+            app:cpb_progressbar_color="#c6d4d5"
+            app:cpb_progressbar_width="20dp"
+            app:cpb_round_border="false"
+            app:layout_constraintBottom_toBottomOf="@+id/weeklyCircularProgressBar"
+            app:layout_constraintEnd_toEndOf="@+id/weeklyCircularProgressBar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/weeklyCircularProgressBar"
+            app:setProgressWithAnimation="@{viewModel.dailyCount}"/>
 
-    <com.mikhaellopez.circularprogressbar.CircularProgressBar
-        android:id="@+id/weeklyCircularProgressBar"
-        android:layout_width="368dp"
-        android:layout_height="385dp"
-        app:cpb_background_progressbar_color="#b6bbd8"
-        app:cpb_background_progressbar_width="5dp"
-        app:cpb_progress_direction="to_right"
-        app:cpb_progress_max="2000"
-        app:cpb_progressbar_color="#e6e3cf"
-        app:cpb_progressbar_width="30dp"
-        app:cpb_round_border="false"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <com.mikhaellopez.circularprogressbar.CircularProgressBar
+            android:id="@+id/weeklyCircularProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cpb_background_progressbar_color="#b6bbd8"
+            app:cpb_background_progressbar_width="5dp"
+            app:cpb_progress_direction="to_right"
+            app:cpb_progress_max="@{viewModel.weeklyGoal}"
+            app:cpb_progressbar_color="#e6e3cf"
+            app:cpb_progressbar_width="30dp"
+            app:cpb_round_border="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:setProgressWithAnimation="@{viewModel.weeklyCount}"
+            />
 
-    <TextView
-        android:id="@+id/count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@{viewModel.dailyCount}"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.297"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.132" />
+        <TextView
+            android:id="@+id/count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.dailyCount}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.297"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.132" />
 
-    <TextView
-        android:id="@+id/dailyPercent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@{viewModel.dailyPercent}"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.305"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.191" />
+        <TextView
+            android:id="@+id/dailyPercent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.dailyPercent}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.305"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.191" />
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/goCatRoom"
-        android:layout_width="135dp"
-        android:layout_height="145dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        app:lottie_rawRes="@raw/cat" />
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/goCatRoom"
+            android:layout_width="135dp"
+            android:layout_height="145dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/cat" />
 
-    <TextView
-        android:id="@+id/WeeklyPercent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@{viewModel.weeklyPercent}"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.603"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.191" />
+        <TextView
+            android:id="@+id/WeeklyPercent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.weeklyPercent}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.603"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.191" />
 
-    <TextView
-        android:id="@+id/weeklyCount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@{viewModel.weeklyCount}"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.588"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.132" />
+        <TextView
+            android:id="@+id/weeklyCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.weeklyCount}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.588"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.132" />
 
-    <TextView
-        android:id="@+id/Day"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text="Daily"
-        app:layout_constraintBottom_toTopOf="@+id/count"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.294"
-        app:layout_constraintStart_toStartOf="parent" />
+        <TextView
+            android:id="@+id/Day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="Daily"
+            app:layout_constraintBottom_toTopOf="@+id/count"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.294"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text="Weekly"
-        app:layout_constraintBottom_toTopOf="@+id/weeklyCount"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.606"
-        app:layout_constraintStart_toStartOf="parent" />
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="Weekly"
+            app:layout_constraintBottom_toTopOf="@+id/weeklyCount"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.606"
+            app:layout_constraintStart_toStartOf="parent" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

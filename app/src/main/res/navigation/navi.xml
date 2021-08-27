@@ -3,11 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navi"
-    app:startDestination="@id/titleFragment">
+    app:startDestination="@id/stepCountFragment">
 
-
-    <navigation android:id="@+id/nest"
-        app:startDestination="@id/stepCountFragment">
         <fragment
             android:id="@+id/stepCountFragment"
             android:name="com.hamu.walkforcats.ui.stepCount.StepCountFragment"
@@ -39,17 +36,5 @@
                 app:popUpTo="@id/settingsFragment"
                 app:popUpToInclusive="true"/>
         </fragment>
-    </navigation>
-    <fragment
-        android:id="@+id/titleFragment"
-        android:name="com.hamu.walkforcats.ui.title.TitleFragment"
-        android:label="fragment_title"
-        tools:layout="@layout/fragment_title" >
-        <action
-            android:id="@+id/action_titleFragment_to_nest"
-            app:destination="@id/nest"
-            app:popUpTo="@id/titleFragment"
-            app:popUpToInclusive="true"/>
 
-    </fragment>
 </navigation>

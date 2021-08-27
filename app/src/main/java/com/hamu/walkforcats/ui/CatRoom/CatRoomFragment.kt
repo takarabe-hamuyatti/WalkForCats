@@ -5,13 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import com.hamu.walkforcats.R
+import com.hamu.walkforcats.viewmodels.StepCountViewmodel
 
 
 class CatRoomFragment : Fragment() {
-
-
-
+    private val viewModel: StepCountViewmodel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

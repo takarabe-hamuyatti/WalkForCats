@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.os.Bundle
 import android.text.InputType
 import androidx.activity.addCallback
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import androidx.preference.EditTextPreference
@@ -12,7 +13,7 @@ import com.hamu.walkforcats.R
 import com.hamu.walkforcats.viewmodels.StepCountViewmodel
 
 class SettingsFragment : PreferenceFragmentCompat() {
-    private val viewModel: StepCountViewmodel by navGraphViewModels(R.id.nest)
+    private val viewModel: StepCountViewmodel by activityViewModels()
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey)
