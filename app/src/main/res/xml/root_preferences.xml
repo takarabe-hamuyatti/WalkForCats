@@ -10,10 +10,10 @@
             />
 
         <EditTextPreference
-            app:key="weeklyGoal"
-            app:title="@string/weeklyGoal"
+            app:key="monthlyGoal"
+            app:title="@string/monthlyGoal"
             app:useSimpleSummaryProvider="true"
-            app:defaultValue="2999"/>
+            app:defaultValue="300000"/>
 
     </PreferenceCategory>
 

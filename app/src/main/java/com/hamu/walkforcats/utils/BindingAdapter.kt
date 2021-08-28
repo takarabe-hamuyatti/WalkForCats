@@ -14,6 +14,7 @@ object BindingAdapter {
     fun setProgressMax(view: com.mikhaellopez.circularprogressbar.CircularProgressBar,goal:Float){
         view.progressMax = goal
 
-    }}
+    }
+}
 
 

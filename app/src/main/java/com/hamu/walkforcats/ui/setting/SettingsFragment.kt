@@ -11,6 +11,7 @@ import androidx.preference.EditTextPreference
 import androidx.preference.PreferenceFragmentCompat
 import com.hamu.walkforcats.R
 import com.hamu.walkforcats.viewmodels.StepCountViewmodel
+import dagger.hilt.android.AndroidEntryPoint
 
 class SettingsFragment : PreferenceFragmentCompat() {
     private val viewModel: StepCountViewmodel by activityViewModels()
@@ -23,7 +24,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         super.onCreate(savedInstanceState)
 
         val dailyGoalPreference: EditTextPreference? = findPreference("dailyGoal")
-        val weeklyGoalPreference: EditTextPreference? = findPreference("weeklyGoal")
+        val monthlyGoalPreference: EditTextPreference? = findPreference("monthlyGoal")
 
         //実機で使ってみたところ、キーボードアプリを使っている場合数字以外も打ててしまいました。
         //そのため、プラスで数字以外を弾く処理を書いています。
@@ -31,13 +32,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
             editText.inputType = InputType.TYPE_CLASS_NUMBER
         }
 
-        weeklyGoalPreference?.setOnBindEditTextListener { editText ->
+        monthlyGoalPreference?.setOnBindEditTextListener { editText ->
             editText.inputType = InputType.TYPE_CLASS_NUMBER
 
         }
         val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
             val text =  dailyGoalPreference?.text
-            val text2 = weeklyGoalPreference?.text
+            val text2 = monthlyGoalPreference?.text
 
             if(text?.toIntOrNull() == null  ||  text2?.toIntOrNull() == null) {
                 AlertDialog.Builder(context)

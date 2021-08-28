@@ -29,29 +29,29 @@
             app:cpb_progressbar_color="#c6d4d5"
             app:cpb_progressbar_width="20dp"
             app:cpb_round_border="false"
-            app:layout_constraintBottom_toBottomOf="@+id/weeklyCircularProgressBar"
-            app:layout_constraintEnd_toEndOf="@+id/weeklyCircularProgressBar"
+            app:layout_constraintBottom_toBottomOf="@+id/monthlyCircularProgressBar"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/weeklyCircularProgressBar"
-            app:setProgressWithAnimation="@{viewModel.dailyCount}"/>
+            app:layout_constraintTop_toTopOf="@+id/monthlyCircularProgressBar"
+            app:setProgressWithAnimation="@{viewModel.dailyCount}" />
 
         <com.mikhaellopez.circularprogressbar.CircularProgressBar
-            android:id="@+id/weeklyCircularProgressBar"
+            android:id="@+id/monthlyCircularProgressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:cpb_background_progressbar_color="#b6bbd8"
             app:cpb_background_progressbar_width="5dp"
             app:cpb_progress_direction="to_right"
-            app:cpb_progress_max="@{viewModel.weeklyGoal}"
+            app:cpb_progress_max="@{viewModel.monthlyGoal}"
             app:cpb_progressbar_color="#e6e3cf"
             app:cpb_progressbar_width="30dp"
             app:cpb_round_border="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:setProgressWithAnimation="@{viewModel.weeklyCount}"
-            />
+            app:setProgressWithAnimation="@{viewModel.monthlyCount}" />
 
         <TextView
             android:id="@+id/count"
@@ -72,42 +72,42 @@
             android:text="@{viewModel.dailyPercent}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.305"
+            app:layout_constraintHorizontal_bias="0.296"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.191" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/goCatRoom"
-            android:layout_width="135dp"
-            android:layout_height="145dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="250dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0"
+            app:layout_constraintTop_toBottomOf="@+id/monthlyCircularProgressBar"
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
             app:lottie_rawRes="@raw/cat" />
 
         <TextView
-            android:id="@+id/WeeklyPercent"
+            android:id="@+id/monthlyPercent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{viewModel.weeklyPercent}"
+            android:text="@{viewModel.monthlyPercent}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.603"
+            app:layout_constraintHorizontal_bias="0.588"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.191" />
 
         <TextView
-            android:id="@+id/weeklyCount"
+            android:id="@+id/monthlyCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{viewModel.weeklyCount}"
+            android:text="@{viewModel.monthlyCount}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.588"
@@ -116,23 +116,23 @@
             app:layout_constraintVertical_bias="0.132" />
 
         <TextView
-            android:id="@+id/Day"
+            android:id="@+id/dayly"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:text="Daily"
+            android:text="@string/daily"
             app:layout_constraintBottom_toTopOf="@+id/count"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.294"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/monthly"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:text="Weekly"
-            app:layout_constraintBottom_toTopOf="@+id/weeklyCount"
+            android:text="@string/monthly"
+            app:layout_constraintBottom_toTopOf="@+id/monthlyCount"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.606"
             app:layout_constraintStart_toStartOf="parent" />

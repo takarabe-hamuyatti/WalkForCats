@@ -11,6 +11,13 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">設定</string>
 
+    <string name="monthly">Monthly</string>
+    <string name="daily">Daily</string>
+
+    <string name="zero">0</string>
+
+
+
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
@@ -24,7 +31,8 @@
 
     <!-- goal Preferences -->
     <string name="dailyGoal">1日の目標</string>
-    <string name="weeklyGoal">一週間の目標</string>
+    <string name="weeklyGoal">１週間の目標</string>
+    <string name="monthlyGoal">１ヶ月の目標</string>
 
 
     <!-- Sync Preferences -->
