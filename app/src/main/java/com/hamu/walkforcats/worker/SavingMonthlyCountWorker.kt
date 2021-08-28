@@ -6,33 +6,29 @@ import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.hamu.walkforcats.database.DaylyStep
+import com.hamu.walkforcats.database.daylyStep
 import com.hamu.walkforcats.database.getDatabase
 import com.hamu.walkforcats.repository.StepSaveRepository
 import java.time.LocalDate
 
-class SavingWeeklyCountWorker (appContext: Context, workerPrams: WorkerParameters)
+class SavingMonthlyCountWorker (appContext: Context, workerPrams: WorkerParameters)
     : CoroutineWorker(appContext,workerPrams){
 
     companion object {
-        const val WORK_NAME = "SavinginWeeklyEnd"
+        const val WORK_NAME = "savinginWeeklyEnd"
     }
 
     @SuppressLint("NewApi")
     override suspend fun doWork(): Result {
 
-        // その日ごとの歩数を保存し、リセットしています。
+
         try{
+            //毎日日付、月を確認して月が変わったかどうか確かめる
             val repository = StepSaveRepository(getDatabase(applicationContext))
             val pref = PreferenceManager.getDefaultSharedPreferences(applicationContext)
-            val todayCount = pref.getInt("todayCount",0)
 
-            val newStepEntity = DaylyStep(date = LocalDate.now().toString(),stepcount = todayCount)
-            repository.saveStep(newStepEntity)
-
-            pref.edit {
-                putInt("todayCount",0)
-            }
+            //val newStep = daylyStep(date = LocalDate.now().toString(),stepCount = todayCount)
+            //todo 日付確認、月が進んだ場合のroom更新
 
             return Result.retry()
         }catch (e:Exception){

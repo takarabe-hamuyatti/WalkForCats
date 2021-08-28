@@ -6,9 +6,9 @@ import androidx.room.Query
 
 @Dao
 interface aboutStepsDao {
-    @Query("select * from DaylyStep")
-    fun getSteops(): List<DaylyStep>
+    @Query("select * from daylyStep")
+    fun getSteops(): List<daylyStep>
 
     @Insert
-    fun insert(daylyStep: DaylyStep)
+    fun insert(daylyStep: daylyStep)
 }
