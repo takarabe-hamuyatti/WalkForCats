@@ -1,5 +1,6 @@
 package com.hamu.walkforcats.worker
 
+/*
 import android.annotation.SuppressLint
 import android.content.Context
 import androidx.core.content.edit
@@ -21,14 +22,12 @@ class SavingMonthlyCountWorker (appContext: Context, workerPrams: WorkerParamete
     @SuppressLint("NewApi")
     override suspend fun doWork(): Result {
 
-
         try{
             //毎日日付、月を確認して月が変わったかどうか確かめる
             val repository = StepSaveRepository(getDatabase(applicationContext))
             val pref = PreferenceManager.getDefaultSharedPreferences(applicationContext)
 
             //val newStep = daylyStep(date = LocalDate.now().toString(),stepCount = todayCount)
-            //todo 日付確認、月が進んだ場合のroom更新
 
             return Result.retry()
         }catch (e:Exception){
@@ -36,3 +35,5 @@ class SavingMonthlyCountWorker (appContext: Context, workerPrams: WorkerParamete
         }
     }
 }
+
+ */

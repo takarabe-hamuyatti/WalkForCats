@@ -6,18 +6,14 @@ import androidx.room.PrimaryKey
 import java.time.YearMonth
 
 @Entity
-data class daylyStep(
-     @PrimaryKey
-     val date: String,
-     var stepCount :Int,
-)
-
-@Entity
-data class monthlyStep(
+data class monthlyInfo(
      @PrimaryKey
      val yearMonth: YearMonth,
      val stepCount: Int,
+     val goalOfMonth: Int,
+     val percentOfMonthlyGoal:Float
 )
+
 //todo どの猫を獲得しているか保存？
 
 

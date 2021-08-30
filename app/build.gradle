@@ -114,6 +114,8 @@ dependencies {
     //lotteie
     def lottieVersion = "3.4.0"
     implementation "com.airbnb.android:lottie:$lottieVersion"
+
+    implementation 'com.jakewharton.timber:timber:4.7.1'
 }
 
 repositories {

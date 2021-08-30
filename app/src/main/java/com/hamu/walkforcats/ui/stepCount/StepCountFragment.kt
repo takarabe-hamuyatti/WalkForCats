@@ -2,8 +2,11 @@ package com.hamu.walkforcats.ui.stepCount
 
 import android.content.Context
 import android.hardware.SensorManager
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.*
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -11,6 +14,7 @@ import com.hamu.walkforcats.R
 import com.hamu.walkforcats.databinding.FragmentStepCountBinding
 import com.hamu.walkforcats.viewmodels.StepCountViewmodel
 import dagger.hilt.android.AndroidEntryPoint
+import java.time.LocalDateTime
 
 
 class StepCountFragment() : Fragment(R.layout.fragment_step_count){
@@ -18,6 +22,8 @@ class StepCountFragment() : Fragment(R.layout.fragment_step_count){
     private val viewModel: StepCountViewmodel by activityViewModels()
     private var sensorManager: SensorManager? = null
 
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)

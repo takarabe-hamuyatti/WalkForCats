@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 
+/*
 @Dao
 interface aboutStepsDao {
     @Query("select * from daylyStep")
@@ -12,3 +13,5 @@ interface aboutStepsDao {
     @Insert
     fun insert(daylyStep: daylyStep)
 }
+
+ */

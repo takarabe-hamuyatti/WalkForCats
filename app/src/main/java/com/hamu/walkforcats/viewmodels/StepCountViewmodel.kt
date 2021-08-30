@@ -24,7 +24,7 @@ class StepCountViewmodel (
     val cont = application
     val pref = PreferenceManager.getDefaultSharedPreferences(cont)
 
-    val repository : preferenceRepository = preferenceRepository()
+    val repository : preferenceRepository = preferenceRepository(pref)
 
     //設定画面や猫部屋から戻るたびに前回分がロードされるのを防ぐための判定に用います。
     // stepCountFragment が最初に作られ歩数をロードした時にfalse　に変え、activity viewmodel が　clearされる時にtureに戻ります。
@@ -119,19 +119,19 @@ class StepCountViewmodel (
     //その日ごとの記録は共有プリファレンスで行い、累計の記録はroom で行います。
 
     fun getCountFromPreference(){
-        _dailyCount.value  = repository.getDailyCountFromPreference(pref)
-        _monthlyCount.value  = repository.getWeeklyCountFromPreference(pref)
+        _dailyCount.value  = repository.getDailyCountFromPreference()
+        _monthlyCount.value  = repository.getMonthlyCountFromPreference()
     }
 
     //一日ごと、一週間ごとの目標を取得しています。
     fun getGoalFromPreference() {
-        _dailyGoal.value  = repository.getDailyGoalFromPreference(pref)
-        _monthlyGoal.value  = repository.getWeeklyGoalFromPreference(pref)
+        _dailyGoal.value  = repository.getDailyGoalFromPreference()
+        _monthlyGoal.value  = repository.getMonthlyGoalFromPreference()
     }
 
     override fun onCleared() {
         super.onCleared()
-        repository.saveCount(pref,_dailyCount.value,_monthlyCount.value)
+        repository.saveCount(_dailyCount.value,_monthlyCount.value)
         isFirstinit = !isFirstinit
     }
 

@@ -1,5 +1,6 @@
 package com.hamu.walkforcats.repository
 
+/*
 import com.hamu.walkforcats.database.StepDatabase
 import com.hamu.walkforcats.database.daylyStep
 
@@ -8,3 +9,5 @@ class StepSaveRepository (private val database: StepDatabase){
         database.aboutStepsDao.insert(newDaylyStep)
     }
 }
+
+ */

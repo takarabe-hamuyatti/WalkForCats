@@ -3,25 +3,26 @@ package com.hamu.walkforcats.repository
 import android.content.SharedPreferences
 import androidx.core.content.edit
 
-class preferenceRepository (){
+class preferenceRepository ( sharedPreferences:SharedPreferences){
 
-    fun getDailyGoalFromPreference(pref :SharedPreferences): Float? {
+    val pref = sharedPreferences
+    fun getDailyGoalFromPreference(): Float? {
          return pref.getString(dailyGoalKey, "15000")?.toFloat()
     }
 
-    fun getWeeklyGoalFromPreference(pref :SharedPreferences):Float? {
+    fun getMonthlyGoalFromPreference():Float? {
         return pref.getString(monthlyGoalKey, "50000")?.toFloat()
     }
 
-    fun getDailyCountFromPreference(pref :SharedPreferences): Int {
+    fun getDailyCountFromPreference(): Int {
          return pref.getInt(dailyCountKey, 0)
     }
 
-    fun getWeeklyCountFromPreference(pref :SharedPreferences): Int {
+    fun getMonthlyCountFromPreference(): Int {
         return  pref.getInt(monthlyCountKey, 0)
     }
 
-    fun saveCount(pref :SharedPreferences,dailyCount:Int?,monthlyCount:Int?){
+    fun saveCount(dailyCount:Int?,monthlyCount:Int?){
         pref.edit {
             if (dailyCount != null) {
                 putInt(dailyCountKey, dailyCount)
@@ -30,6 +31,12 @@ class preferenceRepository (){
                 putInt(monthlyCountKey,monthlyCount)
                     .commit()
             }
+        }
+    }
+
+    fun clearCountOfTheDay(){
+        pref.edit {
+            putInt(dailyCountKey,0)
         }
     }
 
