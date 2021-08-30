@@ -1,4 +1,4 @@
 package com.hamu.walkforcats.repository
 
-class ChartRepository {
+class HistoryRepository {
 }

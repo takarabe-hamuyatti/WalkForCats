@@ -8,10 +8,10 @@ import java.time.YearMonth
 @Entity
 data class monthlyInfo(
      @PrimaryKey
-     val yearMonth: YearMonth,
+     val yearMonth: Int,
      val stepCount: Int,
-     val goalOfMonth: Int,
-     val percentOfMonthlyGoal:Float
+     val goalOfMonth: Int?,
+     val percentOfMonthlyGoal:Float?
 )
 
 //todo どの猫を獲得しているか保存？

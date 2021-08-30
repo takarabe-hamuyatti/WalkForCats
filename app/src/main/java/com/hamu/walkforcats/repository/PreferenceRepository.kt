@@ -3,15 +3,15 @@ package com.hamu.walkforcats.repository
 import android.content.SharedPreferences
 import androidx.core.content.edit
 
-class preferenceRepository ( sharedPreferences:SharedPreferences){
+class PreferenceRepository (sharedPreferences:SharedPreferences){
 
     val pref = sharedPreferences
-    fun getDailyGoalFromPreference(): Float? {
-         return pref.getString(dailyGoalKey, "15000")?.toFloat()
+    fun getDailyGoalFromPreference(): Int? {
+         return pref.getString(dailyGoalKey, "15000")?.toInt()
     }
 
-    fun getMonthlyGoalFromPreference():Float? {
-        return pref.getString(monthlyGoalKey, "50000")?.toFloat()
+    fun getMonthlyGoalFromPreference():Int? {
+        return pref.getString(monthlyGoalKey, "50000")?.toInt()
     }
 
     fun getDailyCountFromPreference(): Int {

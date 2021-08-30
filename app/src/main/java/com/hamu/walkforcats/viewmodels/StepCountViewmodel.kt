@@ -10,7 +10,7 @@ import android.widget.Toast
 import androidx.lifecycle.*
 import androidx.preference.PreferenceManager
 import com.hamu.walkforcats.listener.StepListener
-import com.hamu.walkforcats.repository.preferenceRepository
+import com.hamu.walkforcats.repository.PreferenceRepository
 import com.hamu.walkforcats.utils.StepDetector
 
 class StepCountViewmodel (
@@ -24,7 +24,7 @@ class StepCountViewmodel (
     val cont = application
     val pref = PreferenceManager.getDefaultSharedPreferences(cont)
 
-    val repository : preferenceRepository = preferenceRepository(pref)
+    val repository : PreferenceRepository = PreferenceRepository(pref)
 
     //設定画面や猫部屋から戻るたびに前回分がロードされるのを防ぐための判定に用います。
     // stepCountFragment が最初に作られ歩数をロードした時にfalse　に変え、activity viewmodel が　clearされる時にtureに戻ります。
@@ -41,11 +41,11 @@ class StepCountViewmodel (
 
 
     //1日、１週間の目標です。
-    private val _monthlyGoal = MutableLiveData(0f)
+    private val _monthlyGoal = MutableLiveData(0)
     val monthlyGoal: LiveData<Float>
         get() = _monthlyGoal.map{it.toFloat()}
 
-    private val _dailyGoal = MutableLiveData(0f)
+    private val _dailyGoal = MutableLiveData(0)
      val dailyGoal: LiveData<Float>
         get() = _dailyGoal.map{it.toFloat()}
 
@@ -135,7 +135,7 @@ class StepCountViewmodel (
         isFirstinit = !isFirstinit
     }
 
-    private fun getRatio(num1: Int?, num2: Float?): Float? {
+    private fun getRatio(num1: Int?, num2: Int?): Float? {
         return num1?.toFloat()?.div(num2!!)?.times(100)
     }
 

@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.hamu.walkforcats.repository.CatInfoRepository
 
-class ChartViewModel : ViewModel() {
+class HistoryViewModel : ViewModel() {
 
     private val repository: CatInfoRepository = CatInfoRepository()
 

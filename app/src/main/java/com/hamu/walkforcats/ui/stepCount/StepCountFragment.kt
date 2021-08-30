@@ -61,6 +61,10 @@ class StepCountFragment() : Fragment(R.layout.fragment_step_count){
                 findNavController().navigate(R.id.action_stepCountFragment_to_settingsFragment)
                 true
             }
+            R.id.action_history -> {
+                findNavController().navigate(R.id.action_stepCountFragment_to_historyFragment)
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }

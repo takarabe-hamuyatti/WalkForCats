@@ -1,4 +1,4 @@
-package com.hamu.walkforcats.ui.CatRoom
+package com.hamu.walkforcats.ui.catRoom
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.hamu.walkforcats.R
 import com.hamu.walkforcats.viewmodels.StepCountViewmodel
-import dagger.hilt.android.AndroidEntryPoint
 
 class CatRoomFragment : Fragment() {
     private val viewModel: StepCountViewmodel by activityViewModels()
