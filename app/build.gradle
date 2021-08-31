@@ -102,6 +102,9 @@ dependencies {
     implementation "androidx.room:room-guava:$room_version"
     testImplementation("androidx.room:room-testing:$room_version")
 
+    //coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1'
+
     //google fit api
     implementation("com.google.android.gms:play-services-fitness:20.0.0")
     implementation("com.google.android.gms:play-services-auth:19.2.0")

@@ -1,25 +1,20 @@
 package com.hamu.walkforcats.ui.history
 
+import android.content.Context
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.hamu.walkforcats.R
 import com.hamu.walkforcats.database.monthlyInfo
 import com.hamu.walkforcats.databinding.FragmentItemBinding
 
-import com.hamu.walkforcats.ui.history.placeholder.PlaceholderContent.PlaceholderItem
 
 
-/**
- * [RecyclerView.Adapter] that can display a [PlaceholderItem].
- * TODO: Replace the implementation with code for your data type.
- */
-class MyItemRecyclerViewAdapter(
+class MyItemRecyclerViewAdapter(list: List<monthlyInfo>
 ) : RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder>() {
 
-    var data =  listOf<monthlyInfo>()
+
+    var data = list
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -39,8 +34,8 @@ class MyItemRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = data[position]
-        holder.idView.text = "aaa"
-        holder.contentView.text = "pppp"
+        holder.idView.text = item.yearMonth.toString()
+        holder.contentView.text = item.percentOfMonthlyGoal.toString()
     }
 
     override fun getItemCount(): Int = data.size
