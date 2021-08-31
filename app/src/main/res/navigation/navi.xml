@@ -19,6 +19,7 @@
             <action
                 android:id="@+id/action_stepCountFragment_to_historyFragment"
                 app:destination="@id/historyFragment" />
+
         </fragment>
         <fragment
             android:id="@+id/catRoomFragment"
@@ -43,7 +44,7 @@
         android:id="@+id/historyFragment"
         android:name="com.hamu.walkforcats.ui.history.HistoryFragment"
         android:label="fragment_history_list"
-        tools:layout="@layout/fragment_history_list" >
+        tools:layout="@layout/fragment_history" >
         <action
             android:id="@+id/action_historyFragment_to_stepCountFragment"
             app:destination="@id/stepCountFragment" />

@@ -7,9 +7,8 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.hamu.walkforcats.database.getDatabase
 import com.hamu.walkforcats.database.monthlyInfo
-import com.hamu.walkforcats.repository.CreateNewMonthRepository
+import com.hamu.walkforcats.repository.CreateFinishedMonthRepository
 import com.hamu.walkforcats.repository.PreferenceRepository
-import com.hamu.walkforcats.repository.UpdateExistingMonthRepository
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -26,6 +25,7 @@ class SavingMonthlyInfoWorker (appContext: Context, workerPrams:WorkerParameters
         // その日ごとの歩数をリセットしています。
          try{
              PreferenceRepository.clearCountOfTheDay()
+
              val monthlyStepCount = PreferenceRepository.getMonthlyCountFromPreference()
              val monthlyGoal = PreferenceRepository.getMonthlyGoalFromPreference()
              val percent = truncating(getRatio(monthlyStepCount,monthlyGoal))
@@ -35,34 +35,22 @@ class SavingMonthlyInfoWorker (appContext: Context, workerPrams:WorkerParameters
              val isTheBeginningOfTheMonth = dt.dayOfMonth == 1
 
              //月が変わったかどうかに応じて更新する対象の月を変更しています。
-             val beforeFormatting =
-                 if(isTheBeginningOfTheMonth) {
-                        dt.minusMonths(1)
-                 }else  dt
+             val beforeFormatting = dt.minusMonths(1)
+
              val formatter = DateTimeFormatter.ofPattern("YYYY-MM")
              val yearMonth = beforeFormatting.format(formatter).toInt()
-             val monthlyInfo =
-                 monthlyInfo(
-                     yearMonth = yearMonth,
-                     stepCount = monthlyStepCount,
-                     goalOfMonth = monthlyGoal,
-                     percentOfMonthlyGoal = percent
-                 )
-
-             val updateExistingMonthRepository = UpdateExistingMonthRepository(database)
-             updateExistingMonthRepository.updateExistingMonth(monthlyInfo)
 
              if(isTheBeginningOfTheMonth){
-                 val monthlyInfo =
+                 val finishedMonthlyInfo =
                      monthlyInfo(
                          yearMonth = yearMonth,
-                         stepCount = 0,
+                         stepCount = monthlyStepCount,
                          goalOfMonth = monthlyGoal,
-                         percentOfMonthlyGoal = 0f
+                         percentOfMonthlyGoal = percent
                      )
 
-                 val createNewMonthRepository = CreateNewMonthRepository(database)
-                 createNewMonthRepository.createNewMonth(monthlyInfo = monthlyInfo)
+                 val createFinishedMonthRepository = CreateFinishedMonthRepository(database)
+                 createFinishedMonthRepository.createFinishedMonth(monthlyInfo = finishedMonthlyInfo)
              }
 
              return Result.success()

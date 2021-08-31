@@ -29,7 +29,7 @@ class PreferenceRepository (sharedPreferences:SharedPreferences){
             }
             if (monthlyCount != null) {
                 putInt(monthlyCountKey,monthlyCount)
-                    .commit()
+
             }
         }
     }

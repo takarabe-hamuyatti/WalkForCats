@@ -6,13 +6,18 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.os.Build
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.*
 import androidx.preference.PreferenceManager
 import com.hamu.walkforcats.listener.StepListener
 import com.hamu.walkforcats.repository.PreferenceRepository
 import com.hamu.walkforcats.utils.StepDetector
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
+@RequiresApi(Build.VERSION_CODES.O)
 class StepCountViewmodel (
     application: Application
     ): AndroidViewModel(application), SensorEventListener , StepListener {
@@ -48,6 +53,10 @@ class StepCountViewmodel (
     private val _dailyGoal = MutableLiveData(0)
      val dailyGoal: LiveData<Float>
         get() = _dailyGoal.map{it.toFloat()}
+
+
+
+    val dt = LocalDate.now()
 
 
     //1日単位、週間単位での歩数の達成率です

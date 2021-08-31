@@ -8,55 +8,38 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DefaultItemAnimator
 import com.hamu.walkforcats.R
-import com.hamu.walkforcats.placeholder.PlaceholderContent
+import com.hamu.walkforcats.databinding.FragmentHistoryBinding
+import com.hamu.walkforcats.databinding.FragmentStepCountBinding
+import com.hamu.walkforcats.ui.history.placeholder.PlaceholderContent
+import com.hamu.walkforcats.viewmodels.StepCountViewmodel
 
 /**
  * A fragment representing a list of Items.
  */
-class HistoryFragment : Fragment() {
+class HistoryFragment : Fragment(R.layout.fragment_history) {
 
-    private var columnCount = 1
+    private val viewModel: StepCountViewmodel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        arguments?.let {
-            columnCount = it.getInt(ARG_COLUMN_COUNT)
-        }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_history_list, container, false)
-
-        // Set the adapter
-        if (view is RecyclerView) {
-            with(view) {
-                layoutManager = when {
-                    columnCount <= 1 -> LinearLayoutManager(context)
-                    else -> GridLayoutManager(context, columnCount)
-                }
-                adapter = MyItemRecyclerViewAdapter(PlaceholderContent.ITEMS)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        FragmentHistoryBinding.bind(view).also {
+            it.viewModel = viewModel
+            it.lifecycleOwner = viewLifecycleOwner
+            val adapter = MyItemRecyclerViewAdapter()
+            it.list.also {
+                it.adapter = adapter
+                it.layoutManager = LinearLayoutManager(context)
+                it.setHasFixedSize(true)
+                it.itemAnimator = DefaultItemAnimator()
             }
         }
-        return view
-    }
-
-    companion object {
-
-        // TODO: Customize parameter argument names
-        const val ARG_COLUMN_COUNT = "column-count"
-
-        // TODO: Customize parameter initialization
-        @JvmStatic
-        fun newInstance(columnCount: Int) =
-            HistoryFragment().apply {
-                arguments = Bundle().apply {
-                    putInt(ARG_COLUMN_COUNT, columnCount)
-                }
-            }
     }
 }

@@ -23,18 +23,6 @@ class Operations:Application() {
 
     private fun setupRecurringWork() {
 
-
-        //todo 単純な保存でも例外が起こりうるケースを考え、制約を設定する。
-       /* val constraints = Constraints.Builder()
-            .apply {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    setRequiresDeviceIdle(true)
-                }
-            }
-            .build()
-
-        */
-
         //1日の終わりに実行します。
         val repeatingRequest = PeriodicWorkRequestBuilder<SavingMonthlyInfoWorker>(
             1,

@@ -49,5 +49,6 @@
     <string name="notGettingCat">まだ猫がいません。</string>
 
     <string name="hello_blank_fragment">DUMMY\nCONTENT</string>
+    <string name="_0">0</string>
 
 </resources>

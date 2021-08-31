@@ -1,4 +1,4 @@
-package com.hamu.walkforcats.placeholder
+package com.hamu.walkforcats.ui.history.placeholder
 
 import java.util.ArrayList
 import java.util.HashMap
