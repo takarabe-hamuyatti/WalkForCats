@@ -9,12 +9,10 @@ import androidx.room.Update
 @Dao
 interface aboutMonthlyInfoDao {
     @Query("select * from monthlyInfo")
-    fun getMonthlyInfo(): List<monthlyInfo>
+    suspend fun getMonthlyInfo(): List<monthlyInfo>
 
     @Insert
-    fun insert(monthlyInfo: monthlyInfo)
+    suspend fun insert(monthlyInfo: monthlyInfo)
 
-    @Update
-    fun update (monthlyInfo: monthlyInfo)
 }
 

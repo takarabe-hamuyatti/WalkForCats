@@ -2,8 +2,10 @@ package com.hamu.walkforcats.utils
 
 import android.annotation.SuppressLint
 import android.os.Build
+import android.view.View
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.cardview.widget.CardView
 import androidx.databinding.BindingAdapter
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -35,6 +37,17 @@ object BindingAdapter {
         val formatter = DateTimeFormatter.ofPattern("YYYY-MM")
         val yearMonth = date.format(formatter).toString()
         view.text =yearMonth
+    }
+
+    @BindingAdapter("changeViewVisible")
+    @JvmStatic
+    fun changeViewVisible(view:View,isVisible:Boolean) {
+        if (isVisible == true) {
+            view.visibility = View.VISIBLE
+        } else {
+            view.visibility = View.INVISIBLE
+
+        }
     }
 }
 

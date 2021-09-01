@@ -50,5 +50,14 @@
 
     <string name="hello_blank_fragment">DUMMY\nCONTENT</string>
     <string name="_0">0</string>
+    <string name="noHavingPastData">過去のデータがありません。</string>
+    <string name="srash">/</string>
+    <string name="_20000_40000">20000 / 40000</string>
+    <string name="_1977_8">1977 8</string>
+    <string name="_1999_7">1999 7</string>
+    <string name="_15000_40000">15000 / 40000</string>
+    <string name="_37_5">37.5%</string>
+    <string name="_50">50%</string>
+    <string name="_1999_12">1999 12</string>
 
 </resources>

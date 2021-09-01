@@ -7,18 +7,18 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.hamu.walkforcats.database.monthlyInfo
 import com.hamu.walkforcats.databinding.FragmentItemBinding
+import java.util.Collections.list
 
 
-
-class MyItemRecyclerViewAdapter(list: List<monthlyInfo>
+class MyItemRecyclerViewAdapter(
 ) : RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder>() {
 
-
-    var data = list
+    var data =  listOf<monthlyInfo>()
         set(value) {
             field = value
             notifyDataSetChanged()
         }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 

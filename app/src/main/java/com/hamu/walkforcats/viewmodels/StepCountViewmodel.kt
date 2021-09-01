@@ -54,11 +54,6 @@ class StepCountViewmodel (
      val dailyGoal: LiveData<Float>
         get() = _dailyGoal.map{it.toFloat()}
 
-
-
-    val dt = LocalDate.now()
-
-
     //1日単位、週間単位での歩数の達成率です
     private val _dailyPercent = MutableLiveData<Float>()
     val dailyPercent: LiveData<String>
