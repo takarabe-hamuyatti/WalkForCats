@@ -150,6 +150,7 @@ class StepCountViewmodel (
         isFirstinit = !isFirstinit
     }
 
+    //動作確認用　後で消します。
     fun room(){
         viewModelScope.launch(Dispatchers.IO) {
             val finishedMonthlyInfo =

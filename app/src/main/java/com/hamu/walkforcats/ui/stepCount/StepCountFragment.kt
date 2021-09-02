@@ -26,7 +26,7 @@ class StepCountFragment : Fragment(R.layout.fragment_step_count){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        viewModel.room()
+        viewModel.room()//動作確認　後で消します。
 
         //設定画面や猫部屋から戻るたびに前回終了時のカウントがロードされるのを防ぐためにif文を設けています
         if(viewModel.isFirstinit) {

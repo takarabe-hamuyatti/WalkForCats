@@ -24,11 +24,11 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
             it.lifecycleOwner = viewLifecycleOwner
             it.stepCountviewModel = stepCountviewModel
             it.historyviewModel = historyViewmodel
-            it.list.also {
-                it.adapter = adapter
-                it.layoutManager = LinearLayoutManager(context)
-                it.setHasFixedSize(true)
-                it.itemAnimator = DefaultItemAnimator()
+            it.list.also {list ->
+                list.adapter = adapter
+                list.layoutManager = LinearLayoutManager(context)
+                list.setHasFixedSize(true)
+                list.itemAnimator = DefaultItemAnimator()
             }
         }
         historyViewmodel.allMonthlyInfo.observe(viewLifecycleOwner, {
