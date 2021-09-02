@@ -14,7 +14,6 @@ data class monthlyInfo(
      val percentOfMonthlyGoal:Float?
 )
 
-//todo どの猫を獲得しているか保存？
 
 
 

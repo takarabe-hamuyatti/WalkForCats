@@ -11,11 +11,14 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.*
 import androidx.preference.PreferenceManager
-import com.hamu.walkforcats.listener.StepListener
+import com.hamu.walkforcats.database.getDatabase
+import com.hamu.walkforcats.database.monthlyInfo
+import com.hamu.walkforcats.repository.CreateFinishedMonthRepository
+import com.hamu.walkforcats.utils.StepListener
 import com.hamu.walkforcats.repository.PreferenceRepository
 import com.hamu.walkforcats.utils.StepDetector
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @RequiresApi(Build.VERSION_CODES.O)
 class StepCountViewmodel (
@@ -35,7 +38,7 @@ class StepCountViewmodel (
     // stepCountFragment が最初に作られ歩数をロードした時にfalse　に変え、activity viewmodel が　clearされる時にtureに戻ります。
     var isFirstinit = true
 
-    //歩数の1日ごと、週間での集計です
+    //歩数の1日ごと、月ごとの集計です
     private val _dailyCount = MutableLiveData(0)
     val dailyCount: LiveData<String>
         get() = _dailyCount.map{it.toString()}
@@ -55,11 +58,11 @@ class StepCountViewmodel (
         get() = _dailyGoal.map{it.toFloat()}
 
     //1日単位、週間単位での歩数の達成率です
-    private val _dailyPercent = MutableLiveData<Float>()
+    private val _dailyPercent = MutableLiveData(0f)
     val dailyPercent: LiveData<String>
         get() = _dailyPercent.map{"$it%"}
 
-    private val _monthlyPercent = MutableLiveData<Float>()
+    private val _monthlyPercent = MutableLiveData(0f)
     val monthlyPercent: LiveData<String>
         get() = _monthlyPercent.map {"$it%"}
 
@@ -122,21 +125,15 @@ class StepCountViewmodel (
     //共有プリファレンス
     //その日ごとの記録は共有プリファレンスで行い、累計の記録はroom で行います。
 
-    fun getCountFromPreference(){
-        _dailyCount.value  = repository.getDailyCountFromPreference()
-        _monthlyCount.value  = repository.getMonthlyCountFromPreference()
+    fun getNowCount(){
+        _dailyCount.value  = repository.getDailyCount()
+        _monthlyCount.value  = repository.getMonthlyCount()
     }
 
     //一日ごと、一週間ごとの目標を取得しています。
-    fun getGoalFromPreference() {
-        _dailyGoal.value  = repository.getDailyGoalFromPreference()
-        _monthlyGoal.value  = repository.getMonthlyGoalFromPreference()
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        repository.saveCount(_dailyCount.value,_monthlyCount.value)
-        isFirstinit = !isFirstinit
+    fun getGoal() {
+        _dailyGoal.value  = repository.getDailyGoal()
+        _monthlyGoal.value  = repository.getMonthlyGoal()
     }
 
     private fun getRatio(num1: Int?, num2: Int?): Float? {
@@ -147,4 +144,25 @@ class StepCountViewmodel (
         return num?.times(10)?.toInt()?.toFloat()?.div(10)
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        repository.saveCount(_dailyCount.value,_monthlyCount.value)
+        isFirstinit = !isFirstinit
+    }
+
+    fun room(){
+        viewModelScope.launch(Dispatchers.IO) {
+            val finishedMonthlyInfo =
+                monthlyInfo(
+                    yearMonth = 200007,
+                    stepCount = 24,
+                    goalOfMonth = 5000,
+                    percentOfMonthlyGoal = 12.0f
+                )
+
+            val Dao = getDatabase(cont).aboutMonthlyInfoDao
+            val createFinishedMonthRepository = CreateFinishedMonthRepository()
+            createFinishedMonthRepository.createFinishedMonth(Dao,monthlyInfo = finishedMonthlyInfo)
+        }
+    }
 }

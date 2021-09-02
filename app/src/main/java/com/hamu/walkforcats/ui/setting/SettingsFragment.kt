@@ -1,9 +1,11 @@
 package com.hamu.walkforcats.ui.setting
 
 import android.app.AlertDialog
+import android.os.Build
 import android.os.Bundle
 import android.text.InputType
 import androidx.activity.addCallback
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
@@ -20,6 +22,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         setPreferencesFromResource(R.xml.root_preferences, rootKey)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -46,7 +49,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                     .setMessage("数字を入力してください")
                     .show()
             }else {
-                viewModel.getGoalFromPreference()
+                viewModel.getGoal()
                 findNavController().navigate(R.id.action_settingsFragment_to_stepCountFragment)
             }
         }

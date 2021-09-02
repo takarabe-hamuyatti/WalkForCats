@@ -6,19 +6,19 @@ import androidx.core.content.edit
 class PreferenceRepository (sharedPreferences:SharedPreferences){
 
     val pref = sharedPreferences
-    fun getDailyGoalFromPreference(): Int? {
+    fun getDailyGoal(): Int? {
          return pref.getString(dailyGoalKey, "15000")?.toInt()
     }
 
-    fun getMonthlyGoalFromPreference():Int? {
+    fun getMonthlyGoal():Int? {
         return pref.getString(monthlyGoalKey, "50000")?.toInt()
     }
 
-    fun getDailyCountFromPreference(): Int {
+    fun getDailyCount(): Int {
          return pref.getInt(dailyCountKey, 0)
     }
 
-    fun getMonthlyCountFromPreference(): Int {
+    fun getMonthlyCount(): Int {
         return  pref.getInt(monthlyCountKey, 0)
     }
 
@@ -29,7 +29,6 @@ class PreferenceRepository (sharedPreferences:SharedPreferences){
             }
             if (monthlyCount != null) {
                 putInt(monthlyCountKey,monthlyCount)
-
             }
         }
     }
@@ -37,6 +36,7 @@ class PreferenceRepository (sharedPreferences:SharedPreferences){
     fun clearCountOfTheDay(){
         pref.edit {
             putInt(dailyCountKey,0)
+                .commit()
         }
     }
 

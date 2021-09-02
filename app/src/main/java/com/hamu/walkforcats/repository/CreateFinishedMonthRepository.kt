@@ -1,12 +1,12 @@
 package com.hamu.walkforcats.repository
 
 
-import com.hamu.walkforcats.database.monthlyInfoDatabase
+import com.hamu.walkforcats.database.aboutMonthlyInfoDao
 import com.hamu.walkforcats.database.monthlyInfo
 
-class CreateFinishedMonthRepository (private val database: monthlyInfoDatabase){
-    suspend fun createFinishedMonth(monthlyInfo:monthlyInfo){
-        database.aboutMonthlyInfoDao.insert(monthlyInfo)
+class CreateFinishedMonthRepository {
+      fun createFinishedMonth(Dao: aboutMonthlyInfoDao, monthlyInfo:monthlyInfo){
+        Dao.insert(monthlyInfo)
     }
 }
 

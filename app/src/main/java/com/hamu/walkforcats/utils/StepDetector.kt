@@ -1,7 +1,5 @@
 package com.hamu.walkforcats.utils
 
-import com.hamu.walkforcats.listener.StepListener
-
 
 /*
 Released under the MIT license

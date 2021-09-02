@@ -1,10 +1,7 @@
 package com.hamu.walkforcats.repository
 
-import com.hamu.walkforcats.database.monthlyInfo
-import com.hamu.walkforcats.database.monthlyInfoDatabase
+import com.hamu.walkforcats.database.aboutMonthlyInfoDao
 
-class HistoryRepository (private val database: monthlyInfoDatabase){
-    suspend fun getMonthlyInfo():List<monthlyInfo>{
-        return database.aboutMonthlyInfoDao.getMonthlyInfo()
-    }
+class HistoryRepository (Dao:aboutMonthlyInfoDao){
+    val allMonthlyInfo = Dao.getMonthlyInfo()
 }

@@ -21,7 +21,9 @@
         <com.mikhaellopez.circularprogressbar.CircularProgressBar
             android:id="@+id/dailyCircularProgressBar"
             android:layout_width="wrap_content"
-            android:layout_height="254dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="70dp"
+            android:layout_marginBottom="70dp"
             app:cpb_background_progressbar_color="#b6bbd8"
             app:cpb_background_progressbar_width="5dp"
             app:cpb_progress_direction="to_right"
@@ -77,20 +79,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.191" />
 
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/goCatRoom"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="250dp"
-            android:layout_marginTop="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/monthlyCircularProgressBar"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
-            app:lottie_rawRes="@raw/cat" />
-
         <TextView
             android:id="@+id/monthlyPercent"
             android:layout_width="wrap_content"
@@ -136,6 +124,22 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.606"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="130dp"
+            android:layout_marginTop="300dp"
+            android:layout_marginEnd="130dp"
+            android:layout_marginBottom="300dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.501"
+            app:layout_constraintStart_toStartOf="@+id/monthlyCircularProgressBar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:setCatView="@{viewModel.monthlyPercent}"
+            tools:srcCompat="@tools:sample/avatars" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
