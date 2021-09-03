@@ -155,10 +155,10 @@ class StepCountViewmodel (
         viewModelScope.launch(Dispatchers.IO) {
             val finishedMonthlyInfo =
                 monthlyInfo(
-                    yearMonth = 200007,
-                    stepCount = 24,
+                    yearMonth = 200010,
+                    stepCount = 3000,
                     goalOfMonth = 5000,
-                    percentOfMonthlyGoal = 12.0f
+                    percentOfMonthlyGoal = 60f
                 )
 
             val Dao = getDatabase(cont).aboutMonthlyInfoDao
