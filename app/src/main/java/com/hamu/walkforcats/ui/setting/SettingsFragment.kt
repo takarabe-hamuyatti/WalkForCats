@@ -50,7 +50,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                     .show()
             }else {
                 viewModel.getGoal()
-               // findNavController().navigate(R.id.action_settingsFragment_to_stepCountFragment)
+                findNavController().navigateUp()
             }
         }
     }

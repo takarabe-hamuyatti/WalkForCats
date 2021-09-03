@@ -24,7 +24,7 @@
     <string name="menu_slideshow">Slideshow</string>
     <!-- Preference Titles -->
     <string name="goal_header">目標</string>
-    <string name="sync_header">Sync</string>
+    <string name="cat_header">猫</string>
 
     <!-- Messages Preferences -->
     <string name="signature_title">Your signature</string>
@@ -37,6 +37,7 @@
 
 
     <!-- Sync Preferences -->
+    <string name="more_cat">猫をふやす</string>
     <string name="sync_title">Sync email periodically</string>
     <string name="attachment_title">Download incoming attachments</string>
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
@@ -45,12 +46,9 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
 
-    <!-- cat room -->
-    <string name="notGettingCat">まだ猫がいません。</string>
-
     <string name="hello_blank_fragment">DUMMY\nCONTENT</string>
     <string name="_0">0</string>
-    <string name="noHavingPastData">過去のデータがありません。</string>
+    <string name="no_having_past_data">過去のデータがありません。</string>
     <string name="srash">/</string>
     <string name="_20000_40000">20000 / 40000</string>
     <string name="_1977_8">1977 8(デモデータ)</string>

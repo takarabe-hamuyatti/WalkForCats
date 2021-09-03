@@ -12,20 +12,23 @@
         tools:layout="@layout/fragment_step_count"
         >
         <action
-            android:id="@+id/action_navigation_step_to_settingsFragment"
+            android:id="@+id/action_navigation_step_to_navigation_settings"
             app:destination="@id/navigation_settings" />
     </fragment>
     <fragment
         android:id="@+id/navigation_history"
         android:name="com.hamu.walkforcats.ui.history.HistoryFragment"
         android:label="@+id/navigation_history"
-        tools:layout="@layout/fragment_history"/>
+        tools:layout="@layout/fragment_history">
+        <action
+            android:id="@+id/action_navigation_history_to_navigation_settings"
+            app:destination="@id/navigation_settings"
+            />
+    </fragment>
     <fragment
         android:id="@+id/navigation_settings"
         android:name="com.hamu.walkforcats.ui.setting.SettingsFragment"
         android:label="SettingsFragment" >
-        <action
-            android:id="@+id/action_settingsFragment_to_navigation_step"
-            app:destination="@id/navigation_step" />
+
     </fragment>
 </navigation>
