@@ -13,7 +13,7 @@ interface aboutMonthlyInfoDao {
     fun getMonthlyInfo(): Flow<List<monthlyInfo>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(monthlyInfo: monthlyInfo)
+     fun insert(monthlyInfo: monthlyInfo)
 
 }
 

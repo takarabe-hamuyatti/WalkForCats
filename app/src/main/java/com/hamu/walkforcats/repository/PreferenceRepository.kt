@@ -39,6 +39,12 @@ class PreferenceRepository (sharedPreferences:SharedPreferences){
                 .commit()
         }
     }
+    fun clearCountOfTheMonth(){
+        pref.edit {
+            putInt(monthlyCountKey,0)
+                .commit()
+        }
+    }
 
     companion object{
         val dailyGoalKey = "dailyGoal"

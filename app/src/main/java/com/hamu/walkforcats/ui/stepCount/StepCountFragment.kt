@@ -26,7 +26,7 @@ class StepCountFragment : Fragment(R.layout.fragment_step_count){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        viewModel.room()
+        viewModel.room()//動作確認　後で消します。
 
         //設定画面や猫部屋から戻るたびに前回終了時のカウントがロードされるのを防ぐためにif文を設けています
         if(viewModel.isFirstinit) {
@@ -56,13 +56,16 @@ class StepCountFragment : Fragment(R.layout.fragment_step_count){
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_settings -> {
-                findNavController().navigate(R.id.action_stepCountFragment_to_settingsFragment)
+                findNavController().navigate(R.id.action_navigation_step_to_settingsFragment)
                 true
             }
-            R.id.action_history -> {
+           /* R.id.action_history -> {
                 findNavController().navigate(R.id.action_stepCountFragment_to_historyFragment)
                 true
             }
+
+            */
+
             else -> super.onOptionsItemSelected(item)
         }
     }

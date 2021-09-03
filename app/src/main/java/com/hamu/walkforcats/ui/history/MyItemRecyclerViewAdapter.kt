@@ -43,7 +43,6 @@ class MyItemRecyclerViewAdapter(
                 return ViewHolder(binding)
             }
         }
-
     }
 }
 
@@ -53,10 +52,7 @@ class DiffCallback : DiffUtil.ItemCallback<monthlyInfo>() {
     override fun areItemsTheSame(oldItem: monthlyInfo, newItem: monthlyInfo): Boolean {
         return oldItem.yearMonth == newItem.yearMonth
     }
-
-
     override fun areContentsTheSame(oldItem: monthlyInfo, newItem: monthlyInfo): Boolean {
         return oldItem == newItem
     }
-
 }

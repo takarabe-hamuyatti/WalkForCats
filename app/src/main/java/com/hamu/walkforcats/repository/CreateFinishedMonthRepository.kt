@@ -5,7 +5,7 @@ import com.hamu.walkforcats.database.aboutMonthlyInfoDao
 import com.hamu.walkforcats.database.monthlyInfo
 
 class CreateFinishedMonthRepository {
-      fun createFinishedMonth(Dao: aboutMonthlyInfoDao, monthlyInfo:monthlyInfo){
+       fun createFinishedMonth(Dao: aboutMonthlyInfoDao, monthlyInfo:monthlyInfo){
         Dao.insert(monthlyInfo)
     }
 }

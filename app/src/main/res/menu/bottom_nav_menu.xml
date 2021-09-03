@@ -3,13 +3,13 @@
 
 
     <item
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_step"
         android:icon="@drawable/chart"
-        android:title="@string/title_dashboard" />
+        android:title="@string/step" />
 
     <item
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_history"
         android:icon="@drawable/smail"
-        android:title="@string/title_notifications" />
+        android:title="@string/history" />
 
 </menu>

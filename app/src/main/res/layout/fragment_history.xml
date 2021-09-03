@@ -18,7 +18,7 @@
         android:id="@+id/ConstraitLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.stepCount.StepCountFragment">
+        tools:context=".ui.history.HistoryFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list"
