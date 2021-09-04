@@ -24,6 +24,7 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+        stepCountviewModel.getGoal()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
