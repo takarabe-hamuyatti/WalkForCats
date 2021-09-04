@@ -46,13 +46,14 @@
             app:cpb_progress_direction="to_right"
             app:cpb_progress_max="@{viewModel.monthlyGoal}"
             app:cpb_progressbar_color="#e6e3cf"
-            app:cpb_progressbar_width="30dp"
+            app:cpb_progressbar_width="20dp"
             app:cpb_round_border="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.584"
             app:setProgressWithAnimation="@{viewModel.monthlyCount}" />
 
         <TextView
@@ -135,17 +136,31 @@
             android:id="@+id/imageView3"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="130dp"
-            android:layout_marginTop="300dp"
-            android:layout_marginEnd="130dp"
-            android:layout_marginBottom="300dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.501"
-            app:layout_constraintStart_toStartOf="@+id/monthlyCircularProgressBar"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="70dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="70dp"
+            android:layout_marginBottom="50dp"
+            app:layout_constraintBottom_toBottomOf="@+id/dailyCircularProgressBar"
+            app:layout_constraintEnd_toEndOf="@+id/dailyCircularProgressBar"
+            app:layout_constraintStart_toStartOf="@+id/dailyCircularProgressBar"
+            app:layout_constraintTop_toTopOf="@+id/dailyCircularProgressBar"
             app:setCatView="@{viewModel.monthlyPercent}"
             tools:srcCompat="@tools:sample/avatars" />
+
+        <ImageView
+            android:id="@+id/catImage"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="500dp"
+            android:layout_marginEnd="300dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.003"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            app:srcCompat="@drawable/browncat12" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

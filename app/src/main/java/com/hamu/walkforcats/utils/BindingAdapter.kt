@@ -49,14 +49,13 @@ object BindingAdapter {
             view.visibility = View.VISIBLE
         } else {
             view.visibility = View.INVISIBLE
-
         }
     }
 
     @BindingAdapter("setCatView")
     @JvmStatic
     fun setCatView(imageView: ImageView,percentString:String){
-        var percent = percentString.dropLast(3).toInt()
+        val percent = percentString.dropLast(3).toInt()
         var imgResource by Delegates.notNull<Int>()
         if(10 > percent){  imgResource = R.drawable.whitecat1}
         else if(30 > percent) { imgResource = R.drawable.whitecat2}

@@ -4,12 +4,13 @@
 
     <item
         android:id="@+id/navigation_step"
-        android:icon="@drawable/chart"
-        android:title="@string/step" />
+        android:icon="@drawable/walk"
+        android:title="" />
 
     <item
         android:id="@+id/navigation_history"
-        android:icon="@drawable/smail"
-        android:title="@string/history" />
+        android:icon="@drawable/chart"
+        android:title="" />
+
 
 </menu>
