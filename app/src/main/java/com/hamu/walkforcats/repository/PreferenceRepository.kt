@@ -46,10 +46,15 @@ class PreferenceRepository (sharedPreferences:SharedPreferences){
         }
     }
 
+    fun isUseDemoData(): Boolean {
+        return pref.getBoolean(demoDataKey,true)
+    }
+
     companion object{
         val dailyGoalKey = "dailyGoal"
         val monthlyGoalKey ="monthlyGoal"
         val dailyCountKey = "dailyCount"
         val monthlyCountKey = "monthlyCount"
+        val demoDataKey = "demoData"
     }
 }

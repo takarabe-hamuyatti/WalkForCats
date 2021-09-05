@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.os.Build
 import android.os.Bundle
 import android.text.InputType
+import android.view.View
 import androidx.activity.addCallback
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.activityViewModels
@@ -22,12 +23,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
         setPreferencesFromResource(R.xml.root_preferences, rootKey)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val dailyGoalPreference: EditTextPreference? = findPreference("dailyGoal")
         val monthlyGoalPreference: EditTextPreference? = findPreference("monthlyGoal")
+        val demoDataPreference: EditTextPreference? = findPreference("isFirstInit")
 
         //実機で使ってみたところ、キーボードアプリを使っている場合数字以外も打ててしまいました。
         //そのため、プラスで数字以外を弾く処理を書いています。

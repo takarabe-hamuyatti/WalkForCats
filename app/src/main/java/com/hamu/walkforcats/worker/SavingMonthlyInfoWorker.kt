@@ -1,6 +1,5 @@
 package com.hamu.walkforcats.worker
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Handler
 import android.util.Log
@@ -10,9 +9,8 @@ import androidx.work.WorkerParameters
 import com.hamu.walkforcats.database.getDatabase
 import com.hamu.walkforcats.database.monthlyInfo
 import com.hamu.walkforcats.repository.CreateFinishedMonthRepository
+import com.hamu.walkforcats.repository.HistoryRepository
 import com.hamu.walkforcats.repository.PreferenceRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -24,17 +22,16 @@ class SavingMonthlyInfoWorker (appContext: Context, workerPrams:WorkerParameters
         const val WORK_NAME = "resetDailyCountInDaysEnd"
     }
 
-    @SuppressLint("NewApi", "WeekBasedYear")
     override suspend fun doWork(): Result {
         // その日ごとの歩数をリセットしています。
          try{
+             val pref = PreferenceManager.getDefaultSharedPreferences(applicationContext)
+             val preferenceRepository= PreferenceRepository(pref)
+             preferenceRepository.clearCountOfTheDay()//その日の歩数をリセットします。
              //1日の最後の5分を指定して、遅延させて日付を越えさせています。
              // 日付変更前、つまり当日中に保存する仕組みにすると端末の影響で遅延した時に登録する日付がずれてしまうと考えたためです。
              Handler().postDelayed({
                  Log.i("work","dowork")
-                 val pref = PreferenceManager.getDefaultSharedPreferences(applicationContext)
-                 val repository= PreferenceRepository(pref)
-                 repository.clearCountOfTheDay()//その日の歩数をリセットします。
 
                  val dt = LocalDate.now()
                  //日付を確認して、月が変わったかどうかを確認しています。
@@ -42,8 +39,8 @@ class SavingMonthlyInfoWorker (appContext: Context, workerPrams:WorkerParameters
 
                  if(isTheBeginningOfTheMonth){
                      //これまでの目標値、歩数、達成率を取得します。
-                     val monthlyStepCount = repository.getMonthlyCount()
-                     val monthlyGoal = repository.getMonthlyGoal()
+                     val monthlyStepCount = preferenceRepository.getMonthlyCount()
+                     val monthlyGoal = preferenceRepository.getMonthlyGoal()
                      val percent = truncating(getRatio(monthlyStepCount,monthlyGoal))
                      //月が変わっていたら、これまでの月の記録を行っているので現時点から月を一つ減らした値で登録します。
                      val beforeFormatting = dt.minusMonths(1)
@@ -62,10 +59,9 @@ class SavingMonthlyInfoWorker (appContext: Context, workerPrams:WorkerParameters
                      val createFinishedMonthRepository = CreateFinishedMonthRepository()
                      createFinishedMonthRepository.createFinishedMonth(Dao,monthlyInfo = finishedMonthlyInfo)
 
-                     repository.clearCountOfTheMonth()//最後に、月の歩数もリセットします。
+                     preferenceRepository.clearCountOfTheMonth()//月の歩数をリセットします。
 
                  }
-
               }, 400000)
 
              return Result.success()

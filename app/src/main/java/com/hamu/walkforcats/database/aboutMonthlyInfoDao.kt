@@ -1,9 +1,6 @@
 package com.hamu.walkforcats.database
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 
 
@@ -13,7 +10,12 @@ interface aboutMonthlyInfoDao {
     fun getMonthlyInfo(): Flow<List<monthlyInfo>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-     fun insert(monthlyInfo: monthlyInfo)
+    fun insert(monthlyInfo: monthlyInfo)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertDemoData(monthlyInfos: Array<monthlyInfo>)
+
+    @Delete
+    fun deleteDemoData(monthlyInfos: Array<monthlyInfo>)
 }
 

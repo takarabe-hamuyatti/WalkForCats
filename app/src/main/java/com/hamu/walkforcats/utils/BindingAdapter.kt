@@ -68,10 +68,10 @@ object BindingAdapter {
     @JvmStatic
     fun setCatViewForRecycler(imageView: ImageView,percent:Float){
         var imgResource by Delegates.notNull<Int>()
-        if(10 > percent){  imgResource = R.drawable.whitecat1}
-        else if(30 > percent) { imgResource = R.drawable.whitecat2}
-        else if(60 > percent) { imgResource = R.drawable.whitecat3}
-        else if(80 > percent){  imgResource = R.drawable.whitecat4}
+        if(10 >= percent){  imgResource = R.drawable.whitecat1}
+        else if(30 >= percent) { imgResource = R.drawable.whitecat2}
+        else if(60 >= percent) { imgResource = R.drawable.whitecat3}
+        else if(80 >= percent){  imgResource = R.drawable.whitecat4}
         else{imgResource = R.drawable.whitecat5}
         imageView.setImageResource(imgResource)
     }

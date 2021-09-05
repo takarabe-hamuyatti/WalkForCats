@@ -25,6 +25,7 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
         stepCountviewModel.getGoal()
+        historyViewmodel.checkIsUseDemoData()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -44,8 +45,10 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
         historyViewmodel.allMonthlyInfo.observe(viewLifecycleOwner, {
             it?.let {
                 adapter.submitList(it)
-                historyViewmodel._isDataExist.value = false
             }
+        })
+        historyViewmodel.isUseDemoData.observe(viewLifecycleOwner,{
+            if(it) historyViewmodel.useDemoData() else historyViewmodel.noUseDemoData()
         })
     }
 

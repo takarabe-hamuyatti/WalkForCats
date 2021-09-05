@@ -22,7 +22,6 @@ class StepCountFragment : Fragment(R.layout.fragment_step_count){
     private val viewModel: StepCountViewmodel by activityViewModels()
     private var sensorManager: SensorManager? = null
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -35,7 +34,7 @@ class StepCountFragment : Fragment(R.layout.fragment_step_count){
             viewModel.isFirstinit = !viewModel.isFirstinit
         }
     }
-    @RequiresApi(Build.VERSION_CODES.O)
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         FragmentStepCountBinding.bind(view).also {

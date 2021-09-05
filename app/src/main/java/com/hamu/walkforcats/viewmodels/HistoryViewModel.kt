@@ -1,28 +1,43 @@
 package com.hamu.walkforcats.viewmodels
 
 import android.app.Application
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.*
+import androidx.preference.PreferenceManager
 import com.hamu.walkforcats.database.getDatabase
 import com.hamu.walkforcats.database.monthlyInfo
 import com.hamu.walkforcats.repository.HistoryRepository
+import com.hamu.walkforcats.repository.PreferenceRepository
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 
 class HistoryViewModel(application: Application) : AndroidViewModel(application) {
-
-    @RequiresApi(Build.VERSION_CODES.O)
     val dt = LocalDate.now()
     val context = application
 
-    val _isDataExist = MutableLiveData(false)
-    val isDataExist:LiveData<Boolean>
-        get() = _isDataExist
+    val pref = PreferenceManager.getDefaultSharedPreferences(context)
+    val preferenceRepository= PreferenceRepository(pref)
 
-    val Dao= getDatabase(context).aboutMonthlyInfoDao
-    val repository = HistoryRepository(Dao)
+    private val _isUseDemoData = MutableLiveData(true)
+    val isUseDemoData:LiveData<Boolean>
+        get() = _isUseDemoData
 
+    private val dao= getDatabase(context).aboutMonthlyInfoDao
+    private val historyRepository = HistoryRepository(dao)
 
-    val allMonthlyInfo: LiveData<List<monthlyInfo>> = repository.allMonthlyInfo.asLiveData()
+    val allMonthlyInfo: LiveData<List<monthlyInfo>> = historyRepository.allMonthlyInfo.asLiveData()
 
+    fun checkIsUseDemoData() {
+        _isUseDemoData.value = preferenceRepository.isUseDemoData()
+    }
+
+    fun useDemoData() {
+        viewModelScope.launch {
+            historyRepository.insertDemoData()
+        }
+    }
+    fun noUseDemoData(){
+        viewModelScope.launch {
+            historyRepository.deleteDemoData()
+        }
+    }
 }

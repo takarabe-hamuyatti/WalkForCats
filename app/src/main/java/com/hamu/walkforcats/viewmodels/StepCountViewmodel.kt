@@ -1,14 +1,11 @@
 package com.hamu.walkforcats.viewmodels
 
-import android.annotation.SuppressLint
 import android.app.Application
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import android.os.Build
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.*
 import androidx.preference.PreferenceManager
 import com.hamu.walkforcats.database.getDatabase
@@ -20,19 +17,16 @@ import com.hamu.walkforcats.utils.StepDetector
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-@RequiresApi(Build.VERSION_CODES.O)
+// TODO: 2021/09/04 hilt導入する 全体
 class StepCountViewmodel (
     application: Application
     ): AndroidViewModel(application), SensorEventListener , StepListener {
-    var sensorManager: SensorManager? = null
-    var simpleStepDetector: StepDetector? = null
+    private var sensorManager: SensorManager? = null
+    private var simpleStepDetector: StepDetector? = null
+    private val cont = application
+    private val pref = PreferenceManager.getDefaultSharedPreferences(cont)
 
-
-    @SuppressLint("StaticFieldLeak")
-    val cont = application
-    val pref = PreferenceManager.getDefaultSharedPreferences(cont)
-
-    val repository : PreferenceRepository = PreferenceRepository(pref)
+    private val repository : PreferenceRepository = PreferenceRepository(pref)
 
     //設定画面や猫部屋から戻るたびに前回分がロードされるのを防ぐための判定に用います。
     // stepCountFragment が最初に作られ歩数をロードした時にfalse　に変え、activity viewmodel が　clearされる時にtureに戻ります。
