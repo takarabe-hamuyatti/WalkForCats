@@ -14,19 +14,18 @@ import com.hamu.walkforcats.repository.CreateFinishedMonthRepository
 import com.hamu.walkforcats.utils.StepListener
 import com.hamu.walkforcats.repository.PreferenceRepository
 import com.hamu.walkforcats.utils.StepDetector
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-// TODO: 2021/09/04 hilt導入する 全体
-class StepCountViewmodel (
-    application: Application
-    ): AndroidViewModel(application), SensorEventListener , StepListener {
+@HiltViewModel
+class StepCountViewmodel @Inject constructor(
+    private val context : Application,
+    private val repository: PreferenceRepository
+    ): AndroidViewModel(context), SensorEventListener , StepListener {
     private var sensorManager: SensorManager? = null
     private var simpleStepDetector: StepDetector? = null
-    private val cont = application
-    private val pref = PreferenceManager.getDefaultSharedPreferences(cont)
-
-    private val repository : PreferenceRepository = PreferenceRepository(pref)
 
     //設定画面や猫部屋から戻るたびに前回分がロードされるのを防ぐための判定に用います。
     // stepCountFragment が最初に作られ歩数をロードした時にfalse　に変え、activity viewmodel が　clearされる時にtureに戻ります。
@@ -67,7 +66,7 @@ class StepCountViewmodel (
         simpleStepDetector = StepDetector()
         simpleStepDetector!!.registerListener(this)
         if (sensorManager == null) {
-            Toast.makeText(cont, "端末にセンサーが用意されていません。", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "端末にセンサーが用意されていません。", Toast.LENGTH_SHORT).show()
         } else {
             sensorManager?.let {
                 it.registerListener(
@@ -142,22 +141,5 @@ class StepCountViewmodel (
         super.onCleared()
         repository.saveCount(_dailyCount.value,_monthlyCount.value)
         isFirstinit = !isFirstinit
-    }
-
-    //動作確認用　後で消します。
-    fun room(){
-        viewModelScope.launch(Dispatchers.IO) {
-            val finishedMonthlyInfo =
-                monthlyInfo(
-                    yearMonth = 200010,
-                    stepCount = 3000,
-                    goalOfMonth = 5000,
-                    percentOfMonthlyGoal = 60f
-                )
-
-            val Dao = getDatabase(cont).aboutMonthlyInfoDao
-            val createFinishedMonthRepository = CreateFinishedMonthRepository()
-            createFinishedMonthRepository.createFinishedMonth(Dao,monthlyInfo = finishedMonthlyInfo)
-        }
     }
 }

@@ -16,6 +16,7 @@ import com.hamu.walkforcats.R
 import com.hamu.walkforcats.viewmodels.StepCountViewmodel
 import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SettingsFragment : PreferenceFragmentCompat() {
     private val viewModel: StepCountViewmodel by activityViewModels()
 

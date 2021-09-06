@@ -15,8 +15,9 @@ import com.hamu.walkforcats.database.monthlyInfo
 import com.hamu.walkforcats.databinding.FragmentStepCountBinding
 import com.hamu.walkforcats.repository.CreateFinishedMonthRepository
 import com.hamu.walkforcats.viewmodels.StepCountViewmodel
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class StepCountFragment : Fragment(R.layout.fragment_step_count){
 
     private val viewModel: StepCountViewmodel by activityViewModels()
@@ -25,7 +26,6 @@ class StepCountFragment : Fragment(R.layout.fragment_step_count){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        viewModel.room()//動作確認　後で消します。
 
         //設定画面や猫部屋から戻るたびに前回終了時のカウントがロードされるのを防ぐためにif文を設けています
         if(viewModel.isFirstinit) {

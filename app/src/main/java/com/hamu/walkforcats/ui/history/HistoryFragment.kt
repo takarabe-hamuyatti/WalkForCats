@@ -15,7 +15,9 @@ import com.hamu.walkforcats.R
 import com.hamu.walkforcats.databinding.FragmentHistoryBinding
 import com.hamu.walkforcats.viewmodels.HistoryViewModel
 import com.hamu.walkforcats.viewmodels.StepCountViewmodel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HistoryFragment : Fragment(R.layout.fragment_history) {
 
     private val stepCountviewModel: StepCountViewmodel by activityViewModels()

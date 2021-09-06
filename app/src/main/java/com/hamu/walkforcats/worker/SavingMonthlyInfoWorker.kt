@@ -3,21 +3,28 @@ package com.hamu.walkforcats.worker
 import android.content.Context
 import android.os.Handler
 import android.util.Log
+import androidx.annotation.WorkerThread
 import androidx.preference.PreferenceManager
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
+import com.hamu.walkforcats.database.aboutMonthlyInfoDao
 import com.hamu.walkforcats.database.getDatabase
 import com.hamu.walkforcats.database.monthlyInfo
 import com.hamu.walkforcats.repository.CreateFinishedMonthRepository
 import com.hamu.walkforcats.repository.HistoryRepository
 import com.hamu.walkforcats.repository.PreferenceRepository
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import javax.inject.Inject
 
-class SavingMonthlyInfoWorker (appContext: Context, workerPrams:WorkerParameters)
+class SavingMonthlyInfoWorker @AssistedInject constructor(
+    @Assisted appContext: Context,
+    @Assisted workerPrams:WorkerParameters,
+    @Assisted private val createFinishedMonthRepository: CreateFinishedMonthRepository,
+    @Assisted private val preferenceRepository: PreferenceRepository)
     : CoroutineWorker(appContext,workerPrams){
-
-
     companion object {
         const val WORK_NAME = "resetDailyCountInDaysEnd"
     }
@@ -25,8 +32,6 @@ class SavingMonthlyInfoWorker (appContext: Context, workerPrams:WorkerParameters
     override suspend fun doWork(): Result {
         // その日ごとの歩数をリセットしています。
          try{
-             val pref = PreferenceManager.getDefaultSharedPreferences(applicationContext)
-             val preferenceRepository= PreferenceRepository(pref)
              preferenceRepository.clearCountOfTheDay()//その日の歩数をリセットします。
              //1日の最後の5分を指定して、遅延させて日付を越えさせています。
              // 日付変更前、つまり当日中に保存する仕組みにすると端末の影響で遅延した時に登録する日付がずれてしまうと考えたためです。
@@ -56,8 +61,7 @@ class SavingMonthlyInfoWorker (appContext: Context, workerPrams:WorkerParameters
                              percentOfMonthlyGoal = percent
                          )
                      val Dao = getDatabase(applicationContext).aboutMonthlyInfoDao
-                     val createFinishedMonthRepository = CreateFinishedMonthRepository()
-                     createFinishedMonthRepository.createFinishedMonth(Dao,monthlyInfo = finishedMonthlyInfo)
+                     createFinishedMonthRepository.createFinishedMonth(monthlyInfo = finishedMonthlyInfo)
 
                      preferenceRepository.clearCountOfTheMonth()//月の歩数をリセットします。
 

@@ -7,22 +7,24 @@ import com.hamu.walkforcats.database.getDatabase
 import com.hamu.walkforcats.database.monthlyInfo
 import com.hamu.walkforcats.repository.HistoryRepository
 import com.hamu.walkforcats.repository.PreferenceRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import javax.inject.Inject
 
-class HistoryViewModel(application: Application) : AndroidViewModel(application) {
+@HiltViewModel
+class HistoryViewModel @Inject constructor(
+    application: Application,
+    private val historyRepository: HistoryRepository,
+    private val preferenceRepository: PreferenceRepository
+) : AndroidViewModel(application) {
     val dt = LocalDate.now()
     val context = application
 
-    val pref = PreferenceManager.getDefaultSharedPreferences(context)
-    val preferenceRepository= PreferenceRepository(pref)
 
     private val _isUseDemoData = MutableLiveData(true)
     val isUseDemoData:LiveData<Boolean>
         get() = _isUseDemoData
-
-    private val dao= getDatabase(context).aboutMonthlyInfoDao
-    private val historyRepository = HistoryRepository(dao)
 
     val allMonthlyInfo: LiveData<List<monthlyInfo>> = historyRepository.allMonthlyInfo.asLiveData()
 
