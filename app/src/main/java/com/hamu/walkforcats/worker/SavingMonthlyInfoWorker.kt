@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Handler
 import android.util.Log
 import androidx.annotation.WorkerThread
+import androidx.hilt.work.HiltWorker
 import androidx.preference.PreferenceManager
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
@@ -19,11 +20,11 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
-class SavingMonthlyInfoWorker @AssistedInject constructor(
-    @Assisted appContext: Context,
-    @Assisted workerPrams:WorkerParameters,
-    @Assisted private val createFinishedMonthRepository: CreateFinishedMonthRepository,
-    @Assisted private val preferenceRepository: PreferenceRepository)
+class SavingMonthlyInfoWorker (
+    appContext: Context,
+    workerPrams:WorkerParameters,
+    private val createFinishedMonthRepository: CreateFinishedMonthRepository,
+    private val preferenceRepository: PreferenceRepository, )
     : CoroutineWorker(appContext,workerPrams){
     companion object {
         const val WORK_NAME = "resetDailyCountInDaysEnd"
@@ -43,15 +44,12 @@ class SavingMonthlyInfoWorker @AssistedInject constructor(
                  val isTheBeginningOfTheMonth = dt.dayOfMonth == 1
 
                  if(isTheBeginningOfTheMonth){
+                     //月が変わっていたら、これまでの月の記録を行っているので現時点から月を一つ減らした値で登録します。
+                     val yearMonth = formattingYearMonth(dt)
                      //これまでの目標値、歩数、達成率を取得します。
                      val monthlyStepCount = preferenceRepository.getMonthlyCount()
-                     val monthlyGoal = preferenceRepository.getMonthlyGoal()
+                         val monthlyGoal = preferenceRepository.getMonthlyGoal()
                      val percent = truncating(getRatio(monthlyStepCount,monthlyGoal))
-                     //月が変わっていたら、これまでの月の記録を行っているので現時点から月を一つ減らした値で登録します。
-                     val beforeFormatting = dt.minusMonths(1)
-
-                     val formatter = DateTimeFormatter.ofPattern("YYYYMM")
-                     val yearMonth = beforeFormatting.format(formatter).toInt()
 
                      val finishedMonthlyInfo =
                          monthlyInfo(
@@ -60,11 +58,8 @@ class SavingMonthlyInfoWorker @AssistedInject constructor(
                              goalOfMonth = monthlyGoal,
                              percentOfMonthlyGoal = percent
                          )
-                     val Dao = getDatabase(applicationContext).aboutMonthlyInfoDao
                      createFinishedMonthRepository.createFinishedMonth(monthlyInfo = finishedMonthlyInfo)
-
                      preferenceRepository.clearCountOfTheMonth()//月の歩数をリセットします。
-
                  }
               }, 400000)
 
@@ -81,4 +76,11 @@ class SavingMonthlyInfoWorker @AssistedInject constructor(
     private fun truncating(num:Float?):Float?{
         return num?.times(10)?.toInt()?.toFloat()?.div(10)
     }
+
+    private fun formattingYearMonth(dt:LocalDate): Int {
+        val beforeFormatting = dt.minusMonths(1)
+        val formatter = DateTimeFormatter.ofPattern("YYYYMM")
+        return beforeFormatting.format(formatter).toInt()
+    }
+
 }

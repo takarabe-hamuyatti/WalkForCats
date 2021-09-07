@@ -9,6 +9,4 @@ class CreateFinishedMonthRepositoryImpl(
     override fun createFinishedMonth(monthlyInfo: monthlyInfo){
         dao.insert(monthlyInfo)
     }
-
-
 }

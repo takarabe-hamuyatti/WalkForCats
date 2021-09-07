@@ -1,10 +1,12 @@
-package com.hamu.walkforcats.worker
+package com.hamu.walkforcats
 
 import android.app.Application
 import android.util.Log
-import androidx.hilt.work.HiltWorker
 import androidx.hilt.work.HiltWorkerFactory
-import androidx.work.*
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
+import com.hamu.walkforcats.worker.SavingMonthlyInfoWorker
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -12,42 +14,35 @@ import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-/*
 @HiltAndroidApp
-class Operations: Application(),Configuration.Provider {
-
-    private val applicationScope = CoroutineScope(Dispatchers.Default)
+class MyApplication :Application(),androidx.work.Configuration.Provider {
 
     @Inject
     lateinit var workerFactory: HiltWorkerFactory
+    override fun getWorkManagerConfiguration() =
+        androidx.work.Configuration.Builder()
+            .setWorkerFactory(workerFactory)
+            .build()
 
-    /**
-     * onCreate is called before the first screen is shown to the user.
-     *
-     * Use it to setup any background tasks, running expensive setup operations in a background
-     * thread to avoid delaying app start.
-     */
     override fun onCreate() {
         super.onCreate()
         delayedInit()
     }
+
+    private val applicationScope = CoroutineScope(Dispatchers.Default)
 
     private fun delayedInit() {
         applicationScope.launch {
             setupRecurringWork()
         }
     }
-
-    /**
-     * Setup WorkManager background job to 'fetch' new network data daily.
-     */
     private fun setupRecurringWork() {
         Log.i("work", "initwork")
 
         val repeatingRequest =
             PeriodicWorkRequestBuilder<SavingMonthlyInfoWorker>(
                 1,
-                TimeUnit.DAYS, 15, TimeUnit.MINUTES
+                TimeUnit.DAYS, 5, TimeUnit.MINUTES
             )
                 .build()
 
@@ -59,17 +54,4 @@ class Operations: Application(),Configuration.Provider {
         )
     }
 
-    
-
-    override fun getWorkManagerConfiguration(): Configuration =
-        Configuration.Builder()
-            .setWorkerFactory(workerFactory)
-            .build()
- }
-   */
-
-
-
-
-
-
+}

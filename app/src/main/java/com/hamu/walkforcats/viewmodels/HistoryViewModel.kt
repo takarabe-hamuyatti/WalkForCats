@@ -21,7 +21,6 @@ class HistoryViewModel @Inject constructor(
     val dt = LocalDate.now()
     val context = application
 
-
     private val _isUseDemoData = MutableLiveData(true)
     val isUseDemoData:LiveData<Boolean>
         get() = _isUseDemoData
