@@ -2,8 +2,6 @@ package com.hamu.walkforcats.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.*
-import androidx.preference.PreferenceManager
-import com.hamu.walkforcats.database.getDatabase
 import com.hamu.walkforcats.database.monthlyInfo
 import com.hamu.walkforcats.repository.HistoryRepository
 import com.hamu.walkforcats.repository.PreferenceRepository

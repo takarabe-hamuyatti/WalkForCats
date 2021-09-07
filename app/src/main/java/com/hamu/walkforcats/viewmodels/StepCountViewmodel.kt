@@ -7,16 +7,10 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.widget.Toast
 import androidx.lifecycle.*
-import androidx.preference.PreferenceManager
-import com.hamu.walkforcats.database.getDatabase
-import com.hamu.walkforcats.database.monthlyInfo
-import com.hamu.walkforcats.repository.CreateFinishedMonthRepository
 import com.hamu.walkforcats.utils.StepListener
 import com.hamu.walkforcats.repository.PreferenceRepository
 import com.hamu.walkforcats.utils.StepDetector
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel

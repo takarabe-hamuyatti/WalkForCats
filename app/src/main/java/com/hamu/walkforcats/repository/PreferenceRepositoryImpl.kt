@@ -51,11 +51,16 @@ class PreferenceRepositoryImpl(
         return pref.getBoolean(demoDataKey,true)
     }
 
+    override fun isUseMoreCat(): Boolean {
+        return pref.getBoolean(moreCatKey,false)
+    }
+
     companion object{
         val dailyGoalKey = "dailyGoal"
         val monthlyGoalKey ="monthlyGoal"
         val dailyCountKey = "dailyCount"
         val monthlyCountKey = "monthlyCount"
         val demoDataKey = "demoData"
+        val moreCatKey = "morecat"
     }
 }

@@ -5,10 +5,12 @@ import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 import androidx.room.Room
 import com.hamu.walkforcats.database.aboutMonthlyInfoDao
+import com.hamu.walkforcats.database.checkIsChangeOfDateDatabase
 import com.hamu.walkforcats.database.monthlyInfoDatabase
 import com.hamu.walkforcats.repository.*
 import dagger.Module
 import dagger.Provides
+import dagger.Subcomponent
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ActivityContext
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -39,6 +41,20 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun providecheckIsChangeOfDateDatabase(@ApplicationContext context: Context):checkIsChangeOfDateDatabase{
+        return Room.databaseBuilder(
+            context,
+            checkIsChangeOfDateDatabase::class.java,
+            "checkIsChangeOfDateDatabase"
+        ).build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideaboutIsChangeOfDateDao(db:checkIsChangeOfDateDatabase) = db.aboutIsChangeOfDate
+
+    @Provides
+    @Singleton
     fun provideHistoryRepository(
         dao:aboutMonthlyInfoDao
     ):HistoryRepository = HistoryRepositoryImpl(dao)
@@ -54,4 +70,5 @@ object AppModule {
     fun provideCreateFinishedMonthRepository(
         dao: aboutMonthlyInfoDao
     ):CreateFinishedMonthRepository = CreateFinishedMonthRepositoryImpl(dao)
+
 }

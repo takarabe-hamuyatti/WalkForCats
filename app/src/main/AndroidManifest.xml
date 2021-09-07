@@ -22,7 +22,9 @@
             android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.workmanager-init"
             tools:node="remove"
-            tools:replace="android:authorities"/>
+            android:exported="false"
+            tools:replace="android:authorities"
+            />
         <activity
             android:name="com.hamu.walkforcats.MainActivity"
             android:screenOrientation="portrait"

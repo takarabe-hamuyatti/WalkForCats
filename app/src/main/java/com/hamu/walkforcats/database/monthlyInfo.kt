@@ -11,7 +11,12 @@ data class monthlyInfo(
      val yearMonth: Int,
      val stepCount: Int,
      val goalOfMonth: Int?,
-     val percentOfMonthlyGoal:Float?
+     val percentOfMonthlyGoal:Float?,
+)
+
+@Entity
+data class isChangeOfDate(
+     val isChangeOfDate:Int
 )
 
 

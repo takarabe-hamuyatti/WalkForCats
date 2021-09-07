@@ -3,9 +3,7 @@ package com.hamu.walkforcats
 import android.app.Application
 import android.util.Log
 import androidx.hilt.work.HiltWorkerFactory
-import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
+import androidx.work.*
 import com.hamu.walkforcats.worker.SavingMonthlyInfoWorker
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
@@ -15,14 +13,16 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @HiltAndroidApp
-class MyApplication :Application(),androidx.work.Configuration.Provider {
+class MyApplication :Application(),Configuration.Provider {
 
     @Inject
     lateinit var workerFactory: HiltWorkerFactory
+
     override fun getWorkManagerConfiguration() =
-        androidx.work.Configuration.Builder()
+        Configuration.Builder()
             .setWorkerFactory(workerFactory)
             .build()
+
 
     override fun onCreate() {
         super.onCreate()
@@ -38,12 +38,15 @@ class MyApplication :Application(),androidx.work.Configuration.Provider {
     }
     private fun setupRecurringWork() {
         Log.i("work", "initwork")
-
+        val constraints = Constraints.Builder()
+            .setRequiresStorageNotLow(true)
+            .build()
         val repeatingRequest =
             PeriodicWorkRequestBuilder<SavingMonthlyInfoWorker>(
                 1,
-                TimeUnit.DAYS, 5, TimeUnit.MINUTES
+                TimeUnit.MINUTES
             )
+                .setConstraints(constraints)
                 .build()
 
 
