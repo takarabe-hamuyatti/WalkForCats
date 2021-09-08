@@ -44,6 +44,8 @@ class MyApplication :Application(),Configuration.Provider {
         val repeatingRequest =
             PeriodicWorkRequestBuilder<SavingMonthlyInfoWorker>(
                 1,
+                TimeUnit.DAYS,
+                5,
                 TimeUnit.MINUTES
             )
                 .setConstraints(constraints)

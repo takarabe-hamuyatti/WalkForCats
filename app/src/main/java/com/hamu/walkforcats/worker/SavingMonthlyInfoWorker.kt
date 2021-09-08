@@ -38,7 +38,7 @@ class SavingMonthlyInfoWorker @AssistedInject constructor(
                  // 日付変更前、つまり当日中に保存する仕組みにすると端末の影響で遅延した時に登録する日付がずれてしまうと考えたためです。
 
              GlobalScope.launch {
-                 delay(200)
+                 delay(300000)
                  Log.i("work", "postdeleyed")
 
                  val dt = LocalDate.now()
