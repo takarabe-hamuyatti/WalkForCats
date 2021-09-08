@@ -14,6 +14,7 @@ import dagger.assisted.AssistedInject
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -28,18 +29,18 @@ class SavingMonthlyInfoWorker @AssistedInject constructor(
     companion object {
         const val WORK_NAME = "resetDailyCountInDaysEnd"
     }
-    val workResultLiveData = MutableLiveData<String>()
+
     override suspend fun doWork(): Result {
         // その日ごとの歩数をリセットしています。
          try{
-                 Log.i("work", "dowork1")
-                 preferenceRepository.clearCountOfTheDay()//その日の歩数をリセットします。
-                 //1日の最後の5分を指定して、遅延させて日付を越えさせています。
-                 // 日付変更前、つまり当日中に保存する仕組みにすると端末の影響で遅延した時に登録する日付がずれてしまうと考えたためです。
+             Timber.i("StartWorkMnager")
+             preferenceRepository.clearCountOfTheDay()//その日の歩数をリセットします。
+             //1日の最後の5分を指定して、遅延させて日付を越えさせています。
+             // 日付変更前、つまり当日中に保存する仕組みにすると端末の影響で遅延した時に登録する日付がずれてしまうと考えたためです。
 
              GlobalScope.launch {
                  delay(300000)
-                 Log.i("work", "postdeleyed")
+                 Timber.i("delay")
 
                  val dt = LocalDate.now()
                  //日付を確認して、月が変わったかどうかを確認しています。
@@ -68,7 +69,7 @@ class SavingMonthlyInfoWorker @AssistedInject constructor(
 
              return Result.success()
          }catch (e:Exception){
-             Log.i("work","dowork3")
+             Timber.i("WorkmanagerFailed")
              return  Result.retry()
          }
     }

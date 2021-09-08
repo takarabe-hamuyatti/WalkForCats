@@ -9,6 +9,7 @@ import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -26,6 +27,7 @@ class MyApplication :Application(),Configuration.Provider {
 
     override fun onCreate() {
         super.onCreate()
+        Timber.plant(Timber.DebugTree())
         delayedInit()
     }
 
@@ -37,7 +39,7 @@ class MyApplication :Application(),Configuration.Provider {
         }
     }
     private fun setupRecurringWork() {
-        Log.i("work", "initwork")
+        Timber.i("initwork")
         val constraints = Constraints.Builder()
             .setRequiresStorageNotLow(true)
             .build()
