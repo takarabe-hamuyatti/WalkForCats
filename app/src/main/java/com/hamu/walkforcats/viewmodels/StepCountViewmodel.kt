@@ -8,7 +8,7 @@ import android.hardware.SensorManager
 import android.widget.Toast
 import androidx.lifecycle.*
 import com.hamu.walkforcats.utils.StepListener
-import com.hamu.walkforcats.repository.PreferenceRepository
+import com.hamu.walkforcats.repository.preference.PreferenceRepository
 import com.hamu.walkforcats.utils.StepDetector
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -16,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class StepCountViewmodel @Inject constructor(
     private val context : Application,
-    private val repository: PreferenceRepository
+    private val preferenceRepository: PreferenceRepository
     ): AndroidViewModel(context), SensorEventListener , StepListener {
     private var sensorManager: SensorManager? = null
     private var simpleStepDetector: StepDetector? = null
@@ -52,7 +52,6 @@ class StepCountViewmodel @Inject constructor(
     private val _monthlyPercent = MutableLiveData(0f)
     val monthlyPercent: LiveData<String>
         get() = _monthlyPercent.map {"$it%"}
-
 
     //センサーマネージャー取得
     fun getSensorManager(sensor: SensorManager) {
@@ -113,14 +112,14 @@ class StepCountViewmodel @Inject constructor(
     //その日ごとの記録は共有プリファレンスで行い、累計の記録はroom で行います。
 
     fun getNowCount(){
-        _dailyCount.value  = repository.getDailyCount()
-        _monthlyCount.value  = repository.getMonthlyCount()
+        _dailyCount.value  = preferenceRepository.getDailyCount()
+        _monthlyCount.value  = preferenceRepository.getMonthlyCount()
     }
 
     //一日ごと、一週間ごとの目標を取得しています。
     fun getGoal() {
-        _dailyGoal.value  = repository.getDailyGoal()
-        _monthlyGoal.value  = repository.getMonthlyGoal()
+        _dailyGoal.value  = preferenceRepository.getDailyGoal()
+        _monthlyGoal.value  = preferenceRepository.getMonthlyGoal()
     }
 
     private fun getRatio(num1: Int?, num2: Int?): Float? {
@@ -133,7 +132,11 @@ class StepCountViewmodel @Inject constructor(
 
     override fun onCleared() {
         super.onCleared()
-        repository.saveCount(_dailyCount.value,_monthlyCount.value)
+        preferenceRepository.saveCount(_dailyCount.value,_monthlyCount.value)
         isFirstinit = !isFirstinit
+    }
+
+    fun resetViewmodelCount(){
+        _dailyCount.value = 0
     }
 }

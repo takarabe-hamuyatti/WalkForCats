@@ -1,14 +1,15 @@
-package com.hamu.walkforcats.repository
+package com.hamu.walkforcats.repository.history
 
 import com.hamu.walkforcats.database.aboutMonthlyInfoDao
 import com.hamu.walkforcats.database.monthlyInfo
+import com.hamu.walkforcats.repository.history.HistoryRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 
 class HistoryRepositoryImpl(
     private val dao:aboutMonthlyInfoDao
-) :HistoryRepository{
+) : HistoryRepository {
     override val allMonthlyInfo: Flow<List<monthlyInfo>>
         get() = dao.getMonthlyInfo()
 

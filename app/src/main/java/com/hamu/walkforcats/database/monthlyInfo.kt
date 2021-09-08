@@ -14,11 +14,6 @@ data class monthlyInfo(
      val percentOfMonthlyGoal:Float?,
 )
 
-@Entity
-data class isChangeOfDate(
-     val isChangeOfDate:Int
-)
-
 
 
 

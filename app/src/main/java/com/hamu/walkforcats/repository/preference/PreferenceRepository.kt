@@ -1,4 +1,4 @@
-package com.hamu.walkforcats.repository
+package com.hamu.walkforcats.repository.preference
 
 
 interface PreferenceRepository {

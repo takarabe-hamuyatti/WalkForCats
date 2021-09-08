@@ -1,4 +1,4 @@
-package com.hamu.walkforcats.repository
+package com.hamu.walkforcats.repository.preference
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
@@ -6,7 +6,7 @@ import androidx.core.content.edit
 
 class PreferenceRepositoryImpl(
     private val pref:SharedPreferences
-):PreferenceRepository {
+): PreferenceRepository {
     override fun getDailyGoal(): Int? {
         return pref.getString(dailyGoalKey, "15000")?.toInt()
     }

@@ -3,8 +3,8 @@ package com.hamu.walkforcats.viewmodels
 import android.app.Application
 import androidx.lifecycle.*
 import com.hamu.walkforcats.database.monthlyInfo
-import com.hamu.walkforcats.repository.HistoryRepository
-import com.hamu.walkforcats.repository.PreferenceRepository
+import com.hamu.walkforcats.repository.history.HistoryRepository
+import com.hamu.walkforcats.repository.preference.PreferenceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDate

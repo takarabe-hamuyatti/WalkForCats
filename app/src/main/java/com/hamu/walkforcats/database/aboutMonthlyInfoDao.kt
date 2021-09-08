@@ -19,10 +19,3 @@ interface aboutMonthlyInfoDao {
     fun deleteDemoData(monthlyInfos: Array<monthlyInfo>)
 
 }
-
-@Dao
-interface aboutIsChangeOfDateDao{
-    @Query("select * from isChangeOfDate")
-    fun checkIsChangeOfDate():Flow<isChangeOfDate>
-}
-

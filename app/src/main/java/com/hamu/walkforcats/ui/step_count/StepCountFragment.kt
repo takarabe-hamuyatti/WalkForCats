@@ -1,4 +1,4 @@
-package com.hamu.walkforcats.ui.stepCount
+package com.hamu.walkforcats.ui.step_count
 
 import android.content.Context
 import android.hardware.SensorManager
@@ -7,6 +7,8 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.work.WorkInfo
+import androidx.work.WorkManager
 import com.hamu.walkforcats.R
 import com.hamu.walkforcats.databinding.FragmentStepCountBinding
 import com.hamu.walkforcats.viewmodels.StepCountViewmodel
@@ -40,6 +42,16 @@ class StepCountFragment : Fragment(R.layout.fragment_step_count){
         //センサー取得をして、実際の歩行検知をvieewmodelに任せています。
         sensorManager = activity?.getSystemService(Context.SENSOR_SERVICE) as SensorManager
         sensorManager?.let { viewModel.getSensorManager(it)}
+
+
+        WorkManager.getInstance(requireContext())
+            .getWorkInfosByTagLiveData("everydayWork")
+            .observe(viewLifecycleOwner){workInfo->
+                for(i in workInfo.indices){
+                    if(workInfo[i].state == WorkInfo.State.SUCCEEDED)
+                        viewModel.resetViewmodelCount()
+                }
+            }
 
     }
 

@@ -47,6 +47,7 @@ class MyApplication :Application(),Configuration.Provider {
                 TimeUnit.MINUTES
             )
                 .setConstraints(constraints)
+                .addTag(WorkTag)
                 .build()
 
 
@@ -55,6 +56,10 @@ class MyApplication :Application(),Configuration.Provider {
             ExistingPeriodicWorkPolicy.KEEP,
             repeatingRequest
         )
+    }
+
+    companion object{
+        val WorkTag = "everydayWork"
     }
 
 }

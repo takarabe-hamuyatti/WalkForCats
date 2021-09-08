@@ -3,11 +3,12 @@ package com.hamu.walkforcats.worker
 import android.content.Context
 import android.util.Log
 import androidx.hilt.work.HiltWorker
+import androidx.lifecycle.MutableLiveData
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.hamu.walkforcats.database.monthlyInfo
-import com.hamu.walkforcats.repository.CreateFinishedMonthRepository
-import com.hamu.walkforcats.repository.PreferenceRepository
+import com.hamu.walkforcats.repository.create_finished_month.CreateFinishedMonthRepository
+import com.hamu.walkforcats.repository.preference.PreferenceRepository
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.GlobalScope
@@ -21,11 +22,13 @@ class SavingMonthlyInfoWorker @AssistedInject constructor(
     @Assisted appContext: Context,
     @Assisted workerPrams:WorkerParameters,
     private val createFinishedMonthRepository: CreateFinishedMonthRepository,
-    private val preferenceRepository: PreferenceRepository, )
+    private val preferenceRepository: PreferenceRepository
+    )
     : CoroutineWorker(appContext,workerPrams){
     companion object {
         const val WORK_NAME = "resetDailyCountInDaysEnd"
     }
+    val workResultLiveData = MutableLiveData<String>()
     override suspend fun doWork(): Result {
         // その日ごとの歩数をリセットしています。
          try{

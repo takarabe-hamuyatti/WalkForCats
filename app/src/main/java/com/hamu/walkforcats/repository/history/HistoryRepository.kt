@@ -1,4 +1,4 @@
-package com.hamu.walkforcats.repository
+package com.hamu.walkforcats.repository.history
 
 import com.hamu.walkforcats.database.aboutMonthlyInfoDao
 import com.hamu.walkforcats.database.monthlyInfo

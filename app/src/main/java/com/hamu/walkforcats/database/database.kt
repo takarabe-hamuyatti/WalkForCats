@@ -7,8 +7,3 @@ import androidx.room.RoomDatabase
 abstract class monthlyInfoDatabase: RoomDatabase() {
     abstract val aboutMonthlyInfoDao: aboutMonthlyInfoDao
 }
-
-@Database(entities = [isChangeOfDate::class],version = 1,exportSchema = false)
-abstract  class  checkIsChangeOfDateDatabase:RoomDatabase(){
-    abstract  val aboutIsChangeOfDate:aboutIsChangeOfDateDao
-}

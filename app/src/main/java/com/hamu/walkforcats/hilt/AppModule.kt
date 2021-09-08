@@ -5,14 +5,16 @@ import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 import androidx.room.Room
 import com.hamu.walkforcats.database.aboutMonthlyInfoDao
-import com.hamu.walkforcats.database.checkIsChangeOfDateDatabase
 import com.hamu.walkforcats.database.monthlyInfoDatabase
-import com.hamu.walkforcats.repository.*
+import com.hamu.walkforcats.repository.create_finished_month.CreateFinishedMonthRepository
+import com.hamu.walkforcats.repository.create_finished_month.CreateFinishedMonthRepositoryImpl
+import com.hamu.walkforcats.repository.history.HistoryRepository
+import com.hamu.walkforcats.repository.history.HistoryRepositoryImpl
+import com.hamu.walkforcats.repository.preference.PreferenceRepository
+import com.hamu.walkforcats.repository.preference.PreferenceRepositoryImpl
 import dagger.Module
 import dagger.Provides
-import dagger.Subcomponent
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ActivityContext
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
@@ -39,36 +41,23 @@ object AppModule {
     @Singleton
     fun provideMonthlyInfoDao(db:monthlyInfoDatabase) = db.aboutMonthlyInfoDao
 
-    @Provides
-    @Singleton
-    fun providecheckIsChangeOfDateDatabase(@ApplicationContext context: Context):checkIsChangeOfDateDatabase{
-        return Room.databaseBuilder(
-            context,
-            checkIsChangeOfDateDatabase::class.java,
-            "checkIsChangeOfDateDatabase"
-        ).build()
-    }
-
-    @Provides
-    @Singleton
-    fun provideaboutIsChangeOfDateDao(db:checkIsChangeOfDateDatabase) = db.aboutIsChangeOfDate
 
     @Provides
     @Singleton
     fun provideHistoryRepository(
         dao:aboutMonthlyInfoDao
-    ):HistoryRepository = HistoryRepositoryImpl(dao)
+    ): HistoryRepository = HistoryRepositoryImpl(dao)
 
     @Provides
     @Singleton
     fun providePreferenceRepository(
         pref:SharedPreferences
-    ):PreferenceRepository = PreferenceRepositoryImpl(pref)
+    ): PreferenceRepository = PreferenceRepositoryImpl(pref)
 
     @Provides
     @Singleton
     fun provideCreateFinishedMonthRepository(
         dao: aboutMonthlyInfoDao
-    ):CreateFinishedMonthRepository = CreateFinishedMonthRepositoryImpl(dao)
+    ): CreateFinishedMonthRepository = CreateFinishedMonthRepositoryImpl(dao)
 
 }
