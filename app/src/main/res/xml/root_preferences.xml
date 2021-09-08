@@ -22,8 +22,8 @@
     <PreferenceCategory app:title="@string/cat_header">
 
         <SwitchPreferenceCompat
-            app:key="morecat"
-            app:title="@string/more_cat"
+            app:key="changeCat"
+            app:title="@string/changeCat"
             android:defaultValue="false"/>
     </PreferenceCategory>
 

@@ -19,6 +19,6 @@ interface PreferenceRepository {
 
     fun isUseDemoData(): Boolean
 
-    fun isUseMoreCat() :Boolean
+    fun isCangeCat() :Boolean
 
 }

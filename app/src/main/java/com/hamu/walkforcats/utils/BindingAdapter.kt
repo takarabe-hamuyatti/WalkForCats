@@ -33,7 +33,7 @@ object BindingAdapter {
         var tmp = goal.toInt()
         view.text = tmp.toString()
     }
-    @SuppressLint("NewApi")
+
     @BindingAdapter("formatYearandMonth")
     @JvmStatic
     fun formatYearandMonth(view:TextView,date: LocalDate){
@@ -52,27 +52,44 @@ object BindingAdapter {
         }
     }
 
-    @BindingAdapter("setCatView")
+    @BindingAdapter("setCatView","isChangecat")
     @JvmStatic
-    fun setCatView(imageView: ImageView,percentString:String){
+    fun setCatView(imageView: ImageView,percentString:String,isChangecat:Boolean){
         val percent = percentString.dropLast(3).toInt()
         var imgResource by Delegates.notNull<Int>()
-        if(10 > percent){  imgResource = R.drawable.whitecat1}
-        else if(30 > percent) { imgResource = R.drawable.whitecat2}
-        else if(60 > percent) { imgResource = R.drawable.whitecat3}
-        else if(80 > percent){  imgResource = R.drawable.whitecat4}
-        else{ imgResource = R.drawable.whitecat5}
+        if(isChangecat) {
+            if (10 > percent) { imgResource = R.drawable.realcat1 }
+            else if (30 > percent) { imgResource = R.drawable.realcat2 }
+            else if (60 > percent) {imgResource = R.drawable.realcat3 }
+            else if (80 > percent) { imgResource = R.drawable.realcat4 }
+            else { imgResource = R.drawable.realcat5 }
+        }else{
+            if (10 > percent) { imgResource = R.drawable.whitecat1 }
+            else if (30 > percent) { imgResource = R.drawable.whitecat2 }
+            else if (60 > percent) { imgResource = R.drawable.whitecat3 }
+            else if (80 > percent) { imgResource = R.drawable.whitecat4 }
+            else { imgResource = R.drawable.whitecat5 }
+        }
         imageView.setImageResource(imgResource)
     }
-    @BindingAdapter("setCatViewForRecycler")
+
+    @BindingAdapter("setCatViewForRecycler","isChangecat")
     @JvmStatic
-    fun setCatViewForRecycler(imageView: ImageView,percent:Float){
+    fun setCatViewForRecycler(imageView: ImageView,percent:Float,isChangecat: Boolean){
         var imgResource by Delegates.notNull<Int>()
-        if(10 >= percent){  imgResource = R.drawable.whitecat1}
-        else if(30 >= percent) { imgResource = R.drawable.whitecat2}
-        else if(60 >= percent) { imgResource = R.drawable.whitecat3}
-        else if(80 >= percent){  imgResource = R.drawable.whitecat4}
-        else{imgResource = R.drawable.whitecat5}
+        if(isChangecat){
+            if(10 >= percent){  imgResource = R.drawable.realcat1}
+            else if(30 >= percent) { imgResource = R.drawable.realcat2}
+            else if(60 >= percent) { imgResource = R.drawable.realcat3}
+            else if(80 >= percent){  imgResource = R.drawable.realcat4}
+            else{imgResource = R.drawable.realcat5}
+        }else{
+            if(10 >= percent){  imgResource = R.drawable.whitecat1}
+            else if(30 >= percent) { imgResource = R.drawable.whitecat2}
+            else if(60 >= percent) { imgResource = R.drawable.whitecat3}
+            else if(80 >= percent){  imgResource = R.drawable.whitecat4}
+            else{imgResource = R.drawable.whitecat5}
+        }
         imageView.setImageResource(imgResource)
     }
 }

@@ -10,8 +10,8 @@ data class monthlyInfo(
      @PrimaryKey
      val yearMonth: Int,
      val stepCount: Int,
-     val goalOfMonth: Int?,
-     val percentOfMonthlyGoal:Float?,
+     val monthlyGoal: Int?,
+     val monthlyPercent:Float?,
 )
 
 

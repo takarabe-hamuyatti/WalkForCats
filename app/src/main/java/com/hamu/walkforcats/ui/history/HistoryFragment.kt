@@ -28,6 +28,7 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
         setHasOptionsMenu(true)
         stepCountviewModel.getGoal()
         historyViewmodel.checkIsUseDemoData()
+        stepCountviewModel.checkChangeCat()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

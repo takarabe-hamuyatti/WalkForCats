@@ -59,5 +59,6 @@
     <string name="_1999_12">1999 1(デモデータ）</string>
     <string name="history">履歴</string>
     <string name="step">Step</string>
+    <string name="changeCat">猫をかえる</string>
 
 </resources>

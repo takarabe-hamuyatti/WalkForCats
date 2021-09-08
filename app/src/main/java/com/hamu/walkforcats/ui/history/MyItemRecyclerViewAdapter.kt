@@ -28,11 +28,10 @@ class MyItemRecyclerViewAdapter(
                 sb.append(item.yearMonth.toString())
                 sb.insert(4,"-")
                 yearMonth.text = sb
-
-                percentForCat = item.percentOfMonthlyGoal
                 monthlyCount.text = item.stepCount.toString()
-                monthlyGoal.text = item.goalOfMonth.toString()
-                val percenttext = item.percentOfMonthlyGoal?.toInt().toString()
+                monthlyGoal.text = item.monthlyGoal.toString()
+                percentForCat = item.monthlyPercent
+                val percenttext = item.monthlyPercent?.toInt().toString()
                 percent.text = "$percenttext%"
             }
         }

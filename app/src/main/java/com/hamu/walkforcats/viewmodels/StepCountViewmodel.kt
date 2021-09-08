@@ -53,6 +53,10 @@ class StepCountViewmodel @Inject constructor(
     val monthlyPercent: LiveData<String>
         get() = _monthlyPercent.map {"$it%"}
 
+    private val _isChangeCat = MutableLiveData<Boolean>(false)
+    val isChangeCat:LiveData<Boolean>
+        get() = _isChangeCat
+
     //センサーマネージャー取得
     fun getSensorManager(sensor: SensorManager) {
         sensorManager = sensor
@@ -128,6 +132,10 @@ class StepCountViewmodel @Inject constructor(
 
     private fun truncating(num:Float?):Float?{
         return num?.times(10)?.toInt()?.toFloat()?.div(10)
+    }
+
+    fun checkChangeCat(){
+        _isChangeCat.value = preferenceRepository.isCangeCat()
     }
 
     override fun onCleared() {

@@ -1,9 +1,7 @@
 package com.hamu.walkforcats.worker
 
 import android.content.Context
-import android.util.Log
 import androidx.hilt.work.HiltWorker
-import androidx.lifecycle.MutableLiveData
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.hamu.walkforcats.database.monthlyInfo
@@ -57,8 +55,8 @@ class SavingMonthlyInfoWorker @AssistedInject constructor(
                          monthlyInfo(
                              yearMonth = yearMonth,
                              stepCount = monthlyStepCount,
-                             goalOfMonth = monthlyGoal,
-                             percentOfMonthlyGoal = percent
+                             monthlyGoal = monthlyGoal,
+                             monthlyPercent = percent
                          )
                      //Roomを使って保存しています。
                      createFinishedMonthRepository.createFinishedMonth(monthlyInfo = finishedMonthlyInfo)
