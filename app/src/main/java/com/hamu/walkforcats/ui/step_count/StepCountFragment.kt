@@ -13,6 +13,11 @@ import com.hamu.walkforcats.R
 import com.hamu.walkforcats.databinding.FragmentStepCountBinding
 import com.hamu.walkforcats.viewmodels.StepCountViewmodel
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
+import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 
 @AndroidEntryPoint
 class StepCountFragment : Fragment(R.layout.fragment_step_count){
@@ -38,20 +43,9 @@ class StepCountFragment : Fragment(R.layout.fragment_step_count){
             it.viewModel = viewModel
             it.lifecycleOwner = viewLifecycleOwner
         }
-
         //センサー取得をして、実際の歩行検知をvieewmodelに任せています。
         sensorManager = activity?.getSystemService(Context.SENSOR_SERVICE) as SensorManager
         sensorManager?.let { viewModel.getSensorManager(it)}
-
-
-        WorkManager.getInstance(requireContext())
-            .getWorkInfosByTagLiveData("everydayWork")
-            .observe(viewLifecycleOwner){workInfo->
-                for(i in workInfo.indices){
-                    if(workInfo[i].state == WorkInfo.State.SUCCEEDED)
-                        viewModel.resetViewmodelCount()
-                }
-            }
 
     }
 

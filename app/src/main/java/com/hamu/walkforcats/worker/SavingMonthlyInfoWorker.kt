@@ -32,39 +32,34 @@ class SavingMonthlyInfoWorker @AssistedInject constructor(
         // その日ごとの歩数をリセットしています。
          try{
              Timber.i("StartWorkMnager")
-             preferenceRepository.clearCountOfTheDay()//その日の歩数をリセットします。
              //1日の最後の5分を指定して、遅延させて日付を越えさせています。
              // 日付変更前、つまり当日中に保存する仕組みにすると端末の影響で遅延した時に登録する日付がずれてしまうと考えたためです。
+             val dt = LocalDate.now()
+             //日付を確認して、月が変わったかどうかを確認しています。
+             val isTheBeginningOfTheMonth = dt.dayOfMonth == 1
 
-             GlobalScope.launch {
-                 delay(300000)
-                 Timber.i("delay")
+             if (isTheBeginningOfTheMonth) {
+                 val yearMonth = formattingYearMonth(dt)
+                 //これまでの目標値、歩数、達成率を取得します。
+                 val monthlyStepCount = preferenceRepository.getMonthlyCount()
+                 val monthlyGoal = preferenceRepository.getMonthlyGoal()
+                 val percent = truncating(getRatio(monthlyStepCount, monthlyGoal))
 
-                 val dt = LocalDate.now()
-                 //日付を確認して、月が変わったかどうかを確認しています。
-                 val isTheBeginningOfTheMonth = dt.dayOfMonth == 1
-
-                 if (isTheBeginningOfTheMonth) {
-                     val yearMonth = formattingYearMonth(dt)
-                     //これまでの目標値、歩数、達成率を取得します。
-                     val monthlyStepCount = preferenceRepository.getMonthlyCount()
-                     val monthlyGoal = preferenceRepository.getMonthlyGoal()
-                     val percent = truncating(getRatio(monthlyStepCount, monthlyGoal))
-
-                     val finishedMonthlyInfo =
-                         monthlyInfo(
-                             yearMonth = yearMonth,
-                             stepCount = monthlyStepCount,
-                             monthlyGoal = monthlyGoal,
-                             monthlyPercent = percent
-                         )
-                     //Roomを使って保存しています。
-                     createFinishedMonthRepository.createFinishedMonth(monthlyInfo = finishedMonthlyInfo)
-                     //月の歩数をリセットします。
-                     preferenceRepository.clearCountOfTheMonth()
-                 }
+                 val finishedMonthlyInfo =
+                     monthlyInfo(
+                         yearMonth = yearMonth,
+                         stepCount = monthlyStepCount,
+                         monthlyGoal = monthlyGoal,
+                         monthlyPercent = percent
+                     )
+                 //Roomを使って保存しています。
+                 createFinishedMonthRepository.createFinishedMonth(monthlyInfo = finishedMonthlyInfo)
+                 //月の歩数をリセットします。
+                 preferenceRepository.clearCountOfTheMonth()
              }
-
+             //その日の歩数をリセットします。
+             preferenceRepository.clearCountOfTheDay()
+             Timber.i("endwork")
              return Result.success()
          }catch (e:Exception){
              Timber.i("WorkmanagerFailed")

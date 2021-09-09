@@ -58,6 +58,7 @@ class StepCountViewmodel @Inject constructor(
     val isChangeCat:LiveData<Boolean>
         get() = _isChangeCat
 
+
     //センサーマネージャー取得
     fun getSensorManager(sensor: SensorManager) {
         sensorManager = sensor
