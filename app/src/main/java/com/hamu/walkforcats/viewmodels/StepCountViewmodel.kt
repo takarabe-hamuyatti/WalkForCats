@@ -18,6 +18,7 @@ class StepCountViewmodel @Inject constructor(
     private val context : Application,
     private val preferenceRepository: PreferenceRepository
     ): AndroidViewModel(context), SensorEventListener , StepListener {
+
     private var sensorManager: SensorManager? = null
     private var simpleStepDetector: StepDetector? = null
 
@@ -53,7 +54,7 @@ class StepCountViewmodel @Inject constructor(
     val monthlyPercent: LiveData<String>
         get() = _monthlyPercent.map {"$it%"}
 
-    private val _isChangeCat = MutableLiveData<Boolean>(false)
+    private val _isChangeCat = MutableLiveData(false)
     val isChangeCat:LiveData<Boolean>
         get() = _isChangeCat
 
