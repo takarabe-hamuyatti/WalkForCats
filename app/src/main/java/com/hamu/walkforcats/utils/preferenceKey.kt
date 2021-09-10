@@ -2,13 +2,13 @@ package com.hamu.walkforcats.utils
 
 class preferenceKey {
     companion object{
-        val dailyGoalKey = "dailyGoal"
-        val monthlyGoalKey ="monthlyGoal"
-        val dailyCountKey = "dailyCount"
-        val monthlyCountKey = "monthlyCount"
-        val demoDataKey = "demoData"
-        val changeCatKey = "changeCat"
-        val checkFirstTimeOfHistryKey = "checkFirstTimeOfHistry"
-        val firstInitKey = "firstInit"
+        const val dailyGoalKey = "dailyGoal"
+        const val monthlyGoalKey ="monthlyGoal"
+        const val dailyCountKey = "dailyCount"
+        const val monthlyCountKey = "monthlyCount"
+        const val demoDataKey = "demoData"
+        const val changeCatKey = "changeCat"
+        const val checkFirstTimeOfHistryKey = "checkFirstTimeOfHistry"
+        const val firstInitKey = "firstInit"
     }
 }

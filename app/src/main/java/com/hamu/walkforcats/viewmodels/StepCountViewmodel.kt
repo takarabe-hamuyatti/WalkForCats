@@ -16,7 +16,9 @@ import androidx.lifecycle.*
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.hamu.walkforcats.utils.sensor.StepListener
 import com.hamu.walkforcats.repository.preference.PreferenceRepository
+import com.hamu.walkforcats.utils.getRatio
 import com.hamu.walkforcats.utils.sensor.StepDetector
+import com.hamu.walkforcats.utils.truncating
 import dagger.hilt.android.lifecycle.HiltViewModel
 import timber.log.Timber
 import javax.inject.Inject
@@ -109,10 +111,6 @@ class StepCountViewmodel @Inject constructor(
         _isChangeCat.value = preferenceRepository.isCangeCat()
     }
 
-    private fun resetViewmodelCount(){
-        _dailyCount.value = 0
-    }
-
     override fun onCleared() {
         super.onCleared()
         Timber.i("save")
@@ -131,7 +129,6 @@ class StepCountViewmodel @Inject constructor(
         )
             ?: Toast.makeText(context, "端末にセンサーが用意されていません。", Toast.LENGTH_SHORT).show()
     }
-
     //歩行検知
     override fun onSensorChanged(event: SensorEvent?) {
         if (event?.sensor?.type == Sensor.TYPE_ACCELEROMETER) {
@@ -143,17 +140,8 @@ class StepCountViewmodel @Inject constructor(
             )
         }
     }
-
     //大元のオープンソースで用意されている関数
     override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
         // do nothing
-    }
-
-    private fun getRatio(num1: Int?, num2: Int?): Float? {
-        return num1?.toFloat()?.div(num2!!)?.times(100)
-    }
-
-    private fun truncating(num:Float?):Float?{
-        return num?.times(10)?.toInt()?.toFloat()?.div(10)
     }
 }

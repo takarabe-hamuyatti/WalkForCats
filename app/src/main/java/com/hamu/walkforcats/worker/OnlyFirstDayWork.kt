@@ -7,6 +7,8 @@ import com.hamu.walkforcats.MyApplication
 import com.hamu.walkforcats.database.monthlyInfo
 import com.hamu.walkforcats.repository.create_finished_month.CreateFinishedMonthRepository
 import com.hamu.walkforcats.repository.preference.PreferenceRepository
+import com.hamu.walkforcats.utils.getRatio
+import com.hamu.walkforcats.utils.truncating
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import timber.log.Timber
@@ -34,7 +36,7 @@ class OnlyFirstDayWork @AssistedInject constructor(
             //日付を確認して、月が変わったかどうかを確認しています。
             val isTheBeginningOfTheMonth = dt.dayOfMonth == 1
 
-           // if (isTheBeginningOfTheMonth) {
+            if (isTheBeginningOfTheMonth) {
                 val yearMonth = formattingYearMonth(dt)
                 //これまでの目標値、歩数、達成率を取得します。
                 val monthlyStepCount = preferenceRepository.getMonthlyCount()
@@ -52,24 +54,13 @@ class OnlyFirstDayWork @AssistedInject constructor(
                 createFinishedMonthRepository.createFinishedMonth(monthlyInfo = finishedMonthlyInfo)
                 //月の歩数をリセットします。
                 preferenceRepository.clearCountOfTheMonth()
-            Timber.i("clearmonth")
-
+            }
             //その日の歩数をリセットします。
             preferenceRepository.clearCountOfTheDay()
-            Timber.i("endwork")
             return Result.success()
         }catch (e:Exception){
-            Timber.i("WorkmanagerFailed")
             return  Result.retry()
         }
-    }
-
-    private fun getRatio(num1: Int?, num2: Int?): Float? {
-        return num1?.toFloat()?.div(num2!!)?.times(100)
-    }
-
-    private fun truncating(num:Float?):Float?{
-        return num?.times(10)?.toInt()?.toFloat()?.div(10)
     }
 
     private fun formattingYearMonth(dt: LocalDate): Int {
@@ -80,7 +71,6 @@ class OnlyFirstDayWork @AssistedInject constructor(
     }
 
     fun setupRecurringWork(){
-        Timber.i("setuprecutiwork")
         val constraints = Constraints.Builder()
             .setRequiresStorageNotLow(true)
             .build()
