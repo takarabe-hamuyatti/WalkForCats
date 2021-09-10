@@ -59,6 +59,13 @@ class StepCountViewmodel @Inject constructor(
         get() = _isChangeCat
 
 
+    //画面を再表示した時に獲得したい値をまとめています。歩数の読み込みはアプリ起動時にのみ読み込むので省いています。
+    fun initWhenRedisplay(){
+        getPercent()
+        getGoal()
+        checkChangeCat()
+    }
+
     //センサーマネージャー取得
     fun getSensorManager(sensor: SensorManager) {
         sensorManager = sensor
@@ -103,12 +110,6 @@ class StepCountViewmodel @Inject constructor(
     private fun plusCount() {
         _dailyCount.value = _dailyCount.value?.plus(1)
         _monthlyCount.value = _monthlyCount.value?.plus(1)
-    }
-
-    fun init(){
-        getPercent()
-        getGoal()
-        checkChangeCat()
     }
 
     fun getPercent() {

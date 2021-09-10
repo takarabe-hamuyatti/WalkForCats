@@ -43,7 +43,7 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
                 list.itemAnimator = DefaultItemAnimator()
             }
         }
-        stepCountviewModel.init()
+        stepCountviewModel.initWhenRedisplay()
         historyViewmodel.checkInfo()
 
         historyViewmodel.allMonthlyInfo.observe(viewLifecycleOwner, {

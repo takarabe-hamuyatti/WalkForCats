@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
@@ -14,11 +13,6 @@ import com.hamu.walkforcats.R
 import com.hamu.walkforcats.databinding.FragmentStepCountBinding
 import com.hamu.walkforcats.viewmodels.StepCountViewmodel
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
-import java.time.LocalDateTime
-import java.time.LocalTime
-import java.time.format.DateTimeFormatter
-import java.time.temporal.ChronoUnit
 
 @AndroidEntryPoint
 class StepCountFragment : Fragment(R.layout.fragment_step_count){
@@ -43,7 +37,7 @@ class StepCountFragment : Fragment(R.layout.fragment_step_count){
             it.viewModel = viewModel
             it.lifecycleOwner = viewLifecycleOwner
         }
-        viewModel.init()
+        viewModel.initWhenRedisplay()
         //センサー取得をして、実際の歩行検知をvieewmodelに任せています。
         sensorManager = activity?.getSystemService(Context.SENSOR_SERVICE) as SensorManager
         sensorManager?.let { viewModel.getSensorManager(it)}
