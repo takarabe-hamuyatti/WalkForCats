@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.ListAdapter
 import com.hamu.walkforcats.database.monthlyInfo
 import com.hamu.walkforcats.databinding.FragmentItemBinding
 import com.hamu.walkforcats.repository.preference.PreferenceRepository
+import com.hamu.walkforcats.utils.preferenceKey.Companion.changeCatKey
 import java.time.YearMonth
 import javax.inject.Inject
 
@@ -37,7 +38,7 @@ class MyItemRecyclerViewAdapter : ListAdapter<monthlyInfo, MyItemRecyclerViewAda
                 percent.text = "$percenttext%"
 
                 val pref = PreferenceManager.getDefaultSharedPreferences(itemView.context)
-                isChangeCat = pref.getBoolean("changeCat",false)
+                isChangeCat = pref.getBoolean(changeCatKey,false)
             }
         }
         companion object {

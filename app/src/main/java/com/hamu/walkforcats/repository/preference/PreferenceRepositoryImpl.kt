@@ -2,6 +2,13 @@ package com.hamu.walkforcats.repository.preference
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
+import com.hamu.walkforcats.utils.preferenceKey.Companion.changeCatKey
+import com.hamu.walkforcats.utils.preferenceKey.Companion.checkFirstTimeOfHistryKey
+import com.hamu.walkforcats.utils.preferenceKey.Companion.dailyCountKey
+import com.hamu.walkforcats.utils.preferenceKey.Companion.dailyGoalKey
+import com.hamu.walkforcats.utils.preferenceKey.Companion.demoDataKey
+import com.hamu.walkforcats.utils.preferenceKey.Companion.monthlyCountKey
+import com.hamu.walkforcats.utils.preferenceKey.Companion.monthlyGoalKey
 
 
 class PreferenceRepositoryImpl(
@@ -65,14 +72,4 @@ class PreferenceRepositoryImpl(
         }
     }
 
-
-    companion object{
-        val dailyGoalKey = "dailyGoal"
-        val monthlyGoalKey ="monthlyGoal"
-        val dailyCountKey = "dailyCount"
-        val monthlyCountKey = "monthlyCount"
-        val demoDataKey = "demoData"
-        val changeCatKey = "changeCat"
-        val checkFirstTimeOfHistryKey = "checkFirstTimeOfHistry"
-    }
 }
