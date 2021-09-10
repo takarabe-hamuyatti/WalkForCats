@@ -5,12 +5,14 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.widget.TimePicker
 import android.widget.Toast
 import androidx.lifecycle.*
 import com.hamu.walkforcats.utils.sensor.StepListener
 import com.hamu.walkforcats.repository.preference.PreferenceRepository
 import com.hamu.walkforcats.utils.sensor.StepDetector
 import dagger.hilt.android.lifecycle.HiltViewModel
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -109,6 +111,7 @@ class StepCountViewmodel @Inject constructor(
 
     override fun onCleared() {
         super.onCleared()
+        Timber.i("save")
         preferenceRepository.saveCount(_dailyCount.value,_monthlyCount.value)
     }
 

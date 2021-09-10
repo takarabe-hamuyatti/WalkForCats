@@ -3,7 +3,7 @@ package com.hamu.walkforcats
 import android.app.Application
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.*
-import com.hamu.walkforcats.worker.SavingMonthlyInfoWorker
+import com.hamu.walkforcats.worker.OnlyFirstDayWork
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -40,31 +40,19 @@ class MyApplication :Application(),Configuration.Provider {
             val minutes: Long = ChronoUnit.MINUTES.between(LocalTime.now(), target)
             //最後の5分をflextimeinterval に指定しているので、
             // 12:01　から12:06をその5分に入れて確実に保存するために23:59から7分遅延させています。
-            setupRecurringWork(minutes+7)
+            setupOnlyFirstWork(minutes+7)
         }
     }
-    private fun setupRecurringWork(minute:Long) {
+    private fun setupOnlyFirstWork(minute:Long) {
         Timber.i("initwork")
-        val constraints = Constraints.Builder()
-            .setRequiresStorageNotLow(true)
-            .build()
+
         val repeatingRequest =
-            PeriodicWorkRequestBuilder<SavingMonthlyInfoWorker>(
-                1,
-                TimeUnit.DAYS,
-                5,
-                TimeUnit.MINUTES
-            )
-                .setConstraints(constraints)
+            OneTimeWorkRequestBuilder<OnlyFirstDayWork>()
                 .addTag(WorkTag)
                 .setInitialDelay(minute,TimeUnit.MINUTES)
                 .build()
 
-        WorkManager.getInstance(applicationContext).enqueueUniquePeriodicWork(
-            SavingMonthlyInfoWorker.WORK_NAME,
-            ExistingPeriodicWorkPolicy.KEEP,
-            repeatingRequest
-        )
+        WorkManager.getInstance(applicationContext).enqueue(repeatingRequest)
     }
 
     companion object{
