@@ -1,4 +1,4 @@
-package com.hamu.walkforcats.utils
+package com.hamu.walkforcats.utils.sensor
 
 /*
 Released under the MIT license

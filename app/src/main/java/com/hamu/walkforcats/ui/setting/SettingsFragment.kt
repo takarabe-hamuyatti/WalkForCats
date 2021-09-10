@@ -29,7 +29,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         val dailyGoalPreference: EditTextPreference? = findPreference("dailyGoal")
         val monthlyGoalPreference: EditTextPreference? = findPreference("monthlyGoal")
-        val demoDataPreference: EditTextPreference? = findPreference("isFirstInit")
 
         //実機で使ってみたところ、キーボードアプリを使っている場合数字以外も打ててしまいました。
         //そのため、プラスで数字以外を弾く処理を書いています。
@@ -45,13 +44,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
             val text =  dailyGoalPreference?.text
             val text2 = monthlyGoalPreference?.text
 
-            if(text?.toIntOrNull() == null  ||  text2?.toIntOrNull() == null) {
+            if(text?.toIntOrNull() == null || text2?.toIntOrNull() == null) {
                 AlertDialog.Builder(context)
                     .setTitle("")
                     .setMessage("数字を入力してください")
                     .show()
             }else {
-                viewModel.getGoal()
                 findNavController().navigateUp()
             }
         }

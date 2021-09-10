@@ -7,9 +7,9 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.widget.Toast
 import androidx.lifecycle.*
-import com.hamu.walkforcats.utils.StepListener
+import com.hamu.walkforcats.utils.sensor.StepListener
 import com.hamu.walkforcats.repository.preference.PreferenceRepository
-import com.hamu.walkforcats.utils.StepDetector
+import com.hamu.walkforcats.utils.sensor.StepDetector
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -59,46 +59,11 @@ class StepCountViewmodel @Inject constructor(
         get() = _isChangeCat
 
 
-    //画面を再表示した時に獲得したい値をまとめています。歩数の読み込みはアプリ起動時にのみ読み込むので省いています。
+    //画面を表示、再表示した時に獲得したい値をまとめています。歩数の読み込みはアプリ起動時にのみ読み込むので省いています。
     fun initWhenRedisplay(){
         getPercent()
         getGoal()
         checkChangeCat()
-    }
-
-    //センサーマネージャー取得
-    fun getSensorManager(sensor: SensorManager) {
-        sensorManager = sensor
-        simpleStepDetector = StepDetector()
-        simpleStepDetector!!.registerListener(this)
-        if (sensorManager == null) {
-            Toast.makeText(context, "端末にセンサーが用意されていません。", Toast.LENGTH_SHORT).show()
-        } else {
-            sensorManager?.let {
-                it.registerListener(
-                    this,
-                    sensorManager!!.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-                    SensorManager.SENSOR_DELAY_FASTEST
-                )
-            }
-        }
-    }
-
-    //歩数検知
-    override fun onSensorChanged(event: SensorEvent?) {
-        if (event?.sensor?.type == Sensor.TYPE_ACCELEROMETER) {
-            simpleStepDetector?.updateAccelerometer(
-                event.timestamp,
-                event.values[0],
-                event.values[1],
-                event.values[2]
-            )
-        }
-    }
-
-    //大元のオープンソースで用意されている関数
-    override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
-        // do nothing
     }
 
     //歩数検知時の行動
@@ -123,16 +88,58 @@ class StepCountViewmodel @Inject constructor(
 
     //共有プリファレンス
     //その日ごとの記録は共有プリファレンスで行い、累計の記録はroom で行います。
-
     fun getNowCount(){
         _dailyCount.value  = preferenceRepository.getDailyCount()
         _monthlyCount.value  = preferenceRepository.getMonthlyCount()
     }
 
     //一日ごと、一週間ごとの目標を取得しています。
-    fun getGoal() {
+    private fun getGoal() {
         _dailyGoal.value  = preferenceRepository.getDailyGoal()
         _monthlyGoal.value  = preferenceRepository.getMonthlyGoal()
+    }
+
+    private fun checkChangeCat(){
+        _isChangeCat.value = preferenceRepository.isCangeCat()
+    }
+
+    fun resetViewmodelCount(){
+        _dailyCount.value = 0
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        preferenceRepository.saveCount(_dailyCount.value,_monthlyCount.value)
+    }
+
+    //センサーマネージャー取得
+    fun getSensorManager(sensor: SensorManager) {
+        sensorManager = sensor
+        simpleStepDetector = StepDetector()
+        simpleStepDetector!!.registerListener(this)
+        sensorManager?.registerListener(
+            this,
+            sensorManager!!.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+            SensorManager.SENSOR_DELAY_FASTEST
+        )
+            ?: Toast.makeText(context, "端末にセンサーが用意されていません。", Toast.LENGTH_SHORT).show()
+    }
+
+    //歩行検知
+    override fun onSensorChanged(event: SensorEvent?) {
+        if (event?.sensor?.type == Sensor.TYPE_ACCELEROMETER) {
+            simpleStepDetector?.updateAccelerometer(
+                event.timestamp,
+                event.values[0],
+                event.values[1],
+                event.values[2]
+            )
+        }
+    }
+
+    //大元のオープンソースで用意されている関数
+    override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
+        // do nothing
     }
 
     private fun getRatio(num1: Int?, num2: Int?): Float? {
@@ -141,19 +148,5 @@ class StepCountViewmodel @Inject constructor(
 
     private fun truncating(num:Float?):Float?{
         return num?.times(10)?.toInt()?.toFloat()?.div(10)
-    }
-
-    fun checkChangeCat(){
-        _isChangeCat.value = preferenceRepository.isCangeCat()
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        preferenceRepository.saveCount(_dailyCount.value,_monthlyCount.value)
-        isFirstinit = !isFirstinit
-    }
-
-    fun resetViewmodelCount(){
-        _dailyCount.value = 0
     }
 }
