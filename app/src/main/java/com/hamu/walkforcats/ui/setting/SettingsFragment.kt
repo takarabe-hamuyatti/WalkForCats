@@ -18,12 +18,9 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SettingsFragment : PreferenceFragmentCompat() {
-    private val viewModel: StepCountViewmodel by activityViewModels()
-
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey)
     }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -35,10 +32,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
         dailyGoalPreference?.setOnBindEditTextListener { editText ->
             editText.inputType = InputType.TYPE_CLASS_NUMBER
         }
-
         monthlyGoalPreference?.setOnBindEditTextListener { editText ->
             editText.inputType = InputType.TYPE_CLASS_NUMBER
-
         }
         val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
             val text =  dailyGoalPreference?.text

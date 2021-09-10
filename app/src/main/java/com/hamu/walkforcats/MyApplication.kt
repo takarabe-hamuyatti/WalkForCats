@@ -26,7 +26,6 @@ class MyApplication :Application(),Configuration.Provider {
             .setWorkerFactory(workerFactory)
             .build()
 
-
     override fun onCreate() {
         super.onCreate()
         Timber.plant(Timber.DebugTree())
@@ -38,8 +37,9 @@ class MyApplication :Application(),Configuration.Provider {
     private fun delayedInit() {
         applicationScope.launch {
             val target = LocalTime.of(23,59)
-
             val minutes: Long = ChronoUnit.MINUTES.between(LocalTime.now(), target)
+            //最後の5分をflextimeinterval に指定しているので、
+            // 12:01　から12:06をその5分に入れて確実に保存するために23:59から7分遅延させています。
             setupRecurringWork(minutes+7)
         }
     }

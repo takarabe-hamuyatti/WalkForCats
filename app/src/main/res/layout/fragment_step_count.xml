@@ -19,10 +19,13 @@
 
         <com.mikhaellopez.circularprogressbar.CircularProgressBar
             android:id="@+id/dailyCircularProgressBar"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="70dp"
-            android:layout_marginBottom="70dp"
+            android:layout_marginStart="65dp"
+            android:layout_marginTop="65dp"
+            android:layout_marginEnd="65dp"
+            android:layout_marginBottom="65dp"
+            app:changeColorWhenMax="@{viewModel.dailyPercent}"
             app:cpb_background_progressbar_color="#b6bbd8"
             app:cpb_background_progressbar_width="5dp"
             app:cpb_progress_direction="to_right"
@@ -31,15 +34,19 @@
             app:cpb_progressbar_width="20dp"
             app:cpb_round_border="false"
             app:layout_constraintBottom_toBottomOf="@+id/monthlyCircularProgressBar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/monthlyCircularProgressBar"
+            app:layout_constraintStart_toStartOf="@+id/monthlyCircularProgressBar"
             app:layout_constraintTop_toTopOf="@+id/monthlyCircularProgressBar"
             app:setProgressWithAnimation="@{viewModel.dailyCount}" />
 
         <com.mikhaellopez.circularprogressbar.CircularProgressBar
             android:id="@+id/monthlyCircularProgressBar"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            app:changeColorWhenMax="@{viewModel.monthlyPercent}"
             app:cpb_background_progressbar_color="#b6bbd8"
             app:cpb_background_progressbar_width="5dp"
             app:cpb_progress_direction="to_right"
@@ -49,10 +56,8 @@
             app:cpb_round_border="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.584"
             app:setProgressWithAnimation="@{viewModel.monthlyCount}" />
 
         <TextView

@@ -1,12 +1,16 @@
 package com.hamu.walkforcats.utils
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Build
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.ColorInt
 import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
+import androidx.compose.ui.graphics.Color
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.hamu.walkforcats.R
 import java.text.SimpleDateFormat
@@ -25,8 +29,18 @@ object BindingAdapter {
     @JvmStatic
     fun setProgressMax(view: com.mikhaellopez.circularprogressbar.CircularProgressBar,goal:Float){
         view.progressMax = goal
-
     }
+
+    @BindingAdapter("changeColorWhenMax")
+    @JvmStatic
+    fun changeColorWhenMax(view: com.mikhaellopez.circularprogressbar.CircularProgressBar,
+                           percentString:String){
+        val percent = percentString.dropLast(3).toInt()
+        if(percent > 100) {
+            view.progressBarColor = android.graphics.Color.parseColor("#FFF450")
+        }
+    }
+
     @BindingAdapter("changeToString")
     @JvmStatic
     fun changeToString(view:TextView,goal: Float) {

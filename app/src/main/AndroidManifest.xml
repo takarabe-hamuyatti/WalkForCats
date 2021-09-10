@@ -12,7 +12,7 @@
     <application
         android:name=".MyApplication"
         android:allowBackup="false"
-        android:icon="@mipmap/whitecaticon"
+        android:icon="@mipmap/whitecat"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/groomingcat_round"
         android:supportsRtl="true"

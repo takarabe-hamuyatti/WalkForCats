@@ -15,5 +15,6 @@
     <color name="dark_blue">#b1bdd6</color>
     <color name="dark_green">#9cc5c7</color>
     <color name="status_green">#87BAB3</color>
+    <color name="maxpercent">#ffea08</color>
 
 </resources>
