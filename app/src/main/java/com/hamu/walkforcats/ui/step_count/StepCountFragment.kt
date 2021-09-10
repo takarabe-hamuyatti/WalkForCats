@@ -1,6 +1,9 @@
 package com.hamu.walkforcats.ui.step_count
 
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.hardware.SensorManager
 import android.os.Bundle
 import android.view.*
@@ -9,6 +12,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
+import com.hamu.walkforcats.MyApplication
 import com.hamu.walkforcats.R
 import com.hamu.walkforcats.databinding.FragmentStepCountBinding
 import com.hamu.walkforcats.viewmodels.StepCountViewmodel
@@ -42,16 +46,6 @@ class StepCountFragment : Fragment(R.layout.fragment_step_count){
         //センサー取得をして、実際の歩行検知をvieewmodelに任せています。
         sensorManager = activity?.getSystemService(Context.SENSOR_SERVICE) as SensorManager
         sensorManager?.let { viewModel.getSensorManager(it)}
-
-     /*   WorkManager.getInstance(requireContext())
-            .getWorkInfosByTagLiveData("everydayWork")
-            .observe(viewLifecycleOwner,{list ->
-                for(i in list.indices){
-                    if(list[i].state == WorkInfo.State.SUCCEEDED) viewModel.resetViewmodelCount()
-                }
-            })
-
-      */
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -64,7 +58,6 @@ class StepCountFragment : Fragment(R.layout.fragment_step_count){
                 findNavController().navigate(R.id.action_navigation_step_to_navigation_settings)
                 true
             }
-
             else -> super.onOptionsItemSelected(item)
         }
     }

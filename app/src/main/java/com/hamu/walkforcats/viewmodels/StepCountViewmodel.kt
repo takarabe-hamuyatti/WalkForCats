@@ -1,6 +1,11 @@
 package com.hamu.walkforcats.viewmodels
 
+import android.app.Activity
 import android.app.Application
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -8,6 +13,7 @@ import android.hardware.SensorManager
 import android.widget.TimePicker
 import android.widget.Toast
 import androidx.lifecycle.*
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.hamu.walkforcats.utils.sensor.StepListener
 import com.hamu.walkforcats.repository.preference.PreferenceRepository
 import com.hamu.walkforcats.utils.sensor.StepDetector
@@ -20,7 +26,6 @@ class StepCountViewmodel @Inject constructor(
     private val context : Application,
     private val preferenceRepository: PreferenceRepository
     ): AndroidViewModel(context), SensorEventListener , StepListener {
-
     private var sensorManager: SensorManager? = null
     private var simpleStepDetector: StepDetector? = null
 
@@ -59,7 +64,6 @@ class StepCountViewmodel @Inject constructor(
     private val _isChangeCat = MutableLiveData(false)
     val isChangeCat:LiveData<Boolean>
         get() = _isChangeCat
-
 
     //画面を表示、再表示した時に獲得したい値をまとめています。歩数の読み込みはアプリ起動時にのみ読み込むので省いています。
     fun initWhenRedisplay(){
@@ -105,7 +109,7 @@ class StepCountViewmodel @Inject constructor(
         _isChangeCat.value = preferenceRepository.isCangeCat()
     }
 
-    fun resetViewmodelCount(){
+    private fun resetViewmodelCount(){
         _dailyCount.value = 0
     }
 
