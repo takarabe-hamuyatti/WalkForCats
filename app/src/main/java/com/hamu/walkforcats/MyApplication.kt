@@ -1,8 +1,6 @@
 package com.hamu.walkforcats
 
-import android.R.attr
 import android.app.Application
-import android.util.Log
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.*
 import com.hamu.walkforcats.worker.SavingMonthlyInfoWorker
@@ -14,10 +12,6 @@ import timber.log.Timber
 import java.time.LocalTime
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
-import android.R.attr.delay
-import java.time.Duration
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 
 

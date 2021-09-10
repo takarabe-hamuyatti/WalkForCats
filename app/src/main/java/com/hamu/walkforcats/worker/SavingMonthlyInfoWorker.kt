@@ -32,8 +32,6 @@ class SavingMonthlyInfoWorker @AssistedInject constructor(
         // その日ごとの歩数をリセットしています。
          try{
              Timber.i("StartWorkMnager")
-             //1日の最後の5分を指定して、遅延させて日付を越えさせています。
-             // 日付変更前、つまり当日中に保存する仕組みにすると端末の影響で遅延した時に登録する日付がずれてしまうと考えたためです。
              val dt = LocalDate.now()
              //日付を確認して、月が変わったかどうかを確認しています。
              val isTheBeginningOfTheMonth = dt.dayOfMonth == 1

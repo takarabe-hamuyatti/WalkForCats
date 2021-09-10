@@ -135,16 +135,16 @@
             android:id="@+id/imageView3"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="70dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginEnd="70dp"
-            android:layout_marginBottom="50dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="60dp"
+            android:layout_marginBottom="40dp"
+            app:isChangecat="@{viewModel.isChangeCat}"
             app:layout_constraintBottom_toBottomOf="@+id/dailyCircularProgressBar"
             app:layout_constraintEnd_toEndOf="@+id/dailyCircularProgressBar"
             app:layout_constraintStart_toStartOf="@+id/dailyCircularProgressBar"
             app:layout_constraintTop_toTopOf="@+id/dailyCircularProgressBar"
-            app:setCatView="@{viewModel.monthlyPercent}"
-            app:isChangecat="@{viewModel.isChangeCat}"
+            app:setCatView="@{viewModel.dailyPercent}"
             tools:srcCompat="@tools:sample/avatars" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

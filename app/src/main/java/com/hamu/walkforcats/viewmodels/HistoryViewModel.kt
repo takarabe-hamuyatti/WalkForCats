@@ -23,7 +23,16 @@ class HistoryViewModel @Inject constructor(
     val isUseDemoData:LiveData<Boolean>
         get() = _isUseDemoData
 
+    private val _isFirstDisplay =  MutableLiveData(false)
+    val isFirstDisplay:LiveData<Boolean>
+         get() = _isFirstDisplay
+
     val allMonthlyInfo: LiveData<List<monthlyInfo>> = historyRepository.allMonthlyInfo.asLiveData()
+
+    fun checkInfo(){
+        checkIsUseDemoData()
+        checkIsFirstDisplay()
+    }
 
     fun checkIsUseDemoData() {
         _isUseDemoData.value = preferenceRepository.isUseDemoData()
@@ -38,5 +47,11 @@ class HistoryViewModel @Inject constructor(
         viewModelScope.launch {
             historyRepository.deleteDemoData()
         }
+    }
+    fun checkIsFirstDisplay(){
+      _isFirstDisplay.value  =   preferenceRepository.checkFirstTimeOfHistry()
+    }
+    fun changeiIsFirstDisplayToFalse(){
+        preferenceRepository.changeIsFirstTimeOfHistry()
     }
 }

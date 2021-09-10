@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.hamu.walkforcats.R
 import com.hamu.walkforcats.databinding.FragmentHistoryBinding
+import com.hamu.walkforcats.utils.confirmDialog
 import com.hamu.walkforcats.viewmodels.HistoryViewModel
 import com.hamu.walkforcats.viewmodels.StepCountViewmodel
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,14 +22,11 @@ import dagger.hilt.android.AndroidEntryPoint
 class HistoryFragment : Fragment(R.layout.fragment_history) {
 
     private val stepCountviewModel: StepCountViewmodel by activityViewModels()
-    private val historyViewmodel :HistoryViewModel by viewModels()
+    private val historyViewmodel: HistoryViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        stepCountviewModel.getGoal()
-        stepCountviewModel.checkChangeCat()
-        historyViewmodel.checkIsUseDemoData()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -38,21 +36,31 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
             it.lifecycleOwner = viewLifecycleOwner
             it.stepCountviewModel = stepCountviewModel
             it.historyviewModel = historyViewmodel
-            it.list.also {list ->
+            it.list.also { list ->
                 list.adapter = adapter
                 list.layoutManager = LinearLayoutManager(context)
                 list.setHasFixedSize(true)
                 list.itemAnimator = DefaultItemAnimator()
             }
         }
+        stepCountviewModel.init()
+        historyViewmodel.checkInfo()
+
         historyViewmodel.allMonthlyInfo.observe(viewLifecycleOwner, {
             it?.let {
                 adapter.submitList(it)
             }
         })
-        historyViewmodel.isUseDemoData.observe(viewLifecycleOwner,{
-            if(it) historyViewmodel.useDemoData() else historyViewmodel.noUseDemoData()
+        historyViewmodel.isUseDemoData.observe(viewLifecycleOwner, {
+            if (it) historyViewmodel.useDemoData() else historyViewmodel.noUseDemoData()
         })
+
+        if (historyViewmodel.isFirstDisplay.value == true) {
+            confirmDialog(requireContext(),
+                "デモデータを表示しています",
+                "設定　⇨　デモデータから変更できます。"
+            ) { historyViewmodel.changeiIsFirstDisplayToFalse() }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

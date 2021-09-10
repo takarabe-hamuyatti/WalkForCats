@@ -105,7 +105,13 @@ class StepCountViewmodel @Inject constructor(
         _monthlyCount.value = _monthlyCount.value?.plus(1)
     }
 
-    private fun getPercent() {
+    fun init(){
+        getPercent()
+        getGoal()
+        checkChangeCat()
+    }
+
+    fun getPercent() {
         //まずパーセントを出します
         val percentFloatofDay = getRatio(_dailyCount.value,_dailyGoal.value)
         val percentFloatofWeek = getRatio(_monthlyCount.value,_monthlyGoal.value)

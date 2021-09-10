@@ -55,6 +55,16 @@ class PreferenceRepositoryImpl(
         return pref.getBoolean(changeCatKey,false)
     }
 
+    override fun checkFirstTimeOfHistry():Boolean {
+        return pref.getBoolean(checkFirstTimeOfHistryKey,true)
+    }
+
+    override fun changeIsFirstTimeOfHistry() {
+        pref.edit{
+            putBoolean(checkFirstTimeOfHistryKey,false)
+        }
+    }
+
 
     companion object{
         val dailyGoalKey = "dailyGoal"
@@ -63,5 +73,6 @@ class PreferenceRepositoryImpl(
         val monthlyCountKey = "monthlyCount"
         val demoDataKey = "demoData"
         val changeCatKey = "changeCat"
+        val checkFirstTimeOfHistryKey = "checkFirstTimeOfHistry"
     }
 }

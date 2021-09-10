@@ -21,4 +21,8 @@ interface PreferenceRepository {
 
     fun isCangeCat() :Boolean
 
+    fun checkFirstTimeOfHistry():Boolean
+
+    fun changeIsFirstTimeOfHistry()
+
 }

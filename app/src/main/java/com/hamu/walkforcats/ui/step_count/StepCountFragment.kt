@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
@@ -32,7 +33,6 @@ class StepCountFragment : Fragment(R.layout.fragment_step_count){
         //設定画面や猫部屋から戻るたびに前回終了時のカウントがロードされるのを防ぐためにif文を設けています
         if(viewModel.isFirstinit) {
             viewModel.getNowCount()
-            viewModel.getGoal()
             viewModel.isFirstinit = !viewModel.isFirstinit
         }
     }
@@ -43,10 +43,18 @@ class StepCountFragment : Fragment(R.layout.fragment_step_count){
             it.viewModel = viewModel
             it.lifecycleOwner = viewLifecycleOwner
         }
+        viewModel.init()
         //センサー取得をして、実際の歩行検知をvieewmodelに任せています。
         sensorManager = activity?.getSystemService(Context.SENSOR_SERVICE) as SensorManager
         sensorManager?.let { viewModel.getSensorManager(it)}
 
+        WorkManager.getInstance(requireContext())
+            .getWorkInfosByTagLiveData("everydayWork")
+            .observe(viewLifecycleOwner,{list ->
+                for(i in list.indices){
+                    if(list[i].state == WorkInfo.State.SUCCEEDED) viewModel.resetViewmodelCount()
+                }
+            })
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
