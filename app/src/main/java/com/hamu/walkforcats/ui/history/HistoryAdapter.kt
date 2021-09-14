@@ -29,6 +29,7 @@ class HistoryAdapter(private val viewModel: HistoryViewModel) : ListAdapter<Mont
                 monthlyInfo = item
                 percentForCat = item.monthlyPercent.toFloat()
                 isChangeCat = viewModel.isChangeCat
+                CatImage.setImageResource(viewModel.getRangeOfPercent(item.monthlyPercent.toInt()))
             }
         }
         companion object {

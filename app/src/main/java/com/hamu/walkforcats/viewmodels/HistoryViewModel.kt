@@ -57,4 +57,24 @@ class HistoryViewModel @Inject constructor(
     fun checkChangeCat() {
        isChangeCat =  preferenceRepository.isCangeCat()
     }
+
+    fun getRangeOfPercent(percent:Int): Int {
+        var whichCatToSet: Int
+        percent.let {
+            if(isChangeCat) {
+                if (10 > it) { whichCatToSet = R.drawable.realcat1 }
+                else if (30 > it) {whichCatToSet = R.drawable.realcat2 }
+                else if (60 > it) {whichCatToSet = R.drawable.realcat3 }
+                else if (80 > it) {whichCatToSet= R.drawable.realcat4 }
+                else {whichCatToSet = R.drawable.realcat5 }
+            }else{
+                if (10 > it) { whichCatToSet = R.drawable.whitecat1 }
+                else if (30 > it) { whichCatToSet = R.drawable.whitecat2 }
+                else if (60 > it) {whichCatToSet= R.drawable.whitecat3 }
+                else if (80 > it) {whichCatToSet = R.drawable.whitecat4 }
+                else {whichCatToSet = R.drawable.whitecat5 }
+            }
+        }
+        return whichCatToSet
+    }
 }

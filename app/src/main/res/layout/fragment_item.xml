@@ -93,8 +93,6 @@
                     app:layout_constraintStart_toEndOf="@+id/yearMonth"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.0"
-                    app:setCatViewForRecycler="@{percentForCat}"
-                    app:isChangecat="@{isChangeCat}"
                     tools:srcCompat="@tools:sample/avatars" />
 
                 <TextView
