@@ -113,16 +113,16 @@ class StepCountViewmodel @Inject constructor(
     fun getRangeOfPercent(){
         _dailyPercent.value?.let {
             if(isChangeCat) {
-                if (10f > it) { _whichCatToSet.value = R.drawable.realcat1 }
-                else if (30 > it) { _whichCatToSet.value = R.drawable.realcat2 }
-                else if (60 > it) {_whichCatToSet.value = R.drawable.realcat3 }
-                else if (80 > it) { _whichCatToSet.value= R.drawable.realcat4 }
+                if (10 >= it) { _whichCatToSet.value = R.drawable.realcat1 }
+                else if (30 >= it) { _whichCatToSet.value = R.drawable.realcat2 }
+                else if (60 >= it) {_whichCatToSet.value = R.drawable.realcat3 }
+                else if (80 >= it) { _whichCatToSet.value= R.drawable.realcat4 }
                 else { _whichCatToSet.value = R.drawable.realcat5 }
             }else{
-                if (10 > it) { _whichCatToSet.value = R.drawable.whitecat1 }
-                else if (30 > it) { _whichCatToSet.value = R.drawable.whitecat2 }
-                else if (60 > it) { _whichCatToSet.value = R.drawable.whitecat3 }
-                else if (80 > it) { _whichCatToSet.value = R.drawable.whitecat4 }
+                if (10 >= it) { _whichCatToSet.value = R.drawable.whitecat1 }
+                else if (30 >= it) { _whichCatToSet.value = R.drawable.whitecat2 }
+                else if (60 >= it) { _whichCatToSet.value = R.drawable.whitecat3 }
+                else if (80 >= it) { _whichCatToSet.value = R.drawable.whitecat4 }
                 else { _whichCatToSet.value = R.drawable.whitecat5 }
             }
         }

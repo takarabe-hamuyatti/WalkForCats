@@ -5,7 +5,7 @@ import androidx.core.content.edit
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.preference.PreferenceManager
 import androidx.work.*
-import com.hamu.walkforcats.utils.preferenceKey.Companion.firstInitKey
+import com.hamu.walkforcats.utils.uniqueid.Companion.firstInitKey
 import com.hamu.walkforcats.worker.OnlyFirstDayWork
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope

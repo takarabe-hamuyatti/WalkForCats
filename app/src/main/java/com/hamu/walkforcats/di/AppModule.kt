@@ -12,6 +12,7 @@ import com.hamu.walkforcats.repository.history.HistoryRepository
 import com.hamu.walkforcats.repository.history.HistoryRepositoryImpl
 import com.hamu.walkforcats.repository.preference.PreferenceRepository
 import com.hamu.walkforcats.repository.preference.PreferenceRepositoryImpl
+import com.hamu.walkforcats.utils.uniqueid.Companion.databaseName
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,7 +34,7 @@ object AppModule {
         return Room.databaseBuilder(
             context,
             monthlyInfoDatabase::class.java,
-            "monthlyInfoDatabase"
+            databaseName
         ).build()
     }
 

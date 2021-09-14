@@ -1,7 +1,8 @@
 package com.hamu.walkforcats.utils
 
-class preferenceKey {
+class uniqueid {
     companion object{
+        //共有プリファレンス
         const val dailyGoalKey = "dailyGoal"
         const val monthlyGoalKey ="monthlyGoal"
         const val dailyCountKey = "dailyCount"
@@ -10,5 +11,8 @@ class preferenceKey {
         const val changeCatKey = "changeCat"
         const val checkFirstTimeOfHistryKey = "checkFirstTimeOfHistry"
         const val firstInitKey = "firstInit"
+
+        //database 名
+        const val databaseName = "monthlyInfoDatabase"
     }
 }

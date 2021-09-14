@@ -2,13 +2,13 @@ package com.hamu.walkforcats.repository.preference
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import com.hamu.walkforcats.utils.preferenceKey.Companion.changeCatKey
-import com.hamu.walkforcats.utils.preferenceKey.Companion.checkFirstTimeOfHistryKey
-import com.hamu.walkforcats.utils.preferenceKey.Companion.dailyCountKey
-import com.hamu.walkforcats.utils.preferenceKey.Companion.dailyGoalKey
-import com.hamu.walkforcats.utils.preferenceKey.Companion.demoDataKey
-import com.hamu.walkforcats.utils.preferenceKey.Companion.monthlyCountKey
-import com.hamu.walkforcats.utils.preferenceKey.Companion.monthlyGoalKey
+import com.hamu.walkforcats.utils.uniqueid.Companion.changeCatKey
+import com.hamu.walkforcats.utils.uniqueid.Companion.checkFirstTimeOfHistryKey
+import com.hamu.walkforcats.utils.uniqueid.Companion.dailyCountKey
+import com.hamu.walkforcats.utils.uniqueid.Companion.dailyGoalKey
+import com.hamu.walkforcats.utils.uniqueid.Companion.demoDataKey
+import com.hamu.walkforcats.utils.uniqueid.Companion.monthlyCountKey
+import com.hamu.walkforcats.utils.uniqueid.Companion.monthlyGoalKey
 
 
 class PreferenceRepositoryImpl(
