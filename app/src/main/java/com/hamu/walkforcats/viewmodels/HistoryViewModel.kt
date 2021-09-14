@@ -17,7 +17,9 @@ class HistoryViewModel @Inject constructor(
     private val preferenceRepository: PreferenceRepository
 ) : AndroidViewModel(application) {
     val dt = LocalDate.now()
+
     var isFirstDisplay = false
+
     val allMonthlyInfo: LiveData<List<MonthlyInfo>> = historyRepository.allMonthlyInfo.asLiveData()
 
     fun checkInfo(){
@@ -45,5 +47,9 @@ class HistoryViewModel @Inject constructor(
     }
     fun changeiIsFirstDisplayToFalse(){
         preferenceRepository.changeIsFirstTimeOfHistry()
+    }
+
+    fun checkChangeCat(): Boolean {
+       return preferenceRepository.isCangeCat()
     }
 }

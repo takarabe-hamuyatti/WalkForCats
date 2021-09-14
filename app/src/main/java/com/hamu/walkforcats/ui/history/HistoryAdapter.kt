@@ -11,11 +11,11 @@ import com.hamu.walkforcats.repository.preference.PreferenceRepository
 import com.hamu.walkforcats.viewmodels.HistoryViewModel
 import javax.inject.Inject
 
-class HistoryAdapter : ListAdapter<MonthlyInfo, HistoryAdapter.ViewHolder>(DiffCallback()) {
+class HistoryAdapter(private val viewModel: HistoryViewModel) : ListAdapter<MonthlyInfo, HistoryAdapter.ViewHolder>(DiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item)
+        holder.bind(item,viewModel)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -26,10 +26,11 @@ class HistoryAdapter : ListAdapter<MonthlyInfo, HistoryAdapter.ViewHolder>(DiffC
         private val binding:FragmentItemBinding)
         : RecyclerView.ViewHolder(binding.root){
 
-        fun bind(item: MonthlyInfo) {
+        fun bind(item: MonthlyInfo,viewModel: HistoryViewModel) {
             binding.run{
                 monthlyInfo = item
                 percentForCat = item.monthlyPercent.toFloat()
+                isChangeCat = viewModel.checkChangeCat()
             }
         }
         companion object {
