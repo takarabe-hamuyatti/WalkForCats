@@ -7,11 +7,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.hamu.walkforcats.database.MonthlyInfo
 import com.hamu.walkforcats.databinding.FragmentItemBinding
-import com.hamu.walkforcats.repository.preference.PreferenceRepository
 import com.hamu.walkforcats.viewmodels.HistoryViewModel
-import javax.inject.Inject
 
-class HistoryAdapter(private val viewModel: HistoryViewModel) : ListAdapter<MonthlyInfo, HistoryAdapter.ViewHolder>(DiffCallback()) {
+class HistoryAdapter(private val viewModel: HistoryViewModel) : ListAdapter<MonthlyInfo, HistoryAdapter.ViewHolder>(MonthlyInfoDiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
@@ -42,14 +40,12 @@ class HistoryAdapter(private val viewModel: HistoryViewModel) : ListAdapter<Mont
         }
     }
 }
-
-
-class DiffCallback : DiffUtil.ItemCallback<MonthlyInfo>() {
+class MonthlyInfoDiffCallback : DiffUtil.ItemCallback<MonthlyInfo>() {
 
     override fun areItemsTheSame(oldItem: MonthlyInfo, newItem: MonthlyInfo): Boolean {
-        return oldItem.yearMonth == newItem.yearMonth
+        return oldItem == newItem
     }
     override fun areContentsTheSame(oldItem: MonthlyInfo, newItem: MonthlyInfo): Boolean {
-        return oldItem == newItem
+        return oldItem.id == newItem.id
     }
 }

@@ -52,15 +52,13 @@ object BindingAdapter {
         view.text =yearMonth
     }
 
-    @BindingAdapter("changeViewVisible")
+    @BindingAdapter("makeYearmonthText")
     @JvmStatic
-    fun changeViewVisible(view:View?,isVisible:Boolean) {
+    fun makeYearmonthText(view:TextView?,yearMonth: Int) {
         view ?: return
-        if (isVisible) {
-            view.visibility = View.VISIBLE
-        } else {
-            view.visibility = View.INVISIBLE
-        }
+        val sb = StringBuilder()
+        sb.append(yearMonth)
+        view.text =  sb.insert(4,"-")
     }
 
     @BindingAdapter("makeTextPercent")
@@ -68,14 +66,6 @@ object BindingAdapter {
     fun makeTextPercent(view:TextView?,text:String) {
         view ?: return
         view.text =  "$text%"
-    }
-    @BindingAdapter("makeYearmonthText")
-    @JvmStatic
-    fun makeYearmonthText(view:TextView?,yearMonth: String) {
-        view ?: return
-        val sb = StringBuilder()
-        sb.append(yearMonth)
-        view.text =  sb.insert(4,"-")
     }
 
     @BindingAdapter("setCatView","isChangecat")

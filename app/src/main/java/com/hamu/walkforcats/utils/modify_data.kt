@@ -11,9 +11,9 @@ fun truncating(num:Float?):Float?{
     return num?.times(10)?.toInt()?.toFloat()?.div(10)
 }
 
-fun formattingYearMonth(dt: LocalDate): String {
+fun formattingYearMonth(dt: LocalDate): Int {
     //月が変わっていたら、これまでの月の記録を行っているので現時点から月を一つ減らした値で登録します。
     val beforeFormatting = dt.minusMonths(1)
     val formatter = DateTimeFormatter.ofPattern("yyyyMM")
-    return beforeFormatting.format(formatter)
+    return beforeFormatting.format(formatter).toInt()
 }

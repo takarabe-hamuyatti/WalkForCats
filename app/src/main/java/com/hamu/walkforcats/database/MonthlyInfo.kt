@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 data class MonthlyInfo(
      @PrimaryKey(autoGenerate = true)
      val id :Int?,
-     val yearMonth: String,
+     val yearMonth: Int,
      val stepCount: String,
      val monthlyGoal: String,
      val monthlyPercent:String,
