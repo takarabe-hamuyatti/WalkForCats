@@ -5,14 +5,14 @@ import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 import androidx.room.Room
 import com.hamu.walkforcats.database.AboutMonthlyInfoDao
-import com.hamu.walkforcats.database.monthlyInfoDatabase
+import com.hamu.walkforcats.database.AonthlyInfoDatabase
 import com.hamu.walkforcats.repository.create_finished_month.CreateFinishedMonthRepository
 import com.hamu.walkforcats.repository.create_finished_month.CreateFinishedMonthRepositoryImpl
 import com.hamu.walkforcats.repository.history.HistoryRepository
 import com.hamu.walkforcats.repository.history.HistoryRepositoryImpl
 import com.hamu.walkforcats.repository.preference.PreferenceRepository
 import com.hamu.walkforcats.repository.preference.PreferenceRepositoryImpl
-import com.hamu.walkforcats.utils.uniqueid.Companion.databaseName
+import com.hamu.walkforcats.utils.UniqueId.Companion.MONTHLYINFO_DATABASE_NAME
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,17 +30,17 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideMonthlyInfoDatabase(@ApplicationContext context: Context):monthlyInfoDatabase{
+    fun provideMonthlyInfoDatabase(@ApplicationContext context: Context):AonthlyInfoDatabase{
         return Room.databaseBuilder(
             context,
-            monthlyInfoDatabase::class.java,
-            databaseName
+            AonthlyInfoDatabase::class.java,
+            MONTHLYINFO_DATABASE_NAME
         ).build()
     }
 
     @Provides
     @Singleton
-    fun provideMonthlyInfoDao(db:monthlyInfoDatabase) = db.aboutMonthlyInfoDao
+    fun provideMonthlyInfoDao(db:AonthlyInfoDatabase) = db.aboutMonthlyInfoDao
 
     @Provides
     @Singleton

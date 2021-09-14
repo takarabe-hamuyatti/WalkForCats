@@ -72,7 +72,7 @@ class StepCountViewmodel @Inject constructor(
         getRangeOfPercent()
     }
 
-    //歩数検知時の行動
+    //歩行検知時の行動
     override fun step(timeNs: Long) {
         plusCount()
         getPercent()

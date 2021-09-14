@@ -5,7 +5,7 @@ import androidx.core.content.edit
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.preference.PreferenceManager
 import androidx.work.*
-import com.hamu.walkforcats.utils.uniqueid.Companion.firstInitKey
+import com.hamu.walkforcats.utils.UniqueId.Companion.FIRST_INIT_KEY
 import com.hamu.walkforcats.worker.OnlyFirstDayWork
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
@@ -43,7 +43,7 @@ class MyApplication :Application(),Configuration.Provider {
             val isFirstInit = pref.getBoolean("Firstinitsa",true)
             if(isFirstInit) {
                 pref.edit {
-                    putBoolean(firstInitKey,false)
+                    putBoolean(FIRST_INIT_KEY,false)
                 }
                 val target = LocalTime.of(23, 59)
                 val minutes: Long = ChronoUnit.MINUTES.between(LocalTime.now(), target)
