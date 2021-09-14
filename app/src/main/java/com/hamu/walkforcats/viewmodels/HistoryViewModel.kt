@@ -2,6 +2,7 @@ package com.hamu.walkforcats.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.*
+import com.hamu.walkforcats.R
 import com.hamu.walkforcats.database.MonthlyInfo
 import com.hamu.walkforcats.repository.history.HistoryRepository
 import com.hamu.walkforcats.repository.preference.PreferenceRepository
@@ -16,9 +17,13 @@ class HistoryViewModel @Inject constructor(
     private val historyRepository: HistoryRepository,
     private val preferenceRepository: PreferenceRepository
 ) : AndroidViewModel(application) {
+    init {
+        checkChangeCat()
+    }
     val dt = LocalDate.now()
 
     var isFirstDisplay = false
+    var isChangeCat = false
 
     val allMonthlyInfo: LiveData<List<MonthlyInfo>> = historyRepository.allMonthlyInfo.asLiveData()
 
@@ -49,7 +54,7 @@ class HistoryViewModel @Inject constructor(
         preferenceRepository.changeIsFirstTimeOfHistry()
     }
 
-    fun checkChangeCat(): Boolean {
-       return preferenceRepository.isCangeCat()
+    fun checkChangeCat() {
+       isChangeCat =  preferenceRepository.isCangeCat()
     }
 }

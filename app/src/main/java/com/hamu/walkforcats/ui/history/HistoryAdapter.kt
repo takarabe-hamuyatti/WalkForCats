@@ -28,7 +28,7 @@ class HistoryAdapter(private val viewModel: HistoryViewModel) : ListAdapter<Mont
             binding.run{
                 monthlyInfo = item
                 percentForCat = item.monthlyPercent.toFloat()
-                isChangeCat = viewModel.checkChangeCat()
+                isChangeCat = viewModel.isChangeCat
             }
         }
         companion object {

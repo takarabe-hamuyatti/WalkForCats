@@ -1,7 +1,5 @@
 package com.hamu.walkforcats.utils
 
-
-import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -11,6 +9,7 @@ import java.time.format.DateTimeFormatter
 import kotlin.properties.Delegates
 
 object BindingAdapter {
+    //円形のprogresbar 用です
     @BindingAdapter("setProgressWithAnimation")
     @JvmStatic
     fun setProgressWithAnimation(view: com.mikhaellopez.circularprogressbar.CircularProgressBar?,count:String) {
@@ -61,33 +60,18 @@ object BindingAdapter {
         view.text =  sb.insert(4,"-")
     }
 
-    @BindingAdapter("makeTextPercent")
+    @BindingAdapter("addPercentsymbolToText")
     @JvmStatic
-    fun makeTextPercent(view:TextView?,text:String) {
+    fun addPercentsymbolToText(view:TextView?,text:String) {
         view ?: return
         view.text =  "$text%"
     }
 
-    @BindingAdapter("setCatView","isChangecat")
+    @BindingAdapter("setCatView")
     @JvmStatic
-    fun setCatView(view: ImageView?,percentString:String,isChangecat:Boolean){
+    fun setCatView(view: ImageView?,catResource:Int){
         view ?: return
-        val percent = percentString.dropLast(3).toInt()
-        var imgResource by Delegates.notNull<Int>()
-        if(isChangecat) {
-            if (10 > percent) { imgResource = R.drawable.realcat1 }
-            else if (30 > percent) { imgResource = R.drawable.realcat2 }
-            else if (60 > percent) {imgResource = R.drawable.realcat3 }
-            else if (80 > percent) { imgResource = R.drawable.realcat4 }
-            else { imgResource = R.drawable.realcat5 }
-        }else{
-            if (10 > percent) { imgResource = R.drawable.whitecat1 }
-            else if (30 > percent) { imgResource = R.drawable.whitecat2 }
-            else if (60 > percent) { imgResource = R.drawable.whitecat3 }
-            else if (80 > percent) { imgResource = R.drawable.whitecat4 }
-            else { imgResource = R.drawable.whitecat5 }
-        }
-        view.setImageResource(imgResource)
+        view.setImageResource(catResource)
     }
 
     @BindingAdapter("setCatViewForRecycler","isChangecat")

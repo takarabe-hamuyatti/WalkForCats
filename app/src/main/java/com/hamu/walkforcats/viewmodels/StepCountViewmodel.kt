@@ -7,6 +7,7 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.widget.Toast
 import androidx.lifecycle.*
+import com.hamu.walkforcats.R
 import com.hamu.walkforcats.utils.sensor.StepListener
 import com.hamu.walkforcats.repository.preference.PreferenceRepository
 import com.hamu.walkforcats.utils.getRatio
@@ -15,6 +16,7 @@ import com.hamu.walkforcats.utils.truncating
 import dagger.hilt.android.lifecycle.HiltViewModel
 import timber.log.Timber
 import javax.inject.Inject
+import kotlin.properties.Delegates
 
 @HiltViewModel
 class StepCountViewmodel @Inject constructor(
@@ -56,21 +58,25 @@ class StepCountViewmodel @Inject constructor(
     val monthlyPercent: LiveData<String>
         get() = _monthlyPercent.map {"$it%"}
 
-    private val _isChangeCat = MutableLiveData(false)
-    val isChangeCat:LiveData<Boolean>
-        get() = _isChangeCat
+    private val _whichCatToSet = MutableLiveData(0)
+    val whichCatToSet:LiveData<Int>
+         get() = _whichCatToSet
+
+    var isChangeCat =false
 
     //画面を表示、再表示した時に獲得したい値をまとめています。歩数の読み込みはアプリ起動時にのみ読み込むので省いています。
     fun initWhenRedisplay(){
         getPercent()
         getGoal()
         checkChangeCat()
+        getRangeOfPercent()
     }
 
     //歩数検知時の行動
     override fun step(timeNs: Long) {
         plusCount()
         getPercent()
+        getRangeOfPercent()
     }
 
     private fun plusCount() {
@@ -101,7 +107,25 @@ class StepCountViewmodel @Inject constructor(
     }
 
     private fun checkChangeCat(){
-        _isChangeCat.value = preferenceRepository.isCangeCat()
+        isChangeCat= preferenceRepository.isCangeCat()
+    }
+
+    fun getRangeOfPercent(){
+        _dailyPercent.value?.let {
+            if(isChangeCat) {
+                if (10f > it) { _whichCatToSet.value = R.drawable.realcat1 }
+                else if (30 > it) { _whichCatToSet.value = R.drawable.realcat2 }
+                else if (60 > it) {_whichCatToSet.value = R.drawable.realcat3 }
+                else if (80 > it) { _whichCatToSet.value= R.drawable.realcat4 }
+                else { _whichCatToSet.value = R.drawable.realcat5 }
+            }else{
+                if (10 > it) { _whichCatToSet.value = R.drawable.whitecat1 }
+                else if (30 > it) { _whichCatToSet.value = R.drawable.whitecat2 }
+                else if (60 > it) { _whichCatToSet.value = R.drawable.whitecat3 }
+                else if (80 > it) { _whichCatToSet.value = R.drawable.whitecat4 }
+                else { _whichCatToSet.value = R.drawable.whitecat5 }
+            }
+        }
     }
 
     override fun onCleared() {
