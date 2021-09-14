@@ -2,7 +2,7 @@ package com.hamu.walkforcats.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.*
-import com.hamu.walkforcats.database.monthlyInfo
+import com.hamu.walkforcats.database.MonthlyInfo
 import com.hamu.walkforcats.repository.history.HistoryRepository
 import com.hamu.walkforcats.repository.preference.PreferenceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,17 +17,8 @@ class HistoryViewModel @Inject constructor(
     private val preferenceRepository: PreferenceRepository
 ) : AndroidViewModel(application) {
     val dt = LocalDate.now()
-    val context = application
-
-    private val _isUseDemoData = MutableLiveData(true)
-    val isUseDemoData:LiveData<Boolean>
-        get() = _isUseDemoData
-
-    private val _isFirstDisplay =  MutableLiveData(false)
-    val isFirstDisplay:LiveData<Boolean>
-         get() = _isFirstDisplay
-
-    val allMonthlyInfo: LiveData<List<monthlyInfo>> = historyRepository.allMonthlyInfo.asLiveData()
+    var isFirstDisplay = false
+    val allMonthlyInfo: LiveData<List<MonthlyInfo>> = historyRepository.allMonthlyInfo.asLiveData()
 
     fun checkInfo(){
         checkIsUseDemoData()
@@ -35,7 +26,8 @@ class HistoryViewModel @Inject constructor(
     }
 
     fun checkIsUseDemoData() {
-        _isUseDemoData.value = preferenceRepository.isUseDemoData()
+        val isUseDemoData= preferenceRepository.isUseDemoData()
+        if(isUseDemoData) useDemoData() else noUseDemoData()
     }
 
     fun useDemoData() {
@@ -49,7 +41,7 @@ class HistoryViewModel @Inject constructor(
         }
     }
     fun checkIsFirstDisplay(){
-      _isFirstDisplay.value  =   preferenceRepository.checkFirstTimeOfHistry()
+      isFirstDisplay = preferenceRepository.checkFirstTimeOfHistry()
     }
     fun changeiIsFirstDisplayToFalse(){
         preferenceRepository.changeIsFirstTimeOfHistry()

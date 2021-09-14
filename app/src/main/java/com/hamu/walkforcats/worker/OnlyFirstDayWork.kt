@@ -4,20 +4,18 @@ import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.*
 import com.hamu.walkforcats.MyApplication
-import com.hamu.walkforcats.database.monthlyInfo
+import com.hamu.walkforcats.database.MonthlyInfo
 import com.hamu.walkforcats.repository.create_finished_month.CreateFinishedMonthRepository
 import com.hamu.walkforcats.repository.preference.PreferenceRepository
+import com.hamu.walkforcats.utils.formattingYearMonth
 import com.hamu.walkforcats.utils.getRatio
 import com.hamu.walkforcats.utils.truncating
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import timber.log.Timber
 import java.time.LocalDate
-import java.time.LocalTime
 import java.time.format.DateTimeFormatter
-import java.time.temporal.ChronoUnit
 import java.util.concurrent.TimeUnit
-import javax.inject.Inject
 
 @HiltWorker
 class OnlyFirstDayWork @AssistedInject constructor(
@@ -41,10 +39,11 @@ class OnlyFirstDayWork @AssistedInject constructor(
                 //これまでの目標値、歩数、達成率を取得します。
                 val monthlyStepCount = preferenceRepository.getMonthlyCount()
                 val monthlyGoal = preferenceRepository.getMonthlyGoal()
-                val percent = truncating(getRatio(monthlyStepCount, monthlyGoal))
+                val percent = truncating(getRatio(monthlyStepCount.toInt(), monthlyGoal.toInt())).toString()
 
                 val finishedMonthlyInfo =
-                    monthlyInfo(
+                    MonthlyInfo(
+                        id = null,
                         yearMonth = yearMonth,
                         stepCount = monthlyStepCount,
                         monthlyGoal = monthlyGoal,
@@ -61,13 +60,6 @@ class OnlyFirstDayWork @AssistedInject constructor(
         }catch (e:Exception){
             return  Result.retry()
         }
-    }
-
-    private fun formattingYearMonth(dt: LocalDate): Int {
-        //月が変わっていたら、これまでの月の記録を行っているので現時点から月を一つ減らした値で登録します。
-        val beforeFormatting = dt.minusMonths(1)
-        val formatter = DateTimeFormatter.ofPattern("YYYYMM")
-        return beforeFormatting.format(formatter).toInt()
     }
 
     fun setupRecurringWork(){

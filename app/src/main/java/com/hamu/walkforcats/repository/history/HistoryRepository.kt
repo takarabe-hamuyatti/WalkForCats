@@ -1,13 +1,10 @@
 package com.hamu.walkforcats.repository.history
 
-import com.hamu.walkforcats.database.aboutMonthlyInfoDao
-import com.hamu.walkforcats.database.monthlyInfo
-import kotlinx.coroutines.Dispatchers
+import com.hamu.walkforcats.database.MonthlyInfo
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.withContext
 
 interface HistoryRepository {
-    val allMonthlyInfo: Flow<List<monthlyInfo>>
+    val allMonthlyInfo: Flow<List<MonthlyInfo>>
 
     suspend fun insertDemoData()
 

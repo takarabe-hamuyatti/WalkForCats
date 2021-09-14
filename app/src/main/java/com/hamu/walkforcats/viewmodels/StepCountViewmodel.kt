@@ -1,19 +1,12 @@
 package com.hamu.walkforcats.viewmodels
 
-import android.app.Activity
 import android.app.Application
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import android.widget.TimePicker
 import android.widget.Toast
 import androidx.lifecycle.*
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.hamu.walkforcats.utils.sensor.StepListener
 import com.hamu.walkforcats.repository.preference.PreferenceRepository
 import com.hamu.walkforcats.utils.getRatio
@@ -98,13 +91,13 @@ class StepCountViewmodel @Inject constructor(
     //その日ごとの記録は共有プリファレンスで行い、累計の記録はroom で行います。
     fun getNowCount(){
         _dailyCount.value  = preferenceRepository.getDailyCount()
-        _monthlyCount.value  = preferenceRepository.getMonthlyCount()
+        _monthlyCount.value  = preferenceRepository.getMonthlyCount().toInt()
     }
 
     //一日ごと、一週間ごとの目標を取得しています。
     private fun getGoal() {
         _dailyGoal.value  = preferenceRepository.getDailyGoal()
-        _monthlyGoal.value  = preferenceRepository.getMonthlyGoal()
+        _monthlyGoal.value  = preferenceRepository.getMonthlyGoal().toInt()
     }
 
     private fun checkChangeCat(){
@@ -113,7 +106,6 @@ class StepCountViewmodel @Inject constructor(
 
     override fun onCleared() {
         super.onCleared()
-        Timber.i("save")
         preferenceRepository.saveCount(_dailyCount.value,_monthlyCount.value)
     }
 
