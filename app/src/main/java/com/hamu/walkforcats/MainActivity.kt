@@ -27,4 +27,10 @@ class MainActivity : AppCompatActivity() {
         lifecycle.addObserver(viewModel)
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.initWhenRedisplay()
+        viewModel.getNowCount()
+    }
+
 }

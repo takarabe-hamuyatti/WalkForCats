@@ -26,10 +26,6 @@ class StepCountViewmodel @Inject constructor(
     private var sensorManager: SensorManager? = null
     private var simpleStepDetector: StepDetector? = null
 
-    //設定画面や猫部屋から戻るたびに前回分がロードされるのを防ぐための判定に用います。
-    // stepCountFragment が最初に作られ歩数をロードした時にfalse　に変え、activity viewmodel が　clearされる時にtureに戻ります。
-    var isFirstinit = true
-
     //歩数の1日ごと、月ごとの集計です
     private val _dailyCount = MutableLiveData(0)
     val dailyCount: LiveData<String>
@@ -64,7 +60,7 @@ class StepCountViewmodel @Inject constructor(
 
     var isChangeCat =false
 
-    //画面を表示、再表示した時に獲得したい値をまとめています。歩数の読み込みはアプリ起動時にのみ読み込むので省いています。
+    //画面を表示、再表示した時に獲得したい値をまとめています。歩数の読み込み(getNowCount)はアプリ起動時にのみ読み込むので省いています。
     fun initWhenRedisplay(){
         getPercent()
         getGoal()
