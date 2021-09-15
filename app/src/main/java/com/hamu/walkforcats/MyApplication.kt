@@ -10,6 +10,7 @@ import com.hamu.walkforcats.worker.OnlyFirstDayWork
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.time.LocalTime
@@ -40,7 +41,7 @@ class MyApplication :Application(),Configuration.Provider {
     private fun delayedInit() {
         applicationScope.launch {
             val pref = PreferenceManager.getDefaultSharedPreferences(applicationContext)
-            val isFirstInit = pref.getBoolean("Firstinitsa",true)
+            val isFirstInit = pref.getBoolean(FIRST_INIT_KEY,true)
             if(isFirstInit) {
                 pref.edit {
                     putBoolean(FIRST_INIT_KEY,false)
@@ -54,8 +55,6 @@ class MyApplication :Application(),Configuration.Provider {
         }
     }
     private fun setupOnlyFirstWork(minute:Long) {
-        Timber.i("initwork")
-
         val request =
             OneTimeWorkRequestBuilder<OnlyFirstDayWork>()
                 .addTag(WorkTag)
@@ -64,6 +63,13 @@ class MyApplication :Application(),Configuration.Provider {
 
         WorkManager.getInstance(applicationContext).enqueue(request)
     }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+
+        applicationScope.cancel()
+    }
+
     companion object{
         val WorkTag = "everydayWork"
     }

@@ -22,7 +22,7 @@ import kotlin.properties.Delegates
 class StepCountViewmodel @Inject constructor(
     private val context : Application,
     private val preferenceRepository: PreferenceRepository
-    ): AndroidViewModel(context), SensorEventListener , StepListener {
+    ): AndroidViewModel(context), SensorEventListener , StepListener ,DefaultLifecycleObserver {
     private var sensorManager: SensorManager? = null
     private var simpleStepDetector: StepDetector? = null
 
@@ -110,7 +110,7 @@ class StepCountViewmodel @Inject constructor(
         isChangeCat= preferenceRepository.isCangeCat()
     }
 
-    fun getRangeOfPercent(){
+    private fun getRangeOfPercent(){
         _dailyPercent.value?.let {
             if(isChangeCat) {
                 if (10 >= it) { _whichCatToSet.value = R.drawable.realcat1 }
@@ -126,11 +126,6 @@ class StepCountViewmodel @Inject constructor(
                 else { _whichCatToSet.value = R.drawable.whitecat5 }
             }
         }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        preferenceRepository.saveCount(_dailyCount.value,_monthlyCount.value)
     }
 
     //センサーマネージャー取得
@@ -159,5 +154,10 @@ class StepCountViewmodel @Inject constructor(
     //大元のオープンソースで用意されている関数
     override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
         // do nothing
+    }
+
+    override fun onStop(owner: LifecycleOwner) {
+        super.onStop(owner)
+        preferenceRepository.saveCount(_dailyCount.value,_monthlyCount.value)
     }
 }
