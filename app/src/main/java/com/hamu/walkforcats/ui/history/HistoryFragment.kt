@@ -27,11 +27,12 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+        historyViewmodel.checkInfo()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = MyItemRecyclerViewAdapter()
+        val adapter = HistoryAdapter(historyViewmodel)
         FragmentHistoryBinding.bind(view).also {
             it.lifecycleOwner = viewLifecycleOwner
             it.stepCountviewModel = stepCountviewModel
@@ -44,21 +45,14 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
             }
         }
         stepCountviewModel.initWhenRedisplay()
-        historyViewmodel.checkInfo()
-
         historyViewmodel.allMonthlyInfo.observe(viewLifecycleOwner, {
-            it?.let {
-                adapter.submitList(it)
-            }
-        })
-        historyViewmodel.isUseDemoData.observe(viewLifecycleOwner, {
-            if (it) historyViewmodel.useDemoData() else historyViewmodel.noUseDemoData()
+            adapter.submitList(it)
         })
 
-        if (historyViewmodel.isFirstDisplay.value == true) {
+        if (historyViewmodel.isFirstDisplay) {
             confirmDialog(requireContext(),
-                "デモデータを表示しています",
-                "設定　⇨　デモデータから変更できます。"
+                getString(R.string.demo_data_supplement),
+                getString(R.string.demo_data_howtochange)
             ) { historyViewmodel.changeiIsFirstDisplayToFalse() }
         }
     }

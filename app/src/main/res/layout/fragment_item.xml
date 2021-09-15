@@ -5,6 +5,9 @@
 
     <data>
         <variable
+            name="monthlyInfo"
+            type="com.hamu.walkforcats.database.MonthlyInfo" />
+        <variable
             name="percentForCat"
             type="Float" />
         <variable
@@ -38,8 +41,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    android:text="TextView"
                     android:textSize="16sp"
+                    app:makeYearmonthText="@{monthlyInfo.yearMonth}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -49,7 +52,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="50dp"
-                    android:text="TextView"
+                    android:text="@{monthlyInfo.stepCount}"
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -60,7 +63,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="50dp"
-                    android:text="TextView"
+                    android:text="@{monthlyInfo.monthlyGoal}"
                     android:textSize="20sp"
                     app:layout_constraintStart_toEndOf="@+id/srash"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -90,8 +93,6 @@
                     app:layout_constraintStart_toEndOf="@+id/yearMonth"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.0"
-                    app:setCatViewForRecycler="@{percentForCat}"
-                    app:isChangecat="@{isChangeCat}"
                     tools:srcCompat="@tools:sample/avatars" />
 
                 <TextView
@@ -100,8 +101,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
-                    android:text="TextView"
                     android:textSize="16sp"
+                    app:addPercentsymbolToText="@{monthlyInfo.monthlyPercent}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/monthlyCount" />
             </androidx.constraintlayout.widget.ConstraintLayout>

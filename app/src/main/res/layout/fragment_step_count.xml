@@ -144,12 +144,11 @@
             android:layout_marginTop="40dp"
             android:layout_marginEnd="60dp"
             android:layout_marginBottom="40dp"
-            app:isChangecat="@{viewModel.isChangeCat}"
+            app:setCatView="@{viewModel.whichCatToSet}"
             app:layout_constraintBottom_toBottomOf="@+id/dailyCircularProgressBar"
             app:layout_constraintEnd_toEndOf="@+id/dailyCircularProgressBar"
             app:layout_constraintStart_toStartOf="@+id/dailyCircularProgressBar"
             app:layout_constraintTop_toTopOf="@+id/dailyCircularProgressBar"
-            app:setCatView="@{viewModel.dailyPercent}"
             tools:srcCompat="@tools:sample/avatars" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

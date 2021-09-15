@@ -2,73 +2,73 @@ package com.hamu.walkforcats.repository.preference
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import com.hamu.walkforcats.utils.preferenceKey.Companion.changeCatKey
-import com.hamu.walkforcats.utils.preferenceKey.Companion.checkFirstTimeOfHistryKey
-import com.hamu.walkforcats.utils.preferenceKey.Companion.dailyCountKey
-import com.hamu.walkforcats.utils.preferenceKey.Companion.dailyGoalKey
-import com.hamu.walkforcats.utils.preferenceKey.Companion.demoDataKey
-import com.hamu.walkforcats.utils.preferenceKey.Companion.monthlyCountKey
-import com.hamu.walkforcats.utils.preferenceKey.Companion.monthlyGoalKey
+import com.hamu.walkforcats.utils.UniqueId.Companion.CHANGE_CAT_KEY
+import com.hamu.walkforcats.utils.UniqueId.Companion.CHECK_FIRST_TIME_OF_HISTRY_KEY
+import com.hamu.walkforcats.utils.UniqueId.Companion.DAILY_COUNT_KEY
+import com.hamu.walkforcats.utils.UniqueId.Companion.DAILY_GOAL_KEY
+import com.hamu.walkforcats.utils.UniqueId.Companion.DEMO_DATA_KEY
+import com.hamu.walkforcats.utils.UniqueId.Companion.MONTHLY_COUNT_KEY
+import com.hamu.walkforcats.utils.UniqueId.Companion.MONTHLY_GOAL_KEY
 
 
 class PreferenceRepositoryImpl(
     private val pref:SharedPreferences
 ): PreferenceRepository {
     override fun getDailyGoal(): Int? {
-        return pref.getString(dailyGoalKey, "15000")?.toInt()
+        return pref.getString(DAILY_GOAL_KEY, "15000")?.toInt()
     }
 
-    override fun getMonthlyGoal():Int? {
-        return pref.getString(monthlyGoalKey, "50000")?.toInt()
+    override fun getMonthlyGoal():String {
+        return pref.getString(MONTHLY_GOAL_KEY, "50000").toString()
     }
 
     override fun getDailyCount(): Int {
-        return pref.getInt(dailyCountKey, 0)
+        return pref.getInt(DAILY_COUNT_KEY, 0)
     }
 
-    override fun getMonthlyCount(): Int {
-        return  pref.getInt(monthlyCountKey, 0)
+    override fun getMonthlyCount(): String {
+        return pref.getInt(MONTHLY_COUNT_KEY, 0).toString()
     }
 
     override fun saveCount(dailyCount:Int?,monthlyCount:Int?){
         pref.edit {
             if (dailyCount != null) {
-                putInt(dailyCountKey, dailyCount)
+                putInt(DAILY_COUNT_KEY, dailyCount)
             }
             if (monthlyCount != null) {
-                putInt(monthlyCountKey,monthlyCount)
+                putInt(MONTHLY_COUNT_KEY,monthlyCount)
             }
         }
     }
 
     override fun clearCountOfTheDay(){
         pref.edit {
-            putInt(dailyCountKey,0)
+            putInt(DAILY_COUNT_KEY,0)
                 .commit()
         }
     }
     override fun clearCountOfTheMonth(){
         pref.edit {
-            putInt(monthlyCountKey,0)
+            putInt(MONTHLY_COUNT_KEY,0)
                 .commit()
         }
     }
 
     override fun isUseDemoData(): Boolean {
-        return pref.getBoolean(demoDataKey,true)
+        return pref.getBoolean(DEMO_DATA_KEY,true)
     }
 
     override fun isCangeCat(): Boolean {
-        return pref.getBoolean(changeCatKey,false)
+        return pref.getBoolean(CHANGE_CAT_KEY,false)
     }
 
     override fun checkFirstTimeOfHistry():Boolean {
-        return pref.getBoolean(checkFirstTimeOfHistryKey,true)
+        return pref.getBoolean(CHECK_FIRST_TIME_OF_HISTRY_KEY,true)
     }
 
     override fun changeIsFirstTimeOfHistry() {
         pref.edit{
-            putBoolean(checkFirstTimeOfHistryKey,false)
+            putBoolean(CHECK_FIRST_TIME_OF_HISTRY_KEY,false)
         }
     }
 

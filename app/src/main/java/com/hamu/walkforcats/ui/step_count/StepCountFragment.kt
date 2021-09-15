@@ -1,23 +1,16 @@
 package com.hamu.walkforcats.ui.step_count
 
-import android.content.BroadcastReceiver
 import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
 import android.hardware.SensorManager
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import androidx.work.WorkInfo
-import androidx.work.WorkManager
-import com.hamu.walkforcats.MyApplication
 import com.hamu.walkforcats.R
 import com.hamu.walkforcats.databinding.FragmentStepCountBinding
 import com.hamu.walkforcats.viewmodels.StepCountViewmodel
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class StepCountFragment : Fragment(R.layout.fragment_step_count){
@@ -28,12 +21,6 @@ class StepCountFragment : Fragment(R.layout.fragment_step_count){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        viewModel.initWhenRedisplay()
-        //設定画面や猫部屋から戻るたびに前回終了時のカウントがロードされるのを防ぐためにif文を設けています
-        if(viewModel.isFirstinit) {
-            viewModel.getNowCount()
-            viewModel.isFirstinit = !viewModel.isFirstinit
-        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
