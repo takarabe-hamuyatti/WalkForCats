@@ -3,16 +3,18 @@
 歩数を記録するアプリです。猫好きの人のモチベーションが上がるように目標達成率に合わせて猫の表示が変わるようになっています。
  
  
-## 使用技術など
+## 使用技術
  
 * MVVM architecture
-* DataBinding
+* Room
 * Dagger-Hilt
 * Coroutine
 * kotlin flow
+* workmanager
 * Navigation
-* Fragment
 * RecyclerView
-* Room
+* DataBinding
+* BindingAdapter
+* Service
   
  
