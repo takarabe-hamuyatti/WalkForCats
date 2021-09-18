@@ -26,4 +26,9 @@ class MainActivity : AppCompatActivity() {
 
         //  lifecycle.addObserver(viewModel)
     }
+
+    override fun onStop() {
+        super.onStop()
+        viewModel.saveCount()
+    }
 }
