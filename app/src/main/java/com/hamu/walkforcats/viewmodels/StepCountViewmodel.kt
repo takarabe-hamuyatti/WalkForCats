@@ -22,9 +22,11 @@ import kotlin.properties.Delegates
 class StepCountViewmodel @Inject constructor(
     private val context : Application,
     private val preferenceRepository: PreferenceRepository
-    ): AndroidViewModel(context), SensorEventListener , StepListener ,DefaultLifecycleObserver {
+    ): AndroidViewModel(context), SensorEventListener , StepListener /*,DefaultLifecycleObserver */ {
     private var sensorManager: SensorManager? = null
     private var simpleStepDetector: StepDetector? = null
+
+    var isFirstInit = true
 
     //歩数の1日ごと、月ごとの集計です
     private val _dailyCount = MutableLiveData(0)
@@ -152,8 +154,14 @@ class StepCountViewmodel @Inject constructor(
         // do nothing
     }
 
-    override fun onStop(owner: LifecycleOwner) {
+    /*override fun onStop(owner: LifecycleOwner) {
         super.onStop(owner)
         preferenceRepository.saveCount(_dailyCount.value,_monthlyCount.value)
+    }
+     */
+    override fun onCleared() {
+        super.onCleared()
+        preferenceRepository.saveCount(_dailyCount.value,_monthlyCount.value)
+        isFirstInit = !isFirstInit
     }
 }

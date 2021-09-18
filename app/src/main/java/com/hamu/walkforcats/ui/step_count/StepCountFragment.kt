@@ -21,6 +21,11 @@ class StepCountFragment : Fragment(R.layout.fragment_step_count){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+        viewModel.initWhenRedisplay()
+        if(viewModel.isFirstInit){
+            viewModel.getNowCount()
+            viewModel.isFirstInit = !viewModel.isFirstInit
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

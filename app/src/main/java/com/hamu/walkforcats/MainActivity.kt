@@ -24,13 +24,6 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
         NavigationUI.setupWithNavController(navView, navController)
 
-        lifecycle.addObserver(viewModel)
+        //  lifecycle.addObserver(viewModel)
     }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.initWhenRedisplay()
-        viewModel.getNowCount()
-    }
-
 }
