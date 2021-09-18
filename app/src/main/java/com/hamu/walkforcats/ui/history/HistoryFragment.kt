@@ -15,13 +15,13 @@ import com.hamu.walkforcats.R
 import com.hamu.walkforcats.databinding.FragmentHistoryBinding
 import com.hamu.walkforcats.utils.confirmDialog
 import com.hamu.walkforcats.viewmodels.HistoryViewModel
-import com.hamu.walkforcats.viewmodels.StepCountViewmodel
+import com.hamu.walkforcats.viewmodels.ApplicationViewmodel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class HistoryFragment : Fragment(R.layout.fragment_history) {
 
-    private val stepCountviewModel: StepCountViewmodel by activityViewModels()
+    private val stepCountviewModel: ApplicationViewmodel by activityViewModels()
     private val historyViewmodel: HistoryViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {

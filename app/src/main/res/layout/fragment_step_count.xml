@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.hamu.walkforcats.viewmodels.StepCountViewmodel"/>
+            type="com.hamu.walkforcats.viewmodels.ApplicationViewmodel"/>
     </data>
 
 

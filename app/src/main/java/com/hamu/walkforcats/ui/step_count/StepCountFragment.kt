@@ -9,13 +9,13 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.hamu.walkforcats.R
 import com.hamu.walkforcats.databinding.FragmentStepCountBinding
-import com.hamu.walkforcats.viewmodels.StepCountViewmodel
+import com.hamu.walkforcats.viewmodels.ApplicationViewmodel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class StepCountFragment : Fragment(R.layout.fragment_step_count){
 
-    private val viewModel: StepCountViewmodel by activityViewModels()
+    private val viewModel: ApplicationViewmodel by activityViewModels()
     private var sensorManager: SensorManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,19 +1,13 @@
 package com.hamu.walkforcats.ui.setting
 
 import android.app.AlertDialog
-import android.os.Build
 import android.os.Bundle
 import android.text.InputType
-import android.view.View
 import androidx.activity.addCallback
-import androidx.annotation.RequiresApi
-import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.navGraphViewModels
 import androidx.preference.EditTextPreference
 import androidx.preference.PreferenceFragmentCompat
 import com.hamu.walkforcats.R
-import com.hamu.walkforcats.viewmodels.StepCountViewmodel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

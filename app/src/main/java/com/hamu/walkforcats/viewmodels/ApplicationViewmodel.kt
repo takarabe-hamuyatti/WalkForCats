@@ -19,7 +19,7 @@ import javax.inject.Inject
 import kotlin.properties.Delegates
 
 @HiltViewModel
-class StepCountViewmodel @Inject constructor(
+class ApplicationViewmodel @Inject constructor(
     private val context : Application,
     private val preferenceRepository: PreferenceRepository
     ): AndroidViewModel(context), SensorEventListener , StepListener /*,DefaultLifecycleObserver */ {
@@ -157,7 +157,6 @@ class StepCountViewmodel @Inject constructor(
         preferenceRepository.saveCount(_dailyCount.value,_monthlyCount.value)
         isFirstInit = !isFirstInit
     }
-
 
     override fun onCleared() {
         super.onCleared()
