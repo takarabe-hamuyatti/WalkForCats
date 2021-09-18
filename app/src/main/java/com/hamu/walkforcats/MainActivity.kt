@@ -23,10 +23,7 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         val navController = navHostFragment.navController
         NavigationUI.setupWithNavController(navView, navController)
-    }
 
-    override fun onStop() {
-        super.onStop()
-        viewModel.saveCount()
+        //  lifecycle.addObserver(viewModel)
     }
 }
