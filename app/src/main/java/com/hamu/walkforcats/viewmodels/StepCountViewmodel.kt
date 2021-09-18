@@ -37,7 +37,6 @@ class StepCountViewmodel @Inject constructor(
     val monthlyCount: LiveData<String>
         get() = _monthlyCount.map{it.toString()}
 
-
     //1日、１週間の目標です。
     private val _monthlyGoal = MutableLiveData(0)
     val monthlyGoal: LiveData<Float>
@@ -154,14 +153,14 @@ class StepCountViewmodel @Inject constructor(
         // do nothing
     }
 
-    /*override fun onStop(owner: LifecycleOwner) {
-        super.onStop(owner)
-        preferenceRepository.saveCount(_dailyCount.value,_monthlyCount.value)
-    }
-     */
-    override fun onCleared() {
-        super.onCleared()
+    fun saveCount(){
         preferenceRepository.saveCount(_dailyCount.value,_monthlyCount.value)
         isFirstInit = !isFirstInit
+    }
+
+
+    override fun onCleared() {
+        super.onCleared()
+        saveCount()
     }
 }
