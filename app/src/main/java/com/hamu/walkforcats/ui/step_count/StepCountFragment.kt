@@ -1,7 +1,5 @@
 package com.hamu.walkforcats.ui.step_count
 
-import android.content.Context
-import android.hardware.SensorManager
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -16,7 +14,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class StepCountFragment : Fragment(R.layout.fragment_step_count){
 
     private val viewModel: ApplicationViewmodel by activityViewModels()
-    private var sensorManager: SensorManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,9 +32,6 @@ class StepCountFragment : Fragment(R.layout.fragment_step_count){
             it.lifecycleOwner = viewLifecycleOwner
         }
         viewModel.initWhenRedisplay()
-        //センサー取得をして、実際の歩行検知をvieewmodelに任せています。
-        sensorManager = activity?.getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        sensorManager?.let { viewModel.getSensorManager(it)}
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

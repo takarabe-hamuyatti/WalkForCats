@@ -2,6 +2,7 @@ package com.hamu.walkforcats.di
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.hardware.SensorManager
 import androidx.preference.PreferenceManager
 import androidx.room.Room
 import com.hamu.walkforcats.database.AboutMonthlyInfoDao
@@ -59,5 +60,9 @@ object AppModule {
     fun provideCreateFinishedMonthRepository(
         dao: AboutMonthlyInfoDao
     ): CreateFinishedMonthRepository = CreateFinishedMonthRepositoryImpl(dao)
+
+    @Provides
+    @Singleton
+    fun privideSystemService(@ApplicationContext context: Context) =context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
 }

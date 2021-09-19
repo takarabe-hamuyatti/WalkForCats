@@ -35,7 +35,7 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
         val adapter = HistoryAdapter(historyViewmodel)
         FragmentHistoryBinding.bind(view).also {
             it.lifecycleOwner = viewLifecycleOwner
-            it.stepCountviewModel = stepCountviewModel
+            it.applicationviewModel = stepCountviewModel
             it.historyviewModel = historyViewmodel
             it.list.also { list ->
                 list.adapter = adapter

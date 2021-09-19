@@ -66,7 +66,6 @@ class MyApplication :Application(),Configuration.Provider {
 
     override fun onLowMemory() {
         super.onLowMemory()
-
         applicationScope.cancel()
     }
 

@@ -5,7 +5,7 @@
 
     <data>
         <variable
-            name="stepCountviewModel"
+            name="applicationviewModel"
             type="com.hamu.walkforcats.viewmodels.ApplicationViewmodel"/>
         <variable
             name="historyviewModel"
@@ -60,7 +60,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="96dp"
                     android:layout_marginEnd="10dp"
-                    android:text="@{stepCountviewModel.monthlyCount}"
+                    android:text="@{applicationviewModel.monthlyCount}"
                     android:textSize="34sp"
                     app:layout_constraintEnd_toStartOf="@+id/srash"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -83,7 +83,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="96dp"
                     android:textSize="34sp"
-                    app:changeToString="@{stepCountviewModel.monthlyGoal}"
+                    app:changeToString="@{applicationviewModel.monthlyGoal}"
                     app:layout_constraintStart_toEndOf="@+id/srash"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -94,7 +94,7 @@
                     android:layout_marginStart="48dp"
                     android:layout_marginTop="183dp"
                     android:layout_marginBottom="35dp"
-                    android:text="@{stepCountviewModel.monthlyPercent}"
+                    android:text="@{applicationviewModel.monthlyPercent}"
                     android:textSize="24sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

@@ -20,10 +20,10 @@ import kotlin.properties.Delegates
 
 @HiltViewModel
 class ApplicationViewmodel @Inject constructor(
-    private val context : Application,
-    private val preferenceRepository: PreferenceRepository
+    private val preferenceRepository: PreferenceRepository,
+    sensorManager: SensorManager,
+    context : Application
     ): AndroidViewModel(context), SensorEventListener , StepListener /*,DefaultLifecycleObserver */ {
-    private var sensorManager: SensorManager? = null
     private var simpleStepDetector: StepDetector? = null
 
     var isFirstInit = true
@@ -126,16 +126,16 @@ class ApplicationViewmodel @Inject constructor(
     }
 
     //センサーマネージャー取得
-    fun getSensorManager(sensor: SensorManager) {
-        sensorManager = sensor
+    init {
         simpleStepDetector = StepDetector()
-        simpleStepDetector!!.registerListener(this)
-        sensorManager?.registerListener(
-            this,
-            sensorManager!!.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-            SensorManager.SENSOR_DELAY_FASTEST
-        )
-            ?: Toast.makeText(context, "端末にセンサーが用意されていません。", Toast.LENGTH_SHORT).show()
+        simpleStepDetector?.let{
+            it.registerListener(this)
+            sensorManager.registerListener(
+                this,
+                sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+                SensorManager.SENSOR_DELAY_FASTEST
+            )
+        }
     }
     //歩行検知
     override fun onSensorChanged(event: SensorEvent?) {
@@ -157,6 +157,7 @@ class ApplicationViewmodel @Inject constructor(
         preferenceRepository.saveCount(_dailyCount.value,_monthlyCount.value)
         isFirstInit = !isFirstInit
     }
+
 
     override fun onCleared() {
         super.onCleared()
