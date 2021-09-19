@@ -27,7 +27,6 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        historyViewmodel.checkInfo()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

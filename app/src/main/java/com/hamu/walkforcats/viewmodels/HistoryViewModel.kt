@@ -18,6 +18,8 @@ class HistoryViewModel @Inject constructor(
     private val preferenceRepository: PreferenceRepository
 ) : AndroidViewModel(application) {
     init {
+        checkIsUseDemoData()
+        checkIsFirstDisplay()
         checkChangeCat()
     }
     val dt = LocalDate.now()
@@ -25,28 +27,23 @@ class HistoryViewModel @Inject constructor(
     var isChangeCat = false
     val allMonthlyInfo: LiveData<List<MonthlyInfo>> = historyRepository.allMonthlyInfo.asLiveData()
 
-    fun checkInfo(){
-        checkIsUseDemoData()
-        checkIsFirstDisplay()
-    }
-
     private fun checkIsUseDemoData() {
         val isUseDemoData= preferenceRepository.isUseDemoData()
-        if(isUseDemoData) useDemoData() else noUseDemoData()
+        if(isUseDemoData) displayDemoData() else dontDisplayDemoData()
     }
 
-    private fun useDemoData() {
+    private fun displayDemoData() {
         viewModelScope.launch {
             historyRepository.insertDemoData()
         }
     }
-    private fun noUseDemoData(){
+    private fun dontDisplayDemoData(){
         viewModelScope.launch {
             historyRepository.deleteDemoData()
         }
     }
     private fun checkIsFirstDisplay(){
-      isFirstDisplay = preferenceRepository.checkFirstTimeOfHistry()
+        isFirstDisplay = preferenceRepository.checkFirstTimeOfHistry()
     }
     fun changeiIsFirstDisplayToFalse(){
         preferenceRepository.changeIsFirstTimeOfHistry()
