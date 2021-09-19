@@ -53,7 +53,7 @@ class HistoryViewModel @Inject constructor(
        isChangeCat =  preferenceRepository.isCangeCat()
     }
 
-    fun getRangeOfPercent(percent:Int): Int {
+    fun getCatFromRangeOfPercent(percent:Int): Int {
         var whichCatToSet: Int
         percent.let {
             if(isChangeCat) {
