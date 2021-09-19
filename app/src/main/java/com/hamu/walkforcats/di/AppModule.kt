@@ -6,7 +6,7 @@ import android.hardware.SensorManager
 import androidx.preference.PreferenceManager
 import androidx.room.Room
 import com.hamu.walkforcats.database.AboutMonthlyInfoDao
-import com.hamu.walkforcats.database.AonthlyInfoDatabase
+import com.hamu.walkforcats.database.MonthlyInfoDatabase
 import com.hamu.walkforcats.repository.create_finished_month.CreateFinishedMonthRepository
 import com.hamu.walkforcats.repository.create_finished_month.CreateFinishedMonthRepositoryImpl
 import com.hamu.walkforcats.repository.history.HistoryRepository
@@ -31,17 +31,17 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideMonthlyInfoDatabase(@ApplicationContext context: Context):AonthlyInfoDatabase{
+    fun provideMonthlyInfoDatabase(@ApplicationContext context: Context):MonthlyInfoDatabase{
         return Room.databaseBuilder(
             context,
-            AonthlyInfoDatabase::class.java,
+            MonthlyInfoDatabase::class.java,
             MONTHLYINFO_DATABASE_NAME
         ).build()
     }
 
     @Provides
     @Singleton
-    fun provideMonthlyInfoDao(db:AonthlyInfoDatabase) = db.aboutMonthlyInfoDao
+    fun provideMonthlyInfoDao(db:MonthlyInfoDatabase) = db.aboutMonthlyInfoDao
 
     @Provides
     @Singleton
