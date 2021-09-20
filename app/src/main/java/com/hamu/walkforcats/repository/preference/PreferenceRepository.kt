@@ -5,11 +5,11 @@ interface PreferenceRepository {
 
     fun getDailyGoal(): Int?
 
-    fun getMonthlyGoal():String
+    fun getMonthlyGoal():Int?
 
     fun getDailyCount(): Int
 
-    fun getMonthlyCount(): String
+    fun getMonthlyCount():Int
 
     fun saveCount(dailyCount:Int?,monthlyCount:Int?)
 

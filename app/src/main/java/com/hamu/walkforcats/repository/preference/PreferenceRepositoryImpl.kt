@@ -18,16 +18,16 @@ class PreferenceRepositoryImpl(
         return pref.getString(DAILY_GOAL_KEY, "15000")?.toInt()
     }
 
-    override fun getMonthlyGoal():String {
-        return pref.getString(MONTHLY_GOAL_KEY, "50000").toString()
+    override fun getMonthlyGoal():Int? {
+        return pref.getString(MONTHLY_GOAL_KEY, "50000")?.toInt()
     }
 
     override fun getDailyCount(): Int {
         return pref.getInt(DAILY_COUNT_KEY, 0)
     }
 
-    override fun getMonthlyCount(): String {
-        return pref.getInt(MONTHLY_COUNT_KEY, 0).toString()
+    override fun getMonthlyCount(): Int {
+        return pref.getInt(MONTHLY_COUNT_KEY, 0)
     }
 
     override fun saveCount(dailyCount:Int?,monthlyCount:Int?){

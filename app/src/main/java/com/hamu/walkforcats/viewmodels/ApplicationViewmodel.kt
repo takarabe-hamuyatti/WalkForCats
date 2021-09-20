@@ -5,7 +5,6 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import android.widget.Toast
 import androidx.lifecycle.*
 import com.hamu.walkforcats.R
 import com.hamu.walkforcats.utils.sensor.StepListener
@@ -14,9 +13,7 @@ import com.hamu.walkforcats.utils.getRatio
 import com.hamu.walkforcats.utils.sensor.StepDetector
 import com.hamu.walkforcats.utils.truncating
 import dagger.hilt.android.lifecycle.HiltViewModel
-import timber.log.Timber
 import javax.inject.Inject
-import kotlin.properties.Delegates
 
 @HiltViewModel
 class ApplicationViewmodel @Inject constructor(
@@ -27,6 +24,7 @@ class ApplicationViewmodel @Inject constructor(
     private var simpleStepDetector: StepDetector? = null
 
     var isFirstInit = true
+    var isChangeCat = false
 
     //歩数の1日ごと、月ごとの集計です
     private val _dailyCount = MutableLiveData(0)
@@ -59,21 +57,19 @@ class ApplicationViewmodel @Inject constructor(
     val whichCatToSet:LiveData<Int>
          get() = _whichCatToSet
 
-    var isChangeCat =false
-
     //画面を表示、再表示した時に獲得したい値をまとめています。歩数の読み込み(getNowCount)はアプリ起動時にのみ読み込むので省いています。
     fun initWhenRedisplay(){
         getPercent()
         getGoal()
         checkChangeCat()
-        getRangeOfPercent()
+        getCatFromRangeOfPercent()
     }
 
     //歩行検知時の行動
     override fun step(timeNs: Long) {
         plusCount()
         getPercent()
-        getRangeOfPercent()
+        getCatFromRangeOfPercent()
     }
 
     private fun plusCount() {
@@ -81,7 +77,7 @@ class ApplicationViewmodel @Inject constructor(
         _monthlyCount.value = _monthlyCount.value?.plus(1)
     }
 
-    fun getPercent() {
+    private fun getPercent() {
         //まずパーセントを出します
         val percentFloatofDay = getRatio(_dailyCount.value,_dailyGoal.value)
         val percentFloatofWeek = getRatio(_monthlyCount.value,_monthlyGoal.value)
@@ -94,20 +90,20 @@ class ApplicationViewmodel @Inject constructor(
     //その日ごとの記録は共有プリファレンスで行い、累計の記録はroom で行います。
     fun getNowCount(){
         _dailyCount.value  = preferenceRepository.getDailyCount()
-        _monthlyCount.value  = preferenceRepository.getMonthlyCount().toInt()
+        _monthlyCount.value  = preferenceRepository.getMonthlyCount()
     }
 
     //一日ごと、一週間ごとの目標を取得しています。
     private fun getGoal() {
         _dailyGoal.value  = preferenceRepository.getDailyGoal()
-        _monthlyGoal.value  = preferenceRepository.getMonthlyGoal().toInt()
+        _monthlyGoal.value  = preferenceRepository.getMonthlyGoal()
     }
 
     private fun checkChangeCat(){
         isChangeCat= preferenceRepository.isCangeCat()
     }
 
-    private fun getRangeOfPercent(){
+    fun getCatFromRangeOfPercent(){
         _dailyPercent.value?.let {
             if(isChangeCat) {
                 if (10 >= it) { _whichCatToSet.value = R.drawable.realcat1 }
@@ -123,6 +119,16 @@ class ApplicationViewmodel @Inject constructor(
                 else { _whichCatToSet.value = R.drawable.whitecat5 }
             }
         }
+    }
+
+    fun saveCount(){
+        preferenceRepository.saveCount(_dailyCount.value,_monthlyCount.value)
+        isFirstInit = !isFirstInit
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        saveCount()
     }
 
     //センサーマネージャー取得
@@ -151,16 +157,5 @@ class ApplicationViewmodel @Inject constructor(
     //大元のオープンソースで用意されている関数
     override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
         // do nothing
-    }
-
-    fun saveCount(){
-        preferenceRepository.saveCount(_dailyCount.value,_monthlyCount.value)
-        isFirstInit = !isFirstInit
-    }
-
-
-    override fun onCleared() {
-        super.onCleared()
-        saveCount()
     }
 }
