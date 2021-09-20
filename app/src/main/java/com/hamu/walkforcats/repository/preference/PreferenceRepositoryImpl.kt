@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.hamu.walkforcats.utils.UniqueId.Companion.CHANGE_CAT_KEY
 import com.hamu.walkforcats.utils.UniqueId.Companion.CHECK_FIRST_TIME_OF_HISTRY_KEY
+import com.hamu.walkforcats.utils.UniqueId.Companion.CHECK_FIRST_TIME_OF_STEPCOUNT_KEY
 import com.hamu.walkforcats.utils.UniqueId.Companion.DAILY_COUNT_KEY
 import com.hamu.walkforcats.utils.UniqueId.Companion.DAILY_GOAL_KEY
 import com.hamu.walkforcats.utils.UniqueId.Companion.DEMO_DATA_KEY
@@ -69,6 +70,16 @@ class PreferenceRepositoryImpl(
     override fun changeIsFirstTimeOfHistry() {
         pref.edit{
             putBoolean(CHECK_FIRST_TIME_OF_HISTRY_KEY,false)
+        }
+    }
+
+    override fun checkFirstTimeOfStepCount(): Boolean {
+        return pref.getBoolean(CHECK_FIRST_TIME_OF_STEPCOUNT_KEY,true)
+    }
+
+    override fun changeIsFirstTimeOfStepCount() {
+        pref.edit{
+            putBoolean(CHECK_FIRST_TIME_OF_STEPCOUNT_KEY,false)
         }
     }
 

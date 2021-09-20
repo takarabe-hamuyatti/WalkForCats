@@ -7,6 +7,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.hamu.walkforcats.R
 import com.hamu.walkforcats.databinding.FragmentStepCountBinding
+import com.hamu.walkforcats.utils.confirmDialog
 import com.hamu.walkforcats.viewmodels.ApplicationViewmodel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -32,6 +33,13 @@ class StepCountFragment : Fragment(R.layout.fragment_step_count){
             it.lifecycleOwner = viewLifecycleOwner
         }
         viewModel.initWhenRedisplay()
+        if (viewModel.isFirstDisplay) {
+            confirmDialog(requireContext(),
+                "",
+                getString(R.string.decide_goal)
+            ) { findNavController().navigate(R.id.action_navigation_step_to_navigation_settings)
+                viewModel.changeIsFirstDisplayToFalse()}
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

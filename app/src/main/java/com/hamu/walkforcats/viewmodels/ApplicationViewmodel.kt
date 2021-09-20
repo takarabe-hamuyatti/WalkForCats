@@ -24,6 +24,7 @@ class ApplicationViewmodel @Inject constructor(
 
     var isFirstInit = true
     var isChangeCat = false
+    var isFirstDisplay = false
 
     //歩数の1日ごと、月ごとの集計です
     private val _dailyCount = MutableLiveData(0)
@@ -60,8 +61,9 @@ class ApplicationViewmodel @Inject constructor(
     fun initWhenRedisplay(){
         getPercent()
         getGoal()
-        checkChangeCat()
         getCatFromRangeOfPercent()
+        checkChangeCat()
+        checkIsFirstDisplay()
     }
 
     //歩行検知時の行動
@@ -119,6 +121,13 @@ class ApplicationViewmodel @Inject constructor(
     fun saveCount(){
         preferenceRepository.saveCount(_dailyCount.value,_monthlyCount.value)
         isFirstInit = !isFirstInit
+    }
+
+    private fun checkIsFirstDisplay(){
+        isFirstDisplay = preferenceRepository.checkFirstTimeOfStepCount()
+    }
+    fun changeIsFirstDisplayToFalse(){
+        preferenceRepository.changeIsFirstTimeOfStepCount()
     }
 
     override fun onCleared() {

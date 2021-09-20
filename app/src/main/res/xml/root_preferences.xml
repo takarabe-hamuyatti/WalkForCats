@@ -8,14 +8,14 @@
             app:key="dailyGoal"
             app:title="@string/dailyGoal"
             app:useSimpleSummaryProvider="true"
-            app:defaultValue="20000"
+            app:defaultValue="500"
             />
 
         <EditTextPreference
             app:key="monthlyGoal"
             app:title="@string/monthlyGoal"
             app:useSimpleSummaryProvider="true"
-            app:defaultValue="300000"/>
+            app:defaultValue="3000"/>
 
     </PreferenceCategory>
 

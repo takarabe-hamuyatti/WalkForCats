@@ -13,7 +13,9 @@
         >
         <action
             android:id="@+id/action_navigation_step_to_navigation_settings"
-            app:destination="@id/navigation_settings" />
+            app:destination="@id/navigation_settings"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:popEnterAnim="@android:anim/slide_in_left" />
     </fragment>
     <fragment
         android:id="@+id/navigation_history"
@@ -23,7 +25,8 @@
         <action
             android:id="@+id/action_navigation_history_to_navigation_settings"
             app:destination="@id/navigation_settings"
-            />
+            app:enterAnim="@android:anim/slide_in_left"
+            app:popEnterAnim="@android:anim/slide_in_left" />
     </fragment>
     <fragment
         android:id="@+id/navigation_settings"

@@ -26,6 +26,8 @@
     <string name="demo_data_supplement">デモデータを表示しています</string>
     <string name="demo_data_howtochange">設定　⇨　デモデータから変更できます。</string>
 
+    <string name = "decide_goal">1日、1ヶ月の目標を決めましょう！</string>
+
     <!-- Preference Titles -->
     <string name="goal_header">目標</string>
     <string name="cat_header">猫</string>

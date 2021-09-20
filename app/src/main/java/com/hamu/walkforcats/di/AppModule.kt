@@ -63,6 +63,6 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun privideSystemService(@ApplicationContext context: Context) =context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
+    fun provideSystemService(@ApplicationContext context: Context) =context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
 }

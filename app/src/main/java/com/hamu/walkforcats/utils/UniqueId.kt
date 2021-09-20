@@ -10,6 +10,7 @@ class UniqueId {
         const val DEMO_DATA_KEY = "demoData"
         const val CHANGE_CAT_KEY = "changeCat"
         const val CHECK_FIRST_TIME_OF_HISTRY_KEY = "checkFirstTimeOfHistry"
+        const val CHECK_FIRST_TIME_OF_STEPCOUNT_KEY = "checkFirstTimeOfStepCount"
         const val FIRST_INIT_KEY = "firstInit"
 
         //database 名

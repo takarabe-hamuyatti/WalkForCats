@@ -25,4 +25,8 @@ interface PreferenceRepository {
 
     fun changeIsFirstTimeOfHistry()
 
+    fun checkFirstTimeOfStepCount():Boolean
+
+    fun changeIsFirstTimeOfStepCount()
+
 }
