@@ -3,12 +3,10 @@ package com.hamu.walkforcats.utils
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-fun getRatio(num1: Int?, num2: Int?): Float? {
-    return num1?.toFloat()?.div(num2!!)?.times(100)
-}
 
-fun truncating(num:Float?):Float?{
-    return num?.times(10)?.toInt()?.toFloat()?.div(10)
+fun changeToPercent(count: Int?, goal: Int?):Float?{
+    val tmp = count?.toFloat()?.div(goal!!)?.times(100)
+    return tmp?.times(10)?.toInt()?.toFloat()?.div(10)
 }
 
 fun formattingYearMonth(dt: LocalDate): Int {

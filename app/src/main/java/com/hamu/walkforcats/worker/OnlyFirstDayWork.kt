@@ -7,9 +7,8 @@ import com.hamu.walkforcats.MyApplication
 import com.hamu.walkforcats.database.MonthlyInfo
 import com.hamu.walkforcats.repository.create_finished_month.CreateFinishedMonthRepository
 import com.hamu.walkforcats.repository.preference.PreferenceRepository
+import com.hamu.walkforcats.utils.changeToPercent
 import com.hamu.walkforcats.utils.formattingYearMonth
-import com.hamu.walkforcats.utils.getRatio
-import com.hamu.walkforcats.utils.truncating
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import java.time.LocalDate
@@ -53,8 +52,8 @@ class OnlyFirstDayWork @AssistedInject constructor(
             ExistingPeriodicWorkPolicy.KEEP,
             repeatingRequest
         )
-
     }
+
     private fun processingContentOfWork(){
         val dt = LocalDate.now()
         //日付を確認して、月が変わったかどうかを確認しています。
@@ -63,9 +62,9 @@ class OnlyFirstDayWork @AssistedInject constructor(
         if (isTheBeginningOfTheMonth) {
             val yearMonth = formattingYearMonth(dt)
             //これまでの目標値、歩数、達成率を取得します。
-            val monthlyStepCount = preferenceRepository.getMonthlyCount()
-            val monthlyGoal = preferenceRepository.getMonthlyGoal()
-            val percent = truncating(getRatio(monthlyStepCount.toInt(), monthlyGoal.toInt())).toString()
+            val monthlyStepCount = preferenceRepository.getMonthlyCount().toString()
+            val monthlyGoal = preferenceRepository.getMonthlyGoal().toString()
+            val percent = changeToPercent(monthlyStepCount.toInt(),monthlyGoal.toInt()).toString()
 
             val finishedMonthlyInfo =
                 MonthlyInfo(

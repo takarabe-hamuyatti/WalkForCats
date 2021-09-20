@@ -9,9 +9,8 @@ import androidx.lifecycle.*
 import com.hamu.walkforcats.R
 import com.hamu.walkforcats.utils.sensor.StepListener
 import com.hamu.walkforcats.repository.preference.PreferenceRepository
-import com.hamu.walkforcats.utils.getRatio
+import com.hamu.walkforcats.utils.changeToPercent
 import com.hamu.walkforcats.utils.sensor.StepDetector
-import com.hamu.walkforcats.utils.truncating
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -78,12 +77,8 @@ class ApplicationViewmodel @Inject constructor(
     }
 
     private fun getPercent() {
-        //まずパーセントを出します
-        val percentFloatofDay = getRatio(_dailyCount.value,_dailyGoal.value)
-        val percentFloatofWeek = getRatio(_monthlyCount.value,_monthlyGoal.value)
-        //少数第二位以下を切り捨てます。
-        _dailyPercent.value = truncating(percentFloatofDay)
-        _monthlyPercent.value = truncating(percentFloatofWeek)
+        _dailyPercent.value = changeToPercent(_dailyCount.value,_dailyGoal.value)
+        _monthlyPercent.value = changeToPercent(_monthlyCount.value,_monthlyGoal.value)
     }
 
     //共有プリファレンス
