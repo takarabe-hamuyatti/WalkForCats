@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.hardware.SensorManager
 import androidx.preference.PreferenceManager
 import androidx.room.Room
+import com.hamu.walkforcats.api.WeatherInfoService
 import com.hamu.walkforcats.database.AboutMonthlyInfoDao
 import com.hamu.walkforcats.database.MonthlyInfoDatabase
 import com.hamu.walkforcats.repository.create_finished_month.CreateFinishedMonthRepository
@@ -19,6 +20,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
 @Module
@@ -43,11 +46,16 @@ object AppModule {
     @Singleton
     fun provideMonthlyInfoDao(db:MonthlyInfoDatabase) = db.aboutMonthlyInfoDao
 
-   /* @Provides
+    @Provides
     @Singleton
-    fun provideApi()
+    fun provideApi():WeatherInfoService{
+        return Retrofit.Builder()
+            .baseUrl("https://api.openweathermap.org/data/2.5/onecall?")
+            .addConverterFactory(MoshiConverterFactory.create())
+            .build()
+            .create(WeatherInfoService::class.java)
+    }
 
-    */
 
     @Provides
     @Singleton

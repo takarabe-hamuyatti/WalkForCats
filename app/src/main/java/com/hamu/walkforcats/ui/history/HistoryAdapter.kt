@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.hamu.walkforcats.database.MonthlyInfo
+import com.hamu.walkforcats.entity.MonthlyInfo
 import com.hamu.walkforcats.databinding.FragmentItemBinding
 import com.hamu.walkforcats.viewmodels.HistoryViewModel
 
@@ -24,7 +24,7 @@ class HistoryAdapter(private val viewModel: HistoryViewModel) : ListAdapter<Mont
         private val binding:FragmentItemBinding)
         : RecyclerView.ViewHolder(binding.root){
 
-        fun bind(item: MonthlyInfo,viewModel: HistoryViewModel) {
+        fun bind(item: MonthlyInfo, viewModel: HistoryViewModel) {
             binding.run{
                 monthlyInfo = item
                 percentForCat = item.monthlyPercent.toFloat()

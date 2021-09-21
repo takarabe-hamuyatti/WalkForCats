@@ -1,4 +1,4 @@
-package com.hamu.walkforcats.database
+package com.hamu.walkforcats.entity
 
 
 import androidx.room.Entity

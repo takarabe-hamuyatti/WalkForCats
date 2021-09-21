@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.*
 import com.hamu.walkforcats.MyApplication
-import com.hamu.walkforcats.database.MonthlyInfo
+import com.hamu.walkforcats.entity.MonthlyInfo
 import com.hamu.walkforcats.repository.create_finished_month.CreateFinishedMonthRepository
 import com.hamu.walkforcats.repository.preference.PreferenceRepository
 import com.hamu.walkforcats.utils.changeToPercent
