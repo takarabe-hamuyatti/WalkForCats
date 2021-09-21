@@ -14,6 +14,7 @@ import com.hamu.walkforcats.R
 import com.hamu.walkforcats.databinding.FragmentWeatherInfoBinding
 import com.hamu.walkforcats.viewmodels.WeathearInfoViewmodel
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.concurrent.Executor
 
 @AndroidEntryPoint
 class WeatherInfoFragment() : Fragment(R.layout.fragment_weather_info) {
@@ -34,11 +35,15 @@ class WeatherInfoFragment() : Fragment(R.layout.fragment_weather_info) {
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
+            //pastLocation からとってくる　それもダメだったらダイアログ
             return
         }else{
             fusedLocationClient.lastLocation
-                .addOnSuccessListener { location : Location? ->
-                    // Got last known location. In some rare situations this can be null.
+                .addOnSuccessListener {  it : Location? ->
+
+                }
+                .addOnFailureListener{
+                    //pastLocation からとってくる　それもダメだったらダイアログ
                 }
         }
     }
