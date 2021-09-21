@@ -7,9 +7,14 @@ import androidx.preference.PreferenceManager
 import androidx.room.Room
 import com.hamu.walkforcats.api.WeatherInfoService
 import com.hamu.walkforcats.database.AboutMonthlyInfoDao
-import com.hamu.walkforcats.database.MonthlyInfoDatabase
+import com.hamu.walkforcats.database.AboutHistoryDatabase
+import com.hamu.walkforcats.database.AboutPastLocationDao
+import com.hamu.walkforcats.repository.PastLocation.PastLocationRepository
+import com.hamu.walkforcats.repository.PastLocation.PastLocationRepositoryImpl
 import com.hamu.walkforcats.repository.create_finished_month.CreateFinishedMonthRepository
 import com.hamu.walkforcats.repository.create_finished_month.CreateFinishedMonthRepositoryImpl
+import com.hamu.walkforcats.repository.get_weather_info.GetWeatherInfoRepository
+import com.hamu.walkforcats.repository.get_weather_info.GetWeatherInfoRepositoryImpl
 import com.hamu.walkforcats.repository.history.HistoryRepository
 import com.hamu.walkforcats.repository.history.HistoryRepositoryImpl
 import com.hamu.walkforcats.repository.preference.PreferenceRepository
@@ -34,17 +39,21 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideMonthlyInfoDatabase(@ApplicationContext context: Context):MonthlyInfoDatabase{
+    fun provideMonthlyInfoDatabase(@ApplicationContext context: Context):AboutHistoryDatabase{
         return Room.databaseBuilder(
             context,
-            MonthlyInfoDatabase::class.java,
+            AboutHistoryDatabase::class.java,
             MONTHLYINFO_DATABASE_NAME
         ).build()
     }
 
     @Provides
     @Singleton
-    fun provideMonthlyInfoDao(db:MonthlyInfoDatabase) = db.aboutMonthlyInfoDao
+    fun provideMonthlyInfoDao(db:AboutHistoryDatabase) = db.aboutMonthlyInfoDao
+
+    @Provides
+    @Singleton
+    fun providePastLocationDao(db: AboutHistoryDatabase) = db.aboutPastLocationDao
 
     @Provides
     @Singleton
@@ -55,6 +64,11 @@ object AppModule {
             .build()
             .create(WeatherInfoService::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun provideSystemService(@ApplicationContext context: Context) =context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
+
 
 
     @Provides
@@ -77,6 +91,14 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideSystemService(@ApplicationContext context: Context) =context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
+    fun provideGetWeatherInfoRepository(
+        weatherInfoService: WeatherInfoService
+    ):GetWeatherInfoRepository = GetWeatherInfoRepositoryImpl(weatherInfoService)
+
+    @Provides
+    @Singleton
+    fun providePastLocationRepository(
+        dao: AboutPastLocationDao
+    ):PastLocationRepository = PastLocationRepositoryImpl(dao)
 
 }

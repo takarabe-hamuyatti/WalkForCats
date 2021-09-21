@@ -1,4 +1,5 @@
 package com.hamu.walkforcats.entity
 
-data class WeathearInfo {
-}
+data class WeathearInfo (
+    val tmp :Int
+)
