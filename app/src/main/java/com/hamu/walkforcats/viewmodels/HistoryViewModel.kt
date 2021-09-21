@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.hamu.walkforcats.R
 import com.hamu.walkforcats.entity.MonthlyInfo
-import com.hamu.walkforcats.repository.history.HistoryRepository
+import com.hamu.walkforcats.repository.monthly_history.MonthlyHistoryRepository
 import com.hamu.walkforcats.repository.preference.PreferenceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -14,7 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HistoryViewModel @Inject constructor(
     application: Application,
-    private val historyRepository: HistoryRepository,
+    private val monthlyHistoryRepository: MonthlyHistoryRepository,
     private val preferenceRepository: PreferenceRepository
 ) : AndroidViewModel(application) {
     init {
@@ -25,7 +25,7 @@ class HistoryViewModel @Inject constructor(
     val dt = LocalDate.now()
     var isFirstDisplay = false
     var isChangeCat = false
-    val allMonthlyInfo: LiveData<List<MonthlyInfo>> = historyRepository.allMonthlyInfo.asLiveData()
+    val allMonthlyInfo: LiveData<List<MonthlyInfo>> = monthlyHistoryRepository.allMonthlyInfo.asLiveData()
 
     private fun checkIsUseDemoData() {
         val isUseDemoData= preferenceRepository.isUseDemoData()
@@ -34,12 +34,12 @@ class HistoryViewModel @Inject constructor(
 
     private fun displayDemoData() {
         viewModelScope.launch {
-            historyRepository.insertDemoData()
+            monthlyHistoryRepository.insertDemoData()
         }
     }
     private fun dontDisplayDemoData(){
         viewModelScope.launch {
-            historyRepository.deleteDemoData()
+            monthlyHistoryRepository.deleteDemoData()
         }
     }
     private fun checkIsFirstDisplay(){

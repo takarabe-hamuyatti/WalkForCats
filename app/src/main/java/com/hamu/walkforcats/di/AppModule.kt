@@ -9,14 +9,14 @@ import com.hamu.walkforcats.api.WeatherInfoService
 import com.hamu.walkforcats.database.AboutMonthlyInfoDao
 import com.hamu.walkforcats.database.AboutHistoryDatabase
 import com.hamu.walkforcats.database.AboutPastLocationDao
-import com.hamu.walkforcats.repository.PastLocation.PastLocationRepository
-import com.hamu.walkforcats.repository.PastLocation.PastLocationRepositoryImpl
+import com.hamu.walkforcats.repository.past_location.PastLocationRepository
+import com.hamu.walkforcats.repository.past_location.PastLocationRepositoryImpl
 import com.hamu.walkforcats.repository.create_finished_month.CreateFinishedMonthRepository
 import com.hamu.walkforcats.repository.create_finished_month.CreateFinishedMonthRepositoryImpl
 import com.hamu.walkforcats.repository.get_weather_info.GetWeatherInfoRepository
 import com.hamu.walkforcats.repository.get_weather_info.GetWeatherInfoRepositoryImpl
-import com.hamu.walkforcats.repository.history.HistoryRepository
-import com.hamu.walkforcats.repository.history.HistoryRepositoryImpl
+import com.hamu.walkforcats.repository.monthly_history.MonthlyHistoryRepository
+import com.hamu.walkforcats.repository.monthly_history.MonthlyMonthlyHistoryRepositoryImpl
 import com.hamu.walkforcats.repository.preference.PreferenceRepository
 import com.hamu.walkforcats.repository.preference.PreferenceRepositoryImpl
 import com.hamu.walkforcats.utils.UniqueId.Companion.MONTHLYINFO_DATABASE_NAME
@@ -75,7 +75,7 @@ object AppModule {
     @Singleton
     fun provideHistoryRepository(
         dao: AboutMonthlyInfoDao
-    ): HistoryRepository = HistoryRepositoryImpl(dao)
+    ): MonthlyHistoryRepository = MonthlyMonthlyHistoryRepositoryImpl(dao)
 
     @Provides
     @Singleton

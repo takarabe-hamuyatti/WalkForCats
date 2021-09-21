@@ -1,4 +1,4 @@
-package com.hamu.walkforcats.repository.PastLocation
+package com.hamu.walkforcats.repository.past_location
 
 import com.hamu.walkforcats.database.AboutPastLocationDao
 
