@@ -43,6 +43,12 @@ object AppModule {
     @Singleton
     fun provideMonthlyInfoDao(db:MonthlyInfoDatabase) = db.aboutMonthlyInfoDao
 
+   /* @Provides
+    @Singleton
+    fun provideApi()
+
+    */
+
     @Provides
     @Singleton
     fun provideHistoryRepository(

@@ -1,4 +1,4 @@
 package com.hamu.walkforcats.repository.get_weather_info
 
-class GetWeatherInfoImpl {
+interface GetWeatherInfoRepository {
 }

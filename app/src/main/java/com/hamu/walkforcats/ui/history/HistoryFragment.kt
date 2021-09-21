@@ -66,6 +66,10 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
                 findNavController().navigate(R.id.action_navigation_history_to_navigation_settings)
                 true
             }
+            R.id.action_weather ->{
+                findNavController().navigate(R.id.action_navigation_history_to_weatherInfoFragment)
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }

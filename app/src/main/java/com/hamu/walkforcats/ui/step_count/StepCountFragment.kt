@@ -52,6 +52,10 @@ class StepCountFragment : Fragment(R.layout.fragment_step_count){
                 findNavController().navigate(R.id.action_navigation_step_to_navigation_settings)
                 true
             }
+            R.id.action_weather ->{
+                findNavController().navigate(R.id.action_navigation_step_to_weatherInfoFragment)
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }

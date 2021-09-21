@@ -11,12 +11,12 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">設定</string>
     <string name="action_history">履歴</string>
+    <string name="action_weather">今日の天気</string>
 
     <string name="monthly">Monthly</string>
     <string name="daily">Daily</string>
 
     <string name="zero">0</string>
-
 
 
     <string name="menu_home">Home</string>
@@ -26,7 +26,7 @@
     <string name="demo_data_supplement">デモデータを表示しています</string>
     <string name="demo_data_howtochange">設定　⇨　デモデータから変更できます。</string>
 
-    <string name = "decide_goal">1日、1ヶ月の目標を決めましょう！</string>
+    <string name="decide_goal">1日、1ヶ月の目標を決めましょう！</string>
 
     <!-- Preference Titles -->
     <string name="goal_header">目標</string>
