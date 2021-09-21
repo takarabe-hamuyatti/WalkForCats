@@ -115,5 +115,10 @@ dependencies {
     def lottieVersion = "3.4.0"
     implementation "com.airbnb.android:lottie:$lottieVersion"
 
+    //Timber
     implementation 'com.jakewharton.timber:timber:4.7.1'
+
+    //Retrofit
+    implementation "com.squareup.retrofit2:retrofit:2.9.0."
+    implementation "com.squareup.retrofit2:converter-moshi"
 }
