@@ -31,15 +31,14 @@ class WeatherInfoFragment : Fragment(R.layout.fragment_weather_info) {
 
     private val viewmodel:WeathearInfoViewmodel by viewModels()
 
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
-
-
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { granted ->
         if (granted) {
+            Timber.i("granted")
             getLocation()
         } else {
+            Timber.i("notgranted")
             viewmodel.checkIsPastLocationIsNull()
         }
     }
@@ -48,9 +47,7 @@ class WeatherInfoFragment : Fragment(R.layout.fragment_weather_info) {
         super.onViewCreated(view, savedInstanceState)
 
         FragmentWeatherInfoBinding.bind(view).let {
-            fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
             requestPermissionLauncher.launch(ACCESS_COARSE_LOCATION)
-
             viewmodel.isDisplayDaialog.observe(viewLifecycleOwner, {
                 if (it) displayDialog()
             })
@@ -64,6 +61,7 @@ class WeatherInfoFragment : Fragment(R.layout.fragment_weather_info) {
 
     @SuppressLint("MissingPermission")
     private fun getLocation(){
+        val fusedLocationClient: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
         fusedLocationClient.lastLocation
             .addOnSuccessListener {it : Location? ->
                 val longitude = it?.longitude ?: 36.0
@@ -75,5 +73,4 @@ class WeatherInfoFragment : Fragment(R.layout.fragment_weather_info) {
                 viewmodel.checkIsPastLocationIsNull()
             }
     }
-
 }

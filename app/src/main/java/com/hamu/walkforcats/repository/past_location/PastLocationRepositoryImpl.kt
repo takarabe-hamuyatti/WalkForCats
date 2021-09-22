@@ -2,6 +2,7 @@ package com.hamu.walkforcats.repository.past_location
 
 import com.hamu.walkforcats.database.dao.AboutPastLocationDao
 import com.hamu.walkforcats.entity.PastLocation
+import com.hamu.walkforcats.utils.UniqueId.Companion.PAST_LOCATION_KEY
 import kotlinx.coroutines.flow.Flow
 
 class PastLocationRepositoryImpl(
@@ -11,7 +12,7 @@ class PastLocationRepositoryImpl(
              get() = dao.getPastLocation()
 
     override suspend fun updatePastLocation(longitude:Double, latitude:Double) {
-        val newPastLocation = PastLocation(1,longitude,latitude)
+        val newPastLocation = PastLocation(PAST_LOCATION_KEY,longitude,latitude)
         dao.insertNewLocation(newPastLocation)
     }
 }

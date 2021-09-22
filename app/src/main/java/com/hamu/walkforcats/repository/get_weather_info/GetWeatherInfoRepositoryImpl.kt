@@ -16,10 +16,9 @@ class GetWeatherInfoRepositoryImpl(
         }
         if(response.isSuccessful){
             weathers = response.body()!!
-            var tmp = weathers.list[0].clouds
+            val tmp = weathers.list[0].clouds
             Timber.i("$tmp")
         }
         return response.body()!!
     }
-
 }

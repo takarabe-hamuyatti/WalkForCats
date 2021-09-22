@@ -5,11 +5,14 @@ import com.hamu.walkforcats.utils.UniqueId.Companion.OPEN_WEATHER_API_KEY
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface WeatherInfoService {
-    @GET("https://api.openweathermap.org/data/2.5/onecall{lat}&{lon}&lang=ja&appid={$OPEN_WEATHER_API_KEY}")
+    @GET("onecall")
     suspend fun getWeatherInfo(
-        @Path ("lat") lat:Double,
-        @Path ("lon") lon:Double
+        @Query ("lat") lat:Double,
+        @Query ("lon") lon:Double,
+        @Query ("lang") lang:String = "ja",
+        @Query ("appid") appid:String = OPEN_WEATHER_API_KEY
     ):Response<WeatherResponse>
 }
