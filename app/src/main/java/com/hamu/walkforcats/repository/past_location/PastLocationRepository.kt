@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.Flow
 interface PastLocationRepository {
     val PastLocationInfo :Flow<PastLocation>
 
-    fun updatePastLocation(longitude:Double,latitude:Double)
+    suspend fun updatePastLocation(longitude:Double, latitude:Double)
 }

@@ -20,6 +20,7 @@ import com.hamu.walkforcats.repository.monthly_history.MonthlyMonthlyHistoryRepo
 import com.hamu.walkforcats.repository.preference.PreferenceRepository
 import com.hamu.walkforcats.repository.preference.PreferenceRepositoryImpl
 import com.hamu.walkforcats.utils.UniqueId.Companion.MONTHLYINFO_DATABASE_NAME
+import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -58,6 +59,10 @@ object AppModule {
     @Provides
     @Singleton
     fun provideApi():WeatherInfoService{
+        val moshi = Moshi.Builder()
+            .add(KotlinJsonAdapterFactory())
+            .build()
+
         return Retrofit.Builder()
             .baseUrl("https://api.openweathermap.org/data/2.5/onecall/")
             .addConverterFactory(MoshiConverterFactory.create())

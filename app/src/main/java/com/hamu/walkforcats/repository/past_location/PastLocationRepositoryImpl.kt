@@ -10,7 +10,7 @@ class PastLocationRepositoryImpl(
     override val PastLocationInfo: Flow<PastLocation>
              get() = dao.getPastLocation()
 
-    override fun updatePastLocation(longitude:Double,latitude:Double) {
+    override suspend fun updatePastLocation(longitude:Double, latitude:Double) {
         val newPastLocation = PastLocation(1,longitude,latitude)
         dao.insertNewLocation(newPastLocation)
     }

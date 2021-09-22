@@ -7,7 +7,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface WeatherInfoService {
-    @GET("https://api.openweathermap.org/data/2.5/onecall?/lat={lat}&lon={lon}&lang=ja&appid={$OPEN_WEATHER_API_KEY}")
+    @GET("https://api.openweathermap.org/data/2.5/onecall{lat}&{lon}&lang=ja&appid={$OPEN_WEATHER_API_KEY}")
     suspend fun getWeatherInfo(
         @Path ("lat") lat:Double,
         @Path ("lon") lon:Double

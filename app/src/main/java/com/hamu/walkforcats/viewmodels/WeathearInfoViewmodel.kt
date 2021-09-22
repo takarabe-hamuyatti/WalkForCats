@@ -42,7 +42,9 @@ class WeathearInfoViewmodel @Inject constructor(
     }
 
     fun updatePastLocation(longitude:Double,latitude:Double){
-        pastLocationRepository.updatePastLocation(longitude,latitude)
+        viewModelScope.launch {
+            pastLocationRepository.updatePastLocation(longitude,latitude)
+        }
     }
     private fun displayDialog(){
         _isDisplayDaialog.value = true

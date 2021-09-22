@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
  interface AboutPastLocationDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertNewLocation(pastLocation: PastLocation)
+    suspend fun insertNewLocation(pastLocation: PastLocation)
 
     @Query("select * From PastLocation ")
     fun getPastLocation(): Flow<PastLocation>

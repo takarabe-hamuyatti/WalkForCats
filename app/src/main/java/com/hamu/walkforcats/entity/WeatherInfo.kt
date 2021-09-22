@@ -1,7 +1,11 @@
 package com.hamu.walkforcats.entity
 
+import com.squareup.moshi.JsonClass
+
+@JsonClass(generateAdapter = true)
 data class WeatherResponse(val list: List<WeatherInfo>)
 
+@JsonClass(generateAdapter = true)
 data class WeatherInfo(
     var base: String,
     var clouds: Clouds,
