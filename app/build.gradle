@@ -4,6 +4,7 @@ plugins {
     id "org.jetbrains.kotlin.kapt"
     id "androidx.navigation.safeargs"
     id 'dagger.hilt.android.plugin'
+    id 'kotlin-android-extensions'
 }
 
 android {
@@ -124,6 +125,7 @@ dependencies {
     def okhttp_version = "4.9.1"
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation("com.squareup.moshi:moshi:1.12.0")
+    implementation "com.squareup.moshi:moshi-kotlin:1.12.0"
     kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.9.3'
     implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
     implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
