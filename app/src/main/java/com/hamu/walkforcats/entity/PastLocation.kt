@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey
 @Entity
 data class PastLocation(
     @PrimaryKey
-    var tmp :Int,
-    var tmp2 :Int
+    val primaryKey :Int,
+    var longitude :Float,
+    var latitude :Float
 )

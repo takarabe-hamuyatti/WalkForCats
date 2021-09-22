@@ -8,10 +8,12 @@ import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.hamu.walkforcats.R
 import com.hamu.walkforcats.databinding.FragmentWeatherInfoBinding
+import com.hamu.walkforcats.utils.confirmDialog
 import com.hamu.walkforcats.viewmodels.WeathearInfoViewmodel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.concurrent.Executor
@@ -37,16 +39,25 @@ class WeatherInfoFragment() : Fragment(R.layout.fragment_weather_info) {
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
                 //pastLocation からとってくる　それもダメだったらダイアログ
-                return
+                    viewmodel.checkIsPastLocationIsNull()
             }else{
                 fusedLocationClient.lastLocation
-                    .addOnSuccessListener {  it : Location? ->
-
+                    .addOnSuccessListener {
+                        viewmodel.getWeatherInfo(it)
                     }
                     .addOnFailureListener{
-                        //pastLocation からとってくる　それもダメだったらダイアログ
+                        viewmodel.checkIsPastLocationIsNull()
                     }
             }
         }
+
+        viewmodel.isDisplayDaialog.observe(viewLifecycleOwner,{
+            if(it)displayDialog()
+        })
+    }
+
+    private fun displayDialog(){
+        confirmDialog(requireContext(),"",requireContext().getString(R.string.error_message)
+        ) { viewmodel.hideDialog() }
     }
 }

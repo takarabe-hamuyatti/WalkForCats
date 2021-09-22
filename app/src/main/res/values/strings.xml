@@ -28,6 +28,8 @@
 
     <string name="decide_goal">1日、1ヶ月の目標を決めましょう！</string>
 
+    <string name="error_message">表示できません。</string>
+
     <!-- Preference Titles -->
     <string name="goal_header">目標</string>
     <string name="cat_header">猫</string>
