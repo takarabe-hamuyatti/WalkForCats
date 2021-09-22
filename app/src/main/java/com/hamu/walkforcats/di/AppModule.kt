@@ -6,9 +6,9 @@ import android.hardware.SensorManager
 import androidx.preference.PreferenceManager
 import androidx.room.Room
 import com.hamu.walkforcats.api.WeatherInfoService
-import com.hamu.walkforcats.database.AboutMonthlyInfoDao
+import com.hamu.walkforcats.database.dao.AboutMonthlyInfoDao
 import com.hamu.walkforcats.database.AboutHistoryDatabase
-import com.hamu.walkforcats.database.AboutPastLocationDao
+import com.hamu.walkforcats.database.dao.AboutPastLocationDao
 import com.hamu.walkforcats.repository.past_location.PastLocationRepository
 import com.hamu.walkforcats.repository.past_location.PastLocationRepositoryImpl
 import com.hamu.walkforcats.repository.create_finished_month.CreateFinishedMonthRepository

@@ -1,6 +1,6 @@
 package com.hamu.walkforcats.repository.monthly_history
 
-import com.hamu.walkforcats.database.AboutMonthlyInfoDao
+import com.hamu.walkforcats.database.dao.AboutMonthlyInfoDao
 import com.hamu.walkforcats.entity.MonthlyInfo
 import kotlinx.coroutines.flow.Flow
 

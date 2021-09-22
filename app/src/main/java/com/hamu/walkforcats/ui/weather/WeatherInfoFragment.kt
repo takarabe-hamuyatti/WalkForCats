@@ -23,34 +23,30 @@ class WeatherInfoFragment() : Fragment(R.layout.fragment_weather_info) {
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
-
-        if (ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            //pastLocation からとってくる　それもダメだったらダイアログ
-            return
-        }else{
-            fusedLocationClient.lastLocation
-                .addOnSuccessListener {  it : Location? ->
-
-                }
-                .addOnFailureListener{
-                    //pastLocation からとってくる　それもダメだったらダイアログ
-                }
-        }
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        FragmentWeatherInfoBinding.bind(view)
+        FragmentWeatherInfoBinding.bind(view).let{
+            fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
 
+            if (ActivityCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                //pastLocation からとってくる　それもダメだったらダイアログ
+                return
+            }else{
+                fusedLocationClient.lastLocation
+                    .addOnSuccessListener {  it : Location? ->
+
+                    }
+                    .addOnFailureListener{
+                        //pastLocation からとってくる　それもダメだったらダイアログ
+                    }
+            }
+        }
     }
 }
