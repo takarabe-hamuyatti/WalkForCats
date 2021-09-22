@@ -15,5 +15,8 @@ class UniqueId {
 
         //database 名
         const val MONTHLYINFO_DATABASE_NAME = "monthlyInfoDatabase"
+
+        //ApiKey todo 隠し方を探す
+        const val OPEN_WEATHER_API_KEY = "de9c3d7a7750b7c5a3d9f9691bc274e8"
     }
 }

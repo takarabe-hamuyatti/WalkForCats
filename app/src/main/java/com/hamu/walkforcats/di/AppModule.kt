@@ -59,7 +59,7 @@ object AppModule {
     @Singleton
     fun provideApi():WeatherInfoService{
         return Retrofit.Builder()
-            .baseUrl("https://api.openweathermap.org/data/2.5/onecall?")
+            .baseUrl("https://api.openweathermap.org/data/2.5/onecall/")
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
             .create(WeatherInfoService::class.java)

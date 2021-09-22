@@ -19,7 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.util.concurrent.Executor
 
 @AndroidEntryPoint
-class WeatherInfoFragment() : Fragment(R.layout.fragment_weather_info) {
+class WeatherInfoFragment : Fragment(R.layout.fragment_weather_info) {
 
     private val viewmodel:WeathearInfoViewmodel by viewModels()
 
@@ -38,19 +38,20 @@ class WeatherInfoFragment() : Fragment(R.layout.fragment_weather_info) {
                     Manifest.permission.ACCESS_COARSE_LOCATION
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
-                //pastLocation からとってくる　それもダメだったらダイアログ
                     viewmodel.checkIsPastLocationIsNull()
             }else{
                 fusedLocationClient.lastLocation
                     .addOnSuccessListener {
-                        viewmodel.getWeatherInfo(it)
+                        val longitude = it.longitude
+                        val latitude = it.latitude
+                        viewmodel.getWeatherInfo(longitude,latitude)
+                        viewmodel.updatePastLocation(longitude,latitude)
                     }
                     .addOnFailureListener{
                         viewmodel.checkIsPastLocationIsNull()
                     }
             }
         }
-
         viewmodel.isDisplayDaialog.observe(viewLifecycleOwner,{
             if(it)displayDialog()
         })

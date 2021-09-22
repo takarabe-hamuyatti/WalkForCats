@@ -7,6 +7,6 @@ import androidx.room.PrimaryKey
 data class PastLocation(
     @PrimaryKey
     val primaryKey :Int,
-    var longitude :Float,
-    var latitude :Float
+    var longitude :Double,
+    var latitude :Double
 )
