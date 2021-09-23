@@ -14,6 +14,6 @@ interface WeatherInfoService {
         @Query ("lat") lat:Double,
         @Query ("lon") lon:Double,
         @Query ("lang") lang:String = "ja",
-        @Query ("appid") appid:String = OPEN_WEATHER_API_KEY
+        @Query ("appid") appid:String = OPEN_WEATHER_API_KEY//todo 隠し方探す
     ): Response<WeatherResponse>
 }

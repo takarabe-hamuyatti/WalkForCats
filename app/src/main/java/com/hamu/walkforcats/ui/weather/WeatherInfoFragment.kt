@@ -55,12 +55,7 @@ class WeatherInfoFragment : Fragment(R.layout.fragment_weather_info) {
         val fusedLocationClient: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
         fusedLocationClient.lastLocation
             .addOnSuccessListener {it : Location? ->
-                //値がnullだったら東京の位置情報を登録しています。
-                val longitude = it?.longitude ?: 36.0
-                val latitude = it?.latitude ?: 140.0
-                viewmodel.getWeatherInfo(longitude,latitude)
-                //位置情報を取得したら、過去の位置情報を更新します。
-                viewmodel.updatePastLocation(longitude,latitude)
+                viewmodel.decideWorks(it)
             }
             .addOnFailureListener{
                 //位置情報の取得に失敗したら、過去の位置情報が利用できるか確認します。

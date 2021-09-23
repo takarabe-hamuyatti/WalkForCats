@@ -1,5 +1,6 @@
 package com.hamu.walkforcats.viewmodels
 
+import android.location.Location
 import androidx.lifecycle.*
 import com.hamu.walkforcats.entity.PastLocation
 import com.hamu.walkforcats.entity.WeatherResponse
@@ -26,20 +27,21 @@ class WeathearInfoViewmodel @Inject constructor(
     val isDisplayDialog:LiveData<Boolean>
           get() = _isDisplayDialog
 
-    //過去の位置情報が使えたらそのまま使って、ダメだったらダイアログで知らせます。
-    fun checkIsPastLocationIsNull(){
-        if(pastLocationinfo.value==null){
-            displayDialog()
+    fun decideWorks(location:Location?){
+        if(location!=null){
+            val longitude = location.longitude
+            val latitude = location.latitude
+            getWeatherInfo(longitude,latitude)
+            //位置情報を取得したら、過去の位置情報を更新します。
+            updatePastLocation(longitude,latitude)
         }else{
-            pastLocationinfo.value?.let{
-                val longitude =it.longitude
-                val latitude = it.longitude
-                getWeatherInfo(longitude,latitude)
-            }
+            //位置情報の取得に失敗したら、過去の位置情報が利用できるか確認します。
+            checkIsPastLocationIsNull()
         }
     }
 
-    fun getWeatherInfo(longitude:Double,latitude:Double) {
+
+    private fun getWeatherInfo(longitude:Double,latitude:Double) {
         viewModelScope.launch {
             val response = weatherRepository.getWeatherInfo(longitude, latitude)
             if(response.isSuccessful){
@@ -49,13 +51,35 @@ class WeathearInfoViewmodel @Inject constructor(
                 Timber.i("Sucsess")
             }
             else {
-                displayDialog()
+                checkIsPastLocationIsNull()
                 Timber.i("notSucsess")
             }
         }
     }
 
-    fun updatePastLocation(longitude:Double,latitude:Double){
+    //現在の位置情報をえられない時、過去の位置情報が使えるか確認しています。
+    fun checkIsPastLocationIsNull(){
+        if(pastLocationinfo.value != null){
+            pastLocationinfo.value?.let{
+                val longitude =it.longitude
+                val latitude = it.longitude
+                getWeatherInfo(longitude,latitude)
+            }
+        }else{
+            getWeatherInfoByTokyo()
+        }
+    }
+
+    //過去の位置情報も保存されていなかったら東京の位置情報を使います。ダメっだらダイアログで伝えます。
+    private fun getWeatherInfoByTokyo(){
+        try {
+            getWeatherInfo(36.0,140.0)
+        }catch (e:Exception){
+            displayDialog()
+        }
+    }
+
+    private fun updatePastLocation(longitude:Double,latitude:Double){
         viewModelScope.launch {
             pastLocationRepository.updatePastLocation(longitude,latitude)
         }

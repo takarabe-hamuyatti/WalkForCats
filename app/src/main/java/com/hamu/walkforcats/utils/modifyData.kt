@@ -10,7 +10,7 @@ fun changeToPercent(count: Int?, goal: Int?):Float?{
 }
 
 fun formattingYearMonth(dt: LocalDate): Int {
-    //月が変わっていたら、これまでの月の記録を行っているので現時点から月を一つ減らした値で登録します。
+    //月が変わっていたら、それまでの月の記録を行っているので現時点から月を一つ減らした値で登録します。
     val beforeFormatting = dt.minusMonths(1)
     val formatter = DateTimeFormatter.ofPattern("yyyyMM")
     return beforeFormatting.format(formatter).toInt()
