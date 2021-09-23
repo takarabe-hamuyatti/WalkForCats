@@ -19,6 +19,6 @@ class UniqueId {
         const val PAST_LOCATION_KEY = 1
 
         //ApiKey todo 隠し方を探す
-        const val OPEN_WEATHER_API_KEY = "de9c3d7a7750b7c5a3d9f9691bc274e8"
+        const val OPEN_WEATHER_API_KEY = "b4174ac66f26d0685d02cde6c3361b48"
     }
 }

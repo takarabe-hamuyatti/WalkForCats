@@ -30,6 +30,7 @@ class WeathearInfoViewmodel @Inject constructor(
     fun checkIsPastLocationIsNull(){
         if(pastLocationinfo.value==null){
             displayDialog()
+            Timber.i("PastLocationIsNull")
         }else{
             pastLocationinfo.value?.let{
                 val longitude =it.longitude
@@ -43,14 +44,12 @@ class WeathearInfoViewmodel @Inject constructor(
         viewModelScope.launch {
             val response = weatherRepository.getWeatherInfo(longitude, latitude)
             if(response.isSuccessful){
+                Timber.i("getWeatherIsSuccess")
                 _weatherList.value = response.body()
-                val tmp = response.body()?.list?.get(0)?.main?.temp
-                Timber.i("$tmp")
-                Timber.i("Sucsess")
             }
             else {
+                Timber.i("getWeatherIsNotSuccess")
                 displayDialog()
-                Timber.i("notSucsess")
             }
         }
     }
