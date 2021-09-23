@@ -11,7 +11,7 @@ class GetWeatherInfoRepositoryImpl(
 ):GetWeatherInfoRepository{
     override suspend fun getWeatherInfo(longitude:Double,latitude:Double): Response<WeatherResponse> {
         return withContext(Dispatchers.IO) {
-            WeatherInfoService.getWeatherInfo(longitude, latitude)
+            WeatherInfoService.getWeatherInfo(longitude,latitude)
         }
     }
 }

@@ -17,3 +17,4 @@ interface WeatherInfoService {
         @Query ("appid") appid:String = OPEN_WEATHER_API_KEY//todo 隠し方探す
     ): Response<WeatherResponse>
 }
+

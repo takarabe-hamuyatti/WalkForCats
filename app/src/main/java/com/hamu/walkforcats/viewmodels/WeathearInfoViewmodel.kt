@@ -28,7 +28,7 @@ class WeathearInfoViewmodel @Inject constructor(
           get() = _isDisplayDialog
 
     fun decideWorks(location:Location?){
-        if(location!=null){
+        if(location !=null){
             val longitude = location.longitude
             val latitude = location.latitude
             getWeatherInfo(longitude,latitude)
@@ -46,39 +46,20 @@ class WeathearInfoViewmodel @Inject constructor(
             val response = weatherRepository.getWeatherInfo(longitude, latitude)
             if(response.isSuccessful){
                 _weatherList.value = response.body()
-                val tmp = response.body()?.list?.get(0)?.main?.temp
-                Timber.i("$tmp")
-                Timber.i("Sucsess")
             }
             else {
-                checkIsPastLocationIsNull()
-                Timber.i("notSucsess")
+                displayDialog()
             }
         }
     }
-
-    //現在の位置情報をえられない時、過去の位置情報が使えるか確認しています。
-    fun checkIsPastLocationIsNull(){
-        if(pastLocationinfo.value != null){
-            pastLocationinfo.value?.let{
-                val longitude =it.longitude
-                val latitude = it.longitude
-                getWeatherInfo(longitude,latitude)
-            }
-        }else{
-            getWeatherInfoByTokyo()
+    private fun getWeatherInfoByPastLocation(longitude:Double, latitude:Double) {
+        viewModelScope.launch {
+            val response = weatherRepository.getWeatherInfo(longitude, latitude)
+            if(response.isSuccessful){
+                _weatherList.value = response.body()
+            }else displayDialog()
         }
     }
-
-    //過去の位置情報も保存されていなかったら東京の位置情報を使います。ダメっだらダイアログで伝えます。
-    private fun getWeatherInfoByTokyo(){
-        try {
-            getWeatherInfo(36.0,140.0)
-        }catch (e:Exception){
-            displayDialog()
-        }
-    }
-
     private fun updatePastLocation(longitude:Double,latitude:Double){
         viewModelScope.launch {
             pastLocationRepository.updatePastLocation(longitude,latitude)

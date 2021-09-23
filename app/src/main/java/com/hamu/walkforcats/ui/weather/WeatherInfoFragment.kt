@@ -15,13 +15,13 @@ import com.hamu.walkforcats.databinding.FragmentWeatherInfoBinding
 import com.hamu.walkforcats.utils.confirmDialog
 import com.hamu.walkforcats.viewmodels.WeathearInfoViewmodel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_weather_info.*
 import timber.log.Timber
 
 @AndroidEntryPoint
 class WeatherInfoFragment : Fragment(R.layout.fragment_weather_info) {
 
     private val viewmodel:WeathearInfoViewmodel by viewModels()
-
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { granted ->
@@ -36,15 +36,20 @@ class WeatherInfoFragment : Fragment(R.layout.fragment_weather_info) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         FragmentWeatherInfoBinding.bind(view).let {
             requestPermissionLauncher.launch(ACCESS_COARSE_LOCATION)
+            loading.visibility = View.VISIBLE
             viewmodel.isDisplayDialog.observe(viewLifecycleOwner, {
-                if (it) displayDialog()
+                if (it) {
+                    displayDialog()
+                    loading.visibility = View.INVISIBLE
+                }
+            })
+            viewmodel.weatherList.observe(viewLifecycleOwner,{
+
             })
         }
     }
-
     private fun displayDialog(){
         confirmDialog(requireContext(),"",requireContext().getString(R.string.error_message)
         ) { viewmodel.hideDialog() }
@@ -54,7 +59,7 @@ class WeatherInfoFragment : Fragment(R.layout.fragment_weather_info) {
     private fun getLocation(){
         val fusedLocationClient: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
         fusedLocationClient.lastLocation
-            .addOnSuccessListener {it : Location? ->
+            .addOnSuccessListener {
                 viewmodel.decideWorks(it)
             }
             .addOnFailureListener{
