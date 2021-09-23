@@ -7,7 +7,6 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 import retrofit2.http.QueryMap
 
-//todo 値が帰ってこない、、
 interface WeatherInfoService {
     @GET("onecall")
     suspend fun getWeatherInfo(

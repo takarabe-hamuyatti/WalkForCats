@@ -8,7 +8,6 @@ import com.hamu.walkforcats.repository.get_weather_info.GetWeatherInfoRepository
 import com.hamu.walkforcats.repository.past_location.PastLocationRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -39,7 +38,16 @@ class WeathearInfoViewmodel @Inject constructor(
             checkIsPastLocationIsNull()
         }
     }
-
+    //現在の位置情報をえられない時、過去の位置情報が使えるか確認しています。
+    fun checkIsPastLocationIsNull() {
+        if (pastLocationinfo.value != null) {
+            pastLocationinfo.value?.let {
+                val longitude = it.longitude
+                val latitude = it.longitude
+                getWeatherInfoByPastLocation(longitude, latitude)
+            }
+        }else displayDialog()
+    }
 
     private fun getWeatherInfo(longitude:Double,latitude:Double) {
         viewModelScope.launch {
