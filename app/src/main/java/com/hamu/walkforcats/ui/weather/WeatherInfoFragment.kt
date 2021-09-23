@@ -1,22 +1,14 @@
 package com.hamu.walkforcats.ui.weather
 
-import android.Manifest
 import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.annotation.SuppressLint
-import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.hamu.walkforcats.R
 import com.hamu.walkforcats.databinding.FragmentWeatherInfoBinding
@@ -24,7 +16,6 @@ import com.hamu.walkforcats.utils.confirmDialog
 import com.hamu.walkforcats.viewmodels.WeathearInfoViewmodel
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
-import java.util.concurrent.Executor
 
 @AndroidEntryPoint
 class WeatherInfoFragment : Fragment(R.layout.fragment_weather_info) {
@@ -48,7 +39,7 @@ class WeatherInfoFragment : Fragment(R.layout.fragment_weather_info) {
 
         FragmentWeatherInfoBinding.bind(view).let {
             requestPermissionLauncher.launch(ACCESS_COARSE_LOCATION)
-            viewmodel.isDisplayDaialog.observe(viewLifecycleOwner, {
+            viewmodel.isDisplayDialog.observe(viewLifecycleOwner, {
                 if (it) displayDialog()
             })
         }
@@ -64,12 +55,15 @@ class WeatherInfoFragment : Fragment(R.layout.fragment_weather_info) {
         val fusedLocationClient: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
         fusedLocationClient.lastLocation
             .addOnSuccessListener {it : Location? ->
+                //値がnullだったら東京の位置情報を登録しています。
                 val longitude = it?.longitude ?: 36.0
                 val latitude = it?.latitude ?: 140.0
                 viewmodel.getWeatherInfo(longitude,latitude)
+                //位置情報を取得したら、過去の位置情報を更新します。
                 viewmodel.updatePastLocation(longitude,latitude)
             }
             .addOnFailureListener{
+                //位置情報の取得に失敗したら、過去の位置情報が利用できるか確認します。
                 viewmodel.checkIsPastLocationIsNull()
             }
     }
