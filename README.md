@@ -16,7 +16,8 @@
 * DataBinding
 * BindingAdapter
 * Service
-  
-## やり残したこと
+* retrofit（実装中）
+ 
+ ## やり残したこと
 firestoreやAPI通信を盛り込もうとしたが内容的に必要なところがなかったため未実装  
 特にfiresotreは右も左もわからない時に使ったきりになっているので次作るアプリにはぜひ導入したい
