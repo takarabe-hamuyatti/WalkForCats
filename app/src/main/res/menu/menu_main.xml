@@ -8,4 +8,10 @@
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_weather"
+        android:orderInCategory="100"
+        android:title="@string/action_weather"
+        app:showAsAction="never" />
 </menu>

@@ -6,7 +6,7 @@
     <data>
         <variable
             name="monthlyInfo"
-            type="com.hamu.walkforcats.database.MonthlyInfo" />
+            type="com.hamu.walkforcats.entity.MonthlyInfo" />
         <variable
             name="percentForCat"
             type="Float" />

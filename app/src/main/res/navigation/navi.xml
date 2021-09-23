@@ -16,6 +16,11 @@
             app:destination="@id/navigation_settings"
             app:enterAnim="@android:anim/slide_in_left"
             app:popEnterAnim="@android:anim/slide_in_left" />
+        <action
+            android:id="@+id/action_navigation_step_to_weatherInfoFragment"
+            app:destination="@id/weatherInfoFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:popEnterAnim="@android:anim/slide_in_left" />
     </fragment>
     <fragment
         android:id="@+id/navigation_history"
@@ -27,6 +32,11 @@
             app:destination="@id/navigation_settings"
             app:enterAnim="@android:anim/slide_in_left"
             app:popEnterAnim="@android:anim/slide_in_left" />
+        <action
+            android:id="@+id/action_navigation_history_to_weatherInfoFragment"
+            app:destination="@id/weatherInfoFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:popEnterAnim="@android:anim/slide_in_left" />
     </fragment>
     <fragment
         android:id="@+id/navigation_settings"
@@ -34,4 +44,9 @@
         android:label="SettingsFragment" >
 
     </fragment>
+    <fragment
+        android:id="@+id/weatherInfoFragment"
+        android:name="com.hamu.walkforcats.ui.weather.WeatherInfoFragment"
+        android:label="fragment_weather_info"
+        tools:layout="@layout/fragment_weather_info" />
 </navigation>

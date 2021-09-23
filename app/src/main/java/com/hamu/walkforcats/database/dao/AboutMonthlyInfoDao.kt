@@ -1,6 +1,7 @@
-package com.hamu.walkforcats.database
+package com.hamu.walkforcats.database.dao
 
 import androidx.room.*
+import com.hamu.walkforcats.entity.MonthlyInfo
 import kotlinx.coroutines.flow.Flow
 
 

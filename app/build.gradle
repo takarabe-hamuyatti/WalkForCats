@@ -4,6 +4,7 @@ plugins {
     id "org.jetbrains.kotlin.kapt"
     id "androidx.navigation.safeargs"
     id 'dagger.hilt.android.plugin'
+    id 'kotlin-android-extensions'
 }
 
 android {
@@ -52,6 +53,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation "androidx.lifecycle:lifecycle-common-java8:2.3.1"
+    implementation 'com.google.android.gms:play-services-location:18.0.0'
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1")
 
@@ -115,5 +117,17 @@ dependencies {
     def lottieVersion = "3.4.0"
     implementation "com.airbnb.android:lottie:$lottieVersion"
 
+    //Timber
     implementation 'com.jakewharton.timber:timber:4.7.1'
+
+    //Retrofit&OkHttp
+    def retrofit_version = '2.9.0'
+    def okhttp_version = "4.9.1"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation("com.squareup.moshi:moshi:1.12.0")
+    implementation "com.squareup.moshi:moshi-kotlin:1.12.0"
+    kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.9.3'
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
+    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
 }
