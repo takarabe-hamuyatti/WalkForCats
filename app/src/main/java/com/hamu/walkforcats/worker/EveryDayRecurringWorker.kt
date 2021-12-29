@@ -26,7 +26,6 @@ class EveryDayRecurringWorker @AssistedInject constructor(
     }
 
     override suspend fun doWork(): Result {
-        // その日ごとの歩数をリセットしています。
          try{
              processingContentOfWork()
              return Result.success()
@@ -42,7 +41,6 @@ class EveryDayRecurringWorker @AssistedInject constructor(
 
         if (isTheBeginningOfTheMonth) {
             val yearMonth = formattingYearMonth(dt)
-            //これまでの目標値、歩数、達成率を取得します。
             val monthlyStepCount = preferenceRepository.getMonthlyCount().toString()
             val monthlyGoal = preferenceRepository.getMonthlyGoal().toString()
             val percent = changeToPercent(monthlyStepCount.toInt(),monthlyGoal.toInt()).toString()
@@ -55,12 +53,9 @@ class EveryDayRecurringWorker @AssistedInject constructor(
                     monthlyGoal = monthlyGoal,
                     monthlyPercent = percent
                 )
-            //Roomを使って保存しています。
             createFinishedMonthRepository.createFinishedMonth(monthlyInfo = finishedMonthlyInfo)
-            //月の歩数をリセットします。
             preferenceRepository.clearCountOfTheMonth()
         }
-        //その日の歩数をリセットします。
         preferenceRepository.clearCountOfTheDay()
     }
 
