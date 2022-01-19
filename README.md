@@ -21,3 +21,8 @@
  ## やり残したこと
 firestoreやAPI通信を盛り込もうとしたが内容的に必要なところがなかったため未実装  
 特にfiresotreは右も左もわからない時に使ったきりになっているので次作るアプリにはぜひ導入したい
+
+### スクリーンショット
+<img src="https://user-images.githubusercontent.com/76822642/150058849-91d8fe0b-7aa7-449f-8ffe-7993c9fff02f.jpg" width="200dp">
+<img src="https://user-images.githubusercontent.com/76822642/150058962-a4d97c68-9476-47f3-bb27-357fbf66e74f.jpg" width="200dp">
+
