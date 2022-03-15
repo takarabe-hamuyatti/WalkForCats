@@ -4,6 +4,6 @@ import com.hamu.walkforcats.entity.MonthlyInfo
 
 
 interface CreateFinishedMonthRepository {
-    fun createFinishedMonth(monthlyInfo: MonthlyInfo)
+    suspend fun createFinishedMonth(monthlyInfo: MonthlyInfo)
 }
 

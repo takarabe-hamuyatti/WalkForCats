@@ -34,7 +34,7 @@ class EveryDayRecurringWorker @AssistedInject constructor(
          }
     }
 
-    private fun processingContentOfWork(){
+    private suspend fun processingContentOfWork(){
         val dt = LocalDate.now()
         //日付を確認して、月が変わったかどうかを確認しています。
         val isTheBeginningOfTheMonth = dt.dayOfMonth == 1
